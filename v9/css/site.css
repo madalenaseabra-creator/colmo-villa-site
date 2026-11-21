@@ -95,8 +95,8 @@ html.js body.is-home .brand{visibility:hidden;pointer-events:none}
 /* Flying logo: big on the entrance, docks to the header on scroll */
 .fly-logo{
   position:fixed;z-index:70;
-  left:var(--gutter);top:36px;
-  width:min(260px,42vw);
+  left:var(--gutter);top:28px;
+  width:min(400px,52vw);
   transform:none;
   line-height:0;
 }
@@ -289,15 +289,31 @@ html.js body.is-home .brand{visibility:hidden;pointer-events:none}
 
 /* —— Entrance (home only, the one full-bleed with text) —— */
 .entrance{
-  position:relative;min-height:100vh;color:var(--cream);overflow:hidden;
+  position:relative;min-height:100vh;
+  display:flex;flex-direction:column;
+  color:var(--ink);
+  background:var(--sand);
+  overflow:hidden;
+}
+.entrance-photo{
+  position:relative;
+  flex:0 0 62vh;
+  min-height:320px;
+  overflow:hidden;
 }
 .entrance img.bg{
   position:absolute;inset:0;width:100%;height:100%;
-  object-fit:cover;object-position:center 25%;
+  object-fit:cover;object-position:center 40%;
 }
 .entrance .veil{
   position:absolute;inset:0;
-  background:linear-gradient(180deg,rgba(59,50,40,.18) 0%,rgba(59,50,40,0) 32%,rgba(59,50,40,0) 100%);
+  background:linear-gradient(180deg,rgba(42,33,26,.2) 0%,rgba(42,33,26,0) 36%,rgba(42,33,26,0) 100%);
+}
+.entrance-sand{
+  flex:1 1 auto;
+  min-height:28vh;
+  position:relative;
+  background:var(--sand);
 }
 .entrance-logo{
   position:absolute;left:50%;top:124px;transform:translateX(-50%);
@@ -435,7 +451,7 @@ form .btn{justify-self:start;margin-top:6px}
   .nav-toggle{display:block}
   .btn-book-mobile{display:inline-block;padding:8px 12px;font-size:10px}
   .brand img{max-width:148px}
-  .fly-logo{width:min(168px,48vw);top:24px;left:var(--gutter)}
+  .fly-logo{width:min(240px,62vw);top:20px;left:var(--gutter)}
   .split,.tease,.split.flip,.tease.flip{grid-template-columns:1fr;gap:24px}
   .split.flip .copy,.tease.flip .copy{order:0}
   .split .media img,.tease .media img{height:min(48vh,420px)}
@@ -458,7 +474,7 @@ form .btn{justify-self:start;margin-top:6px}
 
 /* v9 entrance: signature layout — small official logo top-left, italic line bottom-right */
 .entrance-copy{
-  position:absolute;left:auto;right:var(--gutter);bottom:8vh;
+  position:absolute;left:auto;right:var(--gutter);bottom:12%;
   z-index:2;max-width:min(28em,70vw);
   text-align:right;
 }
@@ -474,9 +490,10 @@ form .btn{justify-self:start;margin-top:6px}
   text-shadow:0 1px 0 rgba(241,235,221,.45);
 }
 .entrance .scroll-hint{
-  left:50%;right:auto;bottom:28px;
+  left:50%;right:auto;bottom:22px;
   transform:translateX(-50%);
-  font-size:10px;letter-spacing:.22em;opacity:.7;
+  font-size:10px;letter-spacing:.22em;opacity:.55;
+  color:var(--terra);
 }
 .intro-pad{padding-top:calc(var(--nav) + 48px)}
 
@@ -507,6 +524,8 @@ form .btn{justify-self:start;margin-top:6px}
 @media(max-width:960px){
   .exp-v6{grid-template-columns:1fr}
   .exp-tile img{height:min(42vh,320px)}
-  .entrance-copy{bottom:7vh;max-width:min(22em,78vw)}
-  .entrance .scroll-hint{display:block;bottom:20px;opacity:.65}
+  .entrance-photo{flex-basis:56vh;min-height:240px}
+  .entrance-sand{min-height:32vh}
+  .entrance-copy{bottom:14%;max-width:min(22em,78vw)}
+  .entrance .scroll-hint{display:block;bottom:16px;opacity:.65}
 }

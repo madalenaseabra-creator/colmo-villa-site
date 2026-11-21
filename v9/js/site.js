@@ -28,15 +28,16 @@
     }
 
     const navH = head.offsetHeight || 112;
-    const threshold = Math.max(entrance.offsetHeight - navH, 80);
+    const photo = document.querySelector(".entrance-photo") || entrance;
+    const threshold = Math.max((photo.offsetHeight || entrance.offsetHeight) - navH, 80);
     let t = Math.min(1, Math.max(0, window.scrollY / threshold));
     if (reduce) t = window.scrollY > 24 ? 1 : 0;
     const e = ease(t);
 
     const vw = document.documentElement.clientWidth;
     const gutter = vw < 700 ? 20 : 48;
-    const startW = vw < 700 ? Math.min(168, vw * 0.48) : 260;
-    const startTop = vw < 700 ? 24 : 36;
+    const startW = vw < 700 ? Math.min(240, vw * 0.62) : 400;
+    const startTop = vw < 700 ? 20 : 28;
     const startLeft = gutter;
 
     const slotImg = brand.querySelector(".wm-dark") || brand.querySelector("img");
