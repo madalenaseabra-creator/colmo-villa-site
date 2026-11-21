@@ -202,12 +202,22 @@ html.js body.is-home .brand{visibility:hidden;pointer-events:none}
 .split.intro{padding-top:calc(var(--nav) + 48px)}
 .split .media{min-height:0}
 .split .media img{width:100%;height:min(74vh,760px);object-fit:cover;display:block}
-.stats{display:flex;gap:36px;margin-top:28px;flex-wrap:wrap}
+.stats{display:flex;gap:28px;margin-top:28px;flex-wrap:nowrap;align-items:flex-start}
+.stats > div{flex:0 0 auto}
 .stats b{
   display:block;font-family:Archivo,sans-serif;font-weight:600;font-stretch:88%;
   font-size:28px;color:var(--terra);
 }
-.stats span{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--oliva)}
+.stats span{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--oliva);white-space:nowrap}
+.stats .stat-label-short{display:none}
+@media(min-width:961px){
+  .split.intro:has(.stats){grid-template-columns:minmax(0,.95fr) minmax(0,1.15fr)}
+}
+@media(max-width:420px){
+  .stats{gap:16px}
+  .stats .stat-label-full{display:none}
+  .stats .stat-label-short{display:block}
+}
 
 /* —— Teasers (home, same card every time) —— */
 .tease{
@@ -841,7 +851,9 @@ form .btn{justify-self:start;margin-top:6px}
   margin-top:36px;
 }
 .day-row figure{margin:0}
-.day-row img{width:100%;height:280px;object-fit:cover;display:block;cursor:pointer}
+.day-row figure > div{overflow:hidden}
+.day-row img{width:100%;aspect-ratio:3/4;height:auto;object-fit:cover;display:block;cursor:pointer}
+.day-row img.day-kitchen{object-position:42% 50%}
 .day-row .hour{
   display:block;font-family:Archivo,sans-serif;font-weight:700;font-stretch:70%;
   font-size:clamp(36px,4vw,56px);letter-spacing:-.04em;color:var(--sand);
@@ -870,7 +882,6 @@ form .btn{justify-self:start;margin-top:6px}
 .day-close .acc{color:var(--terracota)}
 @media(max-width:960px){
   .day-row{grid-template-columns:1fr 1fr}
-  .day-row img,.day-row .typo-panel{height:200px}
 }
 @media(max-width:560px){
   .day-row{grid-template-columns:1fr}
