@@ -57,12 +57,13 @@
 </section><section class="house-map" id="volumes">
   <p class="kicker">The house</p>
   <h2 class="disp">The volumes.<br><span class="acc">What is inside.</span></h2>
-  <p class="muted">Hover or tap a building to see what is inside.</p>
+  <p class="muted house-map-hint-desk">Hover or tap a building to see what is inside.</p>
+  <p class="muted house-map-hint-mob">Choose a building to see what is inside.</p>
   <div class="house-map-frame">
     <svg class="house-map-svg" viewBox="143 295 239.5 64.5" role="img" aria-labelledby="house-map-caption">
       <title id="house-map-caption">The volumes of COLMO VILLA</title>
       <g class="zones">
-        <a class="zone zone--azul" href="#kitchen" data-label="Kitchen and living" data-note="Kitchen, living room, wine cellar, an en-suite bedroom, pantry, utility room, gym and cinema room." aria-label="Kitchen and living: kitchen, living room, wine cellar, an en-suite bedroom, pantry, utility room, gym and cinema room."><polygon points="260,332 262,316 266,305 334,305 343,314 345,344 262,348"/></a>
+        <a class="zone zone--azul" href="#kitchen" data-label="Kitchen and living" data-note="Kitchen, living room, wine cellar, an en-suite bedroom, pantry, utility room, gym and cinema room." aria-label="Kitchen and living: kitchen, living room, wine cellar, an en-suite bedroom, pantry, utility room, gym and cinema room."><polygon points="262,308 266,306 348,307 350,312 362,312 363,338 260,339 260,326 261,314"/></a>
         <a class="zone zone--olive" href="#studio" data-label="The annex" data-note="Two en-suite bedrooms, a kitchen and a living room." aria-label="The annex: two en-suite bedrooms, a kitchen and a living room."><polygon points="147,333 149,318 157,308 168,303 182,305 192,318 193,336 193,351 168,354 147,352"/></a>
         <a class="zone zone--rose" href="#bedrooms" data-label="4 bedrooms and a TV room" data-note="Four en-suite bedrooms and a TV room." aria-label="4 bedrooms and a TV room: four en-suite bedrooms and a TV room."><polygon points="172,318 186,306 200,298 222,294 242,300 257,312 260,328 260,351 198,354 176,340 168,328"/></a>
       </g>
@@ -75,6 +76,23 @@
       </g>
     </svg>
     <p class="house-map-live" aria-live="polite"><span>Hover or tap a volume.</span></p>
+    <ul class="house-map-picks">
+      <li><button type="button" class="house-map-pick" data-href="#kitchen" aria-pressed="false">
+        <i class="swatch swatch--azul" aria-hidden="true"></i>
+        <span class="pick-num">1</span>
+        <span class="pick-copy"><strong>Kitchen and living</strong><span class="pick-note">Kitchen, living room, wine cellar, an en-suite bedroom, pantry, utility room, gym and cinema room.</span></span>
+      </button></li>
+      <li><button type="button" class="house-map-pick" data-href="#bedrooms" aria-pressed="false">
+        <i class="swatch swatch--rose" aria-hidden="true"></i>
+        <span class="pick-num">2</span>
+        <span class="pick-copy"><strong>4 bedrooms and a TV room</strong><span class="pick-note">Four en-suite bedrooms and a TV room.</span></span>
+      </button></li>
+      <li><button type="button" class="house-map-pick" data-href="#studio" aria-pressed="false">
+        <i class="swatch swatch--olive" aria-hidden="true"></i>
+        <span class="pick-num">Annex</span>
+        <span class="pick-copy"><strong>The annex</strong><span class="pick-note">Two en-suite bedrooms, a kitchen and a living room.</span></span>
+      </button></li>
+    </ul>
   </div>
 </section>
 <section class="split flip">
@@ -200,7 +218,9 @@
 
 <footer class="site-foot">
   <div class="foot-inner">
-    <img class="logo" src="images/logo-g2-cream.png" alt="COLMO VILLA · Comporta Retreat">
+    <a class="foot-mark" href="index.html">
+      <img src="images/esquisso-cream.svg" alt="COLMO VILLA">
+    </a>
     <ul class="foot-links">
       <li><a href="the-house.html">The House</a></li>
       <li><a href="gallery.html">Gallery</a></li>
@@ -211,7 +231,10 @@
       <li><a href="contact.html">Contact</a></li>
       <li><a href="availability.html">Book Now</a></li>
     </ul>
-    <p><a class="email" href="mailto:madalena.seabra@gmail.com">madalena.seabra@gmail.com</a></p>
+    <div class="foot-meta">
+      <a class="email" href="mailto:madalena.seabra@gmail.com">madalena.seabra@gmail.com</a>
+      <div class="lang" aria-label="Language"><a href="#" lang="en" aria-current="true">EN</a><span class="lang-sep" aria-hidden="true">|</span><a href="#" lang="pt" aria-disabled="true" title="Portuguese version coming soon">PT</a></div>
+    </div>
     <p class="legal">COLMO VILLA · Comporta Retreat · Portugal</p>
   </div>
 </footer>

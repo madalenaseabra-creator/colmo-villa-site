@@ -173,6 +173,7 @@ document.querySelectorAll('.lang a[aria-disabled="true"]').forEach(function(a){
   if (!map) return;
   var live = map.querySelector(".house-map-live");
   var zones = map.querySelectorAll(".zone");
+  var picks = map.querySelectorAll(".house-map-pick");
   var idle = live ? live.innerHTML : "";
   function labelFor(z){
     if (!live) return;
@@ -180,10 +181,19 @@ document.querySelectorAll('.lang a[aria-disabled="true"]').forEach(function(a){
     live.innerHTML = "<strong>" + (z.getAttribute("data-label") || "") +
       "</strong><span>" + (z.getAttribute("data-note") || "") + "</span>";
   }
+  function syncPicks(z){
+    var href = z ? (z.getAttribute("href") || "") : "";
+    picks.forEach(function(p){
+      var on = href && p.getAttribute("data-href") === href;
+      p.classList.toggle("is-active", on);
+      p.setAttribute("aria-pressed", on ? "true" : "false");
+    });
+  }
   function activate(z, scroll){
     zones.forEach(function(x){ x.classList.remove("is-active"); });
     if (z) z.classList.add("is-active");
     labelFor(z);
+    syncPicks(z);
     if (scroll && z) {
       var href = z.getAttribute("href") || "";
       if (href.charAt(0) === "#") {
@@ -193,16 +203,25 @@ document.querySelectorAll('.lang a[aria-disabled="true"]').forEach(function(a){
     }
   }
   zones.forEach(function(z){
-    z.addEventListener("mouseenter", function(){ labelFor(z); });
-    z.addEventListener("focus", function(){ labelFor(z); });
+    z.addEventListener("mouseenter", function(){ labelFor(z); syncPicks(z); });
+    z.addEventListener("focus", function(){ labelFor(z); syncPicks(z); });
     z.addEventListener("click", function(e){
       var href = z.getAttribute("href") || "";
       if (href.charAt(0) === "#") e.preventDefault();
       activate(z, href.charAt(0) === "#");
     });
   });
+  picks.forEach(function(p){
+    p.addEventListener("click", function(){
+      var z = map.querySelector('.zone[href="' + (p.getAttribute("data-href") || "") + '"]');
+      activate(z || null, false);
+    });
+  });
   map.addEventListener("mouseleave", function(){
     var a = map.querySelector(".zone.is-active");
     labelFor(a || null);
+    syncPicks(a || null);
   });
+  var initial = map.querySelector('.zone[href="#kitchen"]');
+  if (initial) activate(initial, false);
 })();

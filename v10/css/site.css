@@ -386,20 +386,43 @@ form .btn{justify-self:start;margin-top:6px}
 /* —— Footer (dark, same on every page) —— */
 .site-foot{
   background:var(--ink);color:var(--cream);
-  padding:56px var(--gutter) 40px;
-  border-top:1px solid rgba(241,235,221,.16);
+  padding:64px var(--gutter) 36px;
+  border-top:1px solid rgba(241,235,221,.12);
 }
-.foot-inner{max-width:var(--max);margin:0 auto}
-.site-foot .logo{width:240px;max-width:76%;height:auto;margin-bottom:24px}
+.foot-inner{
+  max-width:var(--max);margin:0 auto;
+  display:flex;flex-direction:column;align-items:center;
+  text-align:center;
+}
+.foot-mark{display:block;margin:0 0 36px;line-height:0;text-decoration:none}
+.foot-mark:hover{text-decoration:none;opacity:.88}
+.foot-mark img{width:min(168px,48vw);height:auto;display:block;margin:0 auto}
 .foot-links{
-  display:flex;flex-wrap:wrap;gap:10px 22px;
-  list-style:none;margin:0 0 16px;padding:0;
-  font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+  display:flex;flex-wrap:wrap;justify-content:center;
+  gap:10px 28px;
+  list-style:none;margin:0;padding:0;
+  font-size:14px;font-weight:400;letter-spacing:.02em;
 }
 .foot-links a{color:var(--cream);text-decoration:none}
-.foot-links a:hover{color:var(--sand)}
-.site-foot .email{color:var(--cream);border-bottom:1px solid var(--sand);text-decoration:none}
-.legal{margin:22px 0 0;font-size:12px;color:var(--sand)}
+.foot-links a:hover{color:var(--sand);text-decoration:underline;text-underline-offset:3px}
+.foot-meta{
+  display:flex;flex-wrap:wrap;justify-content:center;align-items:baseline;
+  gap:10px 28px;
+  margin:28px 0 0;
+}
+.site-foot .email{
+  color:var(--cream);
+  border-bottom:1px solid rgba(226,215,194,.5);
+  text-decoration:none;
+  font-size:14px;
+}
+.site-foot .email:hover{color:var(--sand)}
+.site-foot .lang{color:var(--cream)}
+.legal{
+  margin:28px 0 0;
+  font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--sand);
+}
 
 /* —— Lightbox / modal —— */
 .lb[hidden],.modal[hidden]{display:none}
@@ -436,6 +459,22 @@ form .btn{justify-self:start;margin-top:6px}
 .band-dark .guide span{color:var(--sand)}
 
 @media(max-width:960px){
+  .site-foot{padding:44px var(--gutter) 28px}
+  .foot-mark{margin-bottom:28px}
+  .foot-mark img{width:min(132px,58vw)}
+  .foot-links{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:0;
+    width:100%;
+    max-width:22em;
+    text-align:left;
+  }
+  .foot-links li{border-top:1px solid rgba(241,235,221,.14)}
+  .foot-links a{display:block;padding:12px 0;font-size:15px}
+  .foot-links a:hover{text-decoration:none}
+  .foot-meta{flex-direction:column;align-items:center;gap:16px;margin-top:26px}
+  .legal{margin-top:22px}
   :root{--gutter:20px;--nav:92px;--radius:36px}
   .nav-links{display:none}
   .nav-toggle{display:block}
@@ -543,6 +582,72 @@ form .btn{justify-self:start;margin-top:6px}
   margin-bottom:4px;
 }
 .house-map-live span{color:var(--oliva);font-size:15px}
+.house-map-hint-mob{display:none}
+.house-map-picks{
+  list-style:none;
+  margin:28px auto 0;padding:0;
+  display:flex;flex-wrap:wrap;justify-content:center;gap:10px;
+  max-width:40em;
+}
+.house-map-pick{
+  display:grid;
+  grid-template-columns:auto auto 1fr;
+  gap:10px 12px;
+  align-items:center;
+  width:auto;
+  margin:0;padding:10px 14px;
+  background:transparent;
+  border:1px solid var(--areia);
+  color:inherit;
+  font:inherit;
+  text-align:left;
+  cursor:pointer;
+}
+.house-map-pick:hover,
+.house-map-pick:focus-visible{
+  border-color:var(--terra);
+  outline:none;
+}
+.house-map-pick.is-active{
+  border-color:var(--terra);
+  background:rgba(81,70,56,.06);
+}
+.house-map-pick .swatch{
+  width:14px;height:14px;border-radius:50%;
+  display:block;
+}
+.swatch--olive{background:#BEBAA6} /* olive fill over cream */
+.swatch--rose{background:#D3B09B}
+.swatch--azul{background:#8BA3A3}
+.pick-num{
+  font-family:Archivo,sans-serif;
+  font-weight:600;font-stretch:88%;
+  font-size:12px;letter-spacing:.08em;
+  color:var(--terra);
+  white-space:nowrap;
+}
+.pick-copy{min-width:0}
+.pick-copy strong{
+  display:block;
+  font-family:Archivo,sans-serif;
+  font-weight:600;font-stretch:88%;
+  font-size:15px;letter-spacing:-.02em;
+  color:var(--terra);
+}
+.pick-note{display:none;color:var(--oliva);font-size:14px;line-height:1.45}
+.house-map-pick .pick-copy .pick-note{margin-top:4px}
+@media(max-width:960px){
+  .house-map-hint-desk,.house-map-live{display:none}
+  .house-map-hint-mob{display:block}
+  .house-map-picks{
+    flex-direction:column;align-items:stretch;
+    gap:8px;margin-top:22px;
+  }
+  .house-map-pick{align-items:start;padding:14px 16px;width:100%}
+  .house-map-pick .swatch{margin-top:4px}
+  .pick-note{display:block}
+  .pick-copy strong{font-size:16px;margin-bottom:2px}
+}
 .house-anchor,
 #studio,#kitchen,#pool,#bedrooms{
   scroll-margin-top:calc(var(--nav) + 16px);
