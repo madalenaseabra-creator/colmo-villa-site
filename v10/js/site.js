@@ -57,7 +57,7 @@
     const docked = t >= 0.78 || open;
     head.classList.toggle("is-solid", docked);
     head.classList.toggle("is-visible", docked);
-    fly.classList.toggle("is-on-cream", docked);
+    fly.classList.toggle("is-on-cream", docked || document.body.classList.contains("is-light-hero"));
   }
 
   function requestSync() {
@@ -166,3 +166,43 @@
 document.querySelectorAll('.lang a[aria-disabled="true"]').forEach(function(a){
   a.addEventListener('click', function(e){ e.preventDefault(); });
 });
+
+
+(function(){
+  var map = document.querySelector(".house-map");
+  if (!map) return;
+  var live = map.querySelector(".house-map-live");
+  var zones = map.querySelectorAll(".zone");
+  var idle = live ? live.innerHTML : "";
+  function labelFor(z){
+    if (!live) return;
+    if (!z) { live.innerHTML = idle; return; }
+    live.innerHTML = "<strong>" + (z.getAttribute("data-label") || "") +
+      "</strong><span>" + (z.getAttribute("data-note") || "") + "</span>";
+  }
+  function activate(z, scroll){
+    zones.forEach(function(x){ x.classList.remove("is-active"); });
+    if (z) z.classList.add("is-active");
+    labelFor(z);
+    if (scroll && z) {
+      var href = z.getAttribute("href") || "";
+      if (href.charAt(0) === "#") {
+        var target = document.querySelector(href);
+        if (target) target.scrollIntoView({behavior:"smooth", block:"start"});
+      }
+    }
+  }
+  zones.forEach(function(z){
+    z.addEventListener("mouseenter", function(){ labelFor(z); });
+    z.addEventListener("focus", function(){ labelFor(z); });
+    z.addEventListener("click", function(e){
+      var href = z.getAttribute("href") || "";
+      if (href.charAt(0) === "#") e.preventDefault();
+      activate(z, href.charAt(0) === "#");
+    });
+  });
+  map.addEventListener("mouseleave", function(){
+    var a = map.querySelector(".zone.is-active");
+    labelFor(a || null);
+  });
+})();

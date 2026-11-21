@@ -57,7 +57,7 @@
     const docked = t >= 0.78 || open;
     head.classList.toggle("is-solid", docked);
     head.classList.toggle("is-visible", docked);
-    fly.classList.toggle("is-on-cream", docked);
+    fly.classList.toggle("is-on-cream", docked || document.body.classList.contains("is-light-hero"));
   }
 
   function requestSync() {

@@ -34,9 +34,10 @@
     const e = ease(t);
 
     const vw = document.documentElement.clientWidth;
-    const startW = Math.min(520, vw * (vw < 700 ? 0.82 : 0.72));
-    const startTop = Math.max(64, Math.min(132, entrance.offsetHeight * 0.13));
-    const startLeft = (vw - startW) / 2;
+    const gutter = vw < 700 ? 20 : 48;
+    const startW = vw < 700 ? Math.min(168, vw * 0.48) : 260;
+    const startTop = vw < 700 ? 24 : 36;
+    const startLeft = gutter;
 
     const slotImg = brand.querySelector(".wm-dark") || brand.querySelector("img");
     const slot = (slotImg || brand).getBoundingClientRect();

@@ -293,7 +293,7 @@ html.js body.is-home .brand{visibility:hidden;pointer-events:none}
 }
 .entrance img.bg{
   position:absolute;inset:0;width:100%;height:100%;
-  object-fit:cover;object-position:center 40%;
+  object-fit:cover;object-position:center 25%;
 }
 .entrance .veil{
   position:absolute;inset:0;
