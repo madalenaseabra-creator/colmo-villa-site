@@ -510,11 +510,11 @@ form .btn{justify-self:start;margin-top:6px}
 .house-map-svg .zone.is-active polygon{
   fill:rgba(168,87,58,.4); /* old rose, fallback */
 }
-.house-map-svg .zone--terra:hover polygon,
-.house-map-svg .zone--terra:focus-visible polygon,
-.house-map-svg .zone--terra.is-active polygon{
-  /* terracotta, a step stronger than the old-rose wash so the two stay distinct */
-  fill:rgba(168,87,58,.62);
+.house-map-svg .zone--olive:hover polygon,
+.house-map-svg .zone--olive:focus-visible polygon,
+.house-map-svg .zone--olive.is-active polygon{
+  /* restored pre-f17ddd4 green */
+  fill:rgba(119,118,91,.42);
 }
 .house-map-svg .zone--rose:hover polygon,
 .house-map-svg .zone--rose:focus-visible polygon,
