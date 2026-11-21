@@ -174,7 +174,10 @@ document.querySelectorAll('.lang a[aria-disabled="true"]').forEach(function(a){
   var live = map.querySelector(".house-map-live");
   var zones = map.querySelectorAll(".zone");
   var picks = map.querySelectorAll(".house-map-pick");
+  var reveal = document.getElementById("house-map-reveal");
+  var closeBtn = reveal ? reveal.querySelector(".house-map-close") : null;
   var idle = live ? live.innerHTML : "";
+
   function labelFor(z){
     if (!live) return;
     if (!z) { live.innerHTML = idle; return; }
@@ -189,41 +192,90 @@ document.querySelectorAll('.lang a[aria-disabled="true"]').forEach(function(a){
       p.setAttribute("aria-pressed", on ? "true" : "false");
     });
   }
-  function activate(z, scroll){
-    zones.forEach(function(x){ x.classList.remove("is-active"); });
-    if (z) z.classList.add("is-active");
-    labelFor(z);
-    syncPicks(z);
-    if (scroll && z) {
-      var href = z.getAttribute("href") || "";
-      if (href.charAt(0) === "#") {
-        var target = document.querySelector(href);
-        if (target) target.scrollIntoView({behavior:"smooth", block:"start"});
-      }
+  function showReveal(href){
+    if (!reveal) return;
+    var id = (href || "").replace("#", "");
+    var volumes = reveal.querySelectorAll(".house-volume");
+    var next = id ? document.getElementById(id) : null;
+    volumes.forEach(function(s){
+      s.classList.toggle("is-shown", s === next);
+    });
+    if (next) reveal.classList.add("is-open");
+    else reveal.classList.remove("is-open");
+  }
+  function deactivate(){
+    zones.forEach(function(x){
+      x.classList.remove("is-active");
+      x.setAttribute("aria-expanded", "false");
+    });
+    labelFor(null);
+    syncPicks(null);
+    showReveal("");
+    if (window.history && history.replaceState && location.hash) {
+      history.replaceState(null, "", location.pathname + location.search);
     }
   }
+  function activate(z, scroll){
+    if (!z) { deactivate(); return; }
+    zones.forEach(function(x){
+      var on = x === z;
+      x.classList.toggle("is-active", on);
+      x.setAttribute("aria-expanded", on ? "true" : "false");
+    });
+    labelFor(z);
+    syncPicks(z);
+    showReveal(z.getAttribute("href") || "");
+    if (scroll && reveal) {
+      reveal.scrollIntoView({behavior:"smooth", block:"start"});
+    }
+  }
+  function toggle(z, scroll){
+    if (z && z.classList.contains("is-active")) deactivate();
+    else activate(z, scroll);
+  }
+  function zoneFromPick(p){
+    return map.querySelector('.zone[href="' + (p.getAttribute("data-href") || "") + '"]');
+  }
+
   zones.forEach(function(z){
-    z.addEventListener("mouseenter", function(){ labelFor(z); syncPicks(z); });
-    z.addEventListener("focus", function(){ labelFor(z); syncPicks(z); });
+    z.setAttribute("aria-expanded", "false");
+    z.addEventListener("mouseenter", function(){ labelFor(z); });
+    z.addEventListener("focus", function(){ labelFor(z); });
     z.addEventListener("click", function(e){
       var href = z.getAttribute("href") || "";
       if (href.charAt(0) === "#") e.preventDefault();
-      activate(z, href.charAt(0) === "#");
+      toggle(z, true);
     });
   });
   picks.forEach(function(p){
+    p.addEventListener("mouseenter", function(){
+      var z = zoneFromPick(p);
+      zones.forEach(function(x){ x.classList.toggle("is-preview", x === z); });
+      if (z) labelFor(z);
+    });
+    p.addEventListener("mouseleave", function(){
+      zones.forEach(function(x){ x.classList.remove("is-preview"); });
+      var a = map.querySelector(".zone.is-active");
+      labelFor(a || null);
+    });
     p.addEventListener("click", function(){
-      var z = map.querySelector('.zone[href="' + (p.getAttribute("data-href") || "") + '"]');
-      activate(z || null, false);
+      toggle(zoneFromPick(p) || null, true);
     });
   });
   map.addEventListener("mouseleave", function(){
     var a = map.querySelector(".zone.is-active");
     labelFor(a || null);
-    syncPicks(a || null);
   });
-  var initial = map.querySelector('.zone[href="#kitchen"]');
-  if (initial) activate(initial, false);
+  if (closeBtn) closeBtn.addEventListener("click", deactivate);
+  document.addEventListener("keydown", function(e){
+    if (e.key === "Escape") deactivate();
+  });
+
+  var fromHash = null;
+  if (location.hash) {
+    fromHash = map.querySelector('.zone[href="' + location.hash + '"]');
+  }
+  if (fromHash) activate(fromHash, false);
 })();
 
 
