@@ -225,3 +225,70 @@ document.querySelectorAll('.lang a[aria-disabled="true"]').forEach(function(a){
   var initial = map.querySelector('.zone[href="#kitchen"]');
   if (initial) activate(initial, false);
 })();
+
+
+(function(){
+  var wrap = document.querySelector(".cal-wrap");
+  if (!wrap) return;
+  var title = wrap.querySelector(".cal-title");
+  var sub = wrap.querySelector(".cal-sub");
+  var grid = wrap.querySelector(".cal");
+  var legend = wrap.querySelector(".cal-legend");
+  var prev = wrap.querySelector(".cal-prev");
+  var next = wrap.querySelector(".cal-next");
+  if (!title || !grid || !prev || !next) return;
+
+  var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+  var dow = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+  var y = 2027, m = 6;
+
+  function daysInMonth(year, month){
+    return new Date(year, month, 0).getDate();
+  }
+  function mondayOffset(year, month){
+    var day = new Date(year, month - 1, 1).getDay();
+    return (day + 6) % 7;
+  }
+  function dayClass(year, month, day){
+    if (year === 2027 && month === 6){
+      if (day <= 11) return "busy";
+      if (day <= 18) return "open";
+      if (day <= 25) return "sel";
+      if (day === 26) return "out";
+      return "open";
+    }
+    return "open";
+  }
+  function render(){
+    var name = months[m - 1] + " " + y;
+    var isJune = (y === 2027 && m === 6);
+    title.textContent = name;
+    if (sub) sub.textContent = isJune ? "An example stay" : "An example";
+    grid.setAttribute("aria-label", "Example calendar for " + name);
+    var html = "";
+    var i, d;
+    for (i = 0; i < dow.length; i++) html += '<span class="dow">' + dow[i] + "</span>";
+    var offset = mondayOffset(y, m);
+    var n = daysInMonth(y, m);
+    for (i = 0; i < offset; i++) html += '<span class="empty"></span>';
+    for (d = 1; d <= n; d++) html += '<span class="' + dayClass(y, m, d) + '">' + d + "</span>";
+    var fill = (7 - ((offset + n) % 7)) % 7;
+    for (i = 0; i < fill; i++) html += '<span class="empty"></span>';
+    grid.innerHTML = html;
+    if (legend){
+      legend.textContent = isJune
+        ? "Sand: already reserved · Outline: open · Terracotta: 19–25 June, seven nights · Dashed: departure on the 26th."
+        : "Outline: open in this example.";
+    }
+  }
+  prev.addEventListener("click", function(){
+    m -= 1;
+    if (m < 1){ m = 12; y -= 1; }
+    render();
+  });
+  next.addEventListener("click", function(){
+    m += 1;
+    if (m > 12){ m = 1; y += 1; }
+    render();
+  });
+})();

@@ -335,6 +335,30 @@ html.js body.is-home .brand{visibility:hidden;pointer-events:none}
   font-size:13px;letter-spacing:.16em;text-transform:uppercase;font-weight:500;
   margin:0 0 12px;color:var(--terra);
 }
+.cal-head{
+  display:grid;
+  grid-template-columns:44px 1fr 44px;
+  align-items:center;
+  gap:8px;
+  margin:0 0 14px;
+  max-width:360px;
+}
+.cal-heading{text-align:center;min-width:0}
+.cal-head h3{margin:0;text-align:center;line-height:1.25}
+.cal-sub{margin:4px 0 0;font-size:12px;letter-spacing:.02em;text-transform:none;color:var(--oliva);font-weight:400}
+.cal-nav{
+  width:44px;height:44px;
+  border:1px solid var(--areia);
+  background:transparent;
+  color:var(--ink);
+  font-size:28px;line-height:1;
+  cursor:pointer;
+  border-radius:2px;
+  display:flex;align-items:center;justify-content:center;
+  padding:0;
+}
+.cal-nav:hover{border-color:var(--terracota);color:var(--terracota)}
+.cal-nav:focus-visible{outline:2px solid var(--terracota);outline-offset:2px}
 .cal{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;max-width:360px;margin:0 0 10px}
 .cal span{
   aspect-ratio:1;width:100%;max-width:36px;margin:0 auto;
@@ -347,7 +371,8 @@ html.js body.is-home .brand{visibility:hidden;pointer-events:none}
 .cal .open{border:1px solid var(--areia)}
 .cal .sel{background:var(--terracota);color:var(--cream)}
 .cal .out{border:1px dashed var(--terracota);color:var(--terracota)}
-.cal-legend{font-size:12px;color:var(--oliva);margin:0 0 28px}
+.cal-legend{font-size:12px;color:var(--oliva);margin:0 0 8px}
+.cal-note{font-size:12px;color:var(--terra);margin:0 0 28px}
 .rates table{width:100%;border-collapse:collapse;font-size:14px}
 .rates th,.rates td{text-align:left;padding:8px 8px 8px 0;border-bottom:1px solid var(--areia);vertical-align:top}
 .rates th{font-weight:500;color:var(--terra);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
@@ -419,10 +444,36 @@ form .btn{justify-self:start;margin-top:6px}
 .site-foot .email:hover{color:var(--sand)}
 .site-foot .lang{color:var(--cream)}
 .legal{
-  margin:28px 0 0;
+  margin:22px 0 0;
   font-size:11px;letter-spacing:.14em;text-transform:uppercase;
   color:var(--sand);
 }
+.foot-legal{
+  display:flex;flex-wrap:wrap;justify-content:center;align-items:baseline;
+  list-style:none;margin:28px 0 0;padding:0;
+  font-size:13px;
+  max-width:34em;
+}
+.foot-legal li{display:flex;align-items:baseline}
+.foot-legal li:not(:last-child)::after{
+  content:"·";
+  margin:0 10px;
+  color:rgba(241,235,221,.55);
+}
+.foot-legal a{
+  color:var(--cream);
+  text-decoration:none;
+  padding:6px 0;
+}
+.foot-legal a:hover{color:var(--sand);text-decoration:underline;text-underline-offset:3px}
+.foot-legal a[aria-current="page"]{font-weight:500}
+
+.policy{
+  padding:calc(var(--nav) + 56px) var(--gutter) 88px;
+}
+.policy-inner{max-width:36em;margin:0 auto}
+.policy-inner .lede{margin-bottom:18px}
+
 
 /* —— Lightbox / modal —— */
 .lb[hidden],.modal[hidden]{display:none}
@@ -463,18 +514,28 @@ form .btn{justify-self:start;margin-top:6px}
   .foot-mark{margin-bottom:28px}
   .foot-mark img{width:min(132px,58vw)}
   .foot-links{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:4px 4px;
+    width:auto;
+    max-width:none;
+    text-align:center;
+  }
+  .foot-links li{border-top:0}
+  .foot-links a{display:inline-block;padding:10px 14px;font-size:15px}
+  .foot-meta{flex-direction:column;align-items:center;gap:16px;margin-top:26px}
+  .foot-legal{
     display:grid;
     grid-template-columns:1fr 1fr;
-    gap:0;
-    width:100%;
+    gap:6px 16px;
+    margin-top:22px;
     max-width:22em;
-    text-align:left;
+    text-align:center;
   }
-  .foot-links li{border-top:1px solid rgba(241,235,221,.14)}
-  .foot-links a{display:block;padding:12px 0;font-size:15px}
-  .foot-links a:hover{text-decoration:none}
-  .foot-meta{flex-direction:column;align-items:center;gap:16px;margin-top:26px}
-  .legal{margin-top:22px}
+  .foot-legal li{display:block;justify-content:center}
+  .foot-legal li:not(:last-child)::after{content:none;margin:0}
+  .legal{margin-top:18px}
   :root{--gutter:20px;--nav:92px;--radius:36px}
   .nav-links{display:none}
   .nav-toggle{display:block}
