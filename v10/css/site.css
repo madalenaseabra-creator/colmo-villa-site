@@ -151,12 +151,11 @@ html.js body.is-home .brand{visibility:hidden;pointer-events:none}
 .nav-panel.is-open{display:block}
 .nav-panel a{
   display:block;text-decoration:none;color:var(--terra);
-  padding:9px 0;border-bottom:1px solid var(--areia);
+  padding:20px 0;border-bottom:1px solid var(--areia);
   font-family:Archivo,sans-serif;font-weight:600;font-stretch:88%;font-size:24px;
   line-height:1.2;
 }
 .nav-panel a[aria-current="page"]{color:var(--terracota)}
-.nav-panel .btn{display:inline-block;margin-top:24px;font-size:12px}
 
 .lang{
   display:flex;align-items:baseline;gap:7px;
@@ -467,6 +466,8 @@ form .btn{justify-self:start;margin-top:6px}
 
 
 /* —— Around (Comporta) —— */
+.around-intro{grid-template-columns:1fr;padding-bottom:40px}
+.around-intro .copy{max-width:36em}
 .around{padding:64px var(--gutter) 80px;background:var(--sand)}
 .around-inner{max-width:var(--max);margin:0 auto}
 .around-inner .disp{margin:0 0 28px}
