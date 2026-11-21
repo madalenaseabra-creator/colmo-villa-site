@@ -169,3 +169,7 @@
     });
   }
 })();
+
+document.querySelectorAll('.lang a[aria-disabled="true"]').forEach(function(a){
+  a.addEventListener('click', function(e){ e.preventDefault(); });
+});

@@ -156,6 +156,30 @@ html.js body.is-home .brand{visibility:hidden;pointer-events:none}
 .nav-panel a[aria-current="page"]{color:var(--terracota)}
 .nav-panel .btn{display:inline-block;margin-top:28px;font-size:13px}
 
+.lang{
+  display:flex;align-items:baseline;gap:7px;
+  font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  flex:0 0 auto;
+}
+.lang a{color:inherit;text-decoration:none;opacity:.62;font-weight:400}
+.lang a:hover{opacity:1;text-decoration:none}
+.lang a[aria-current="true"]{color:var(--terracota);opacity:1;font-weight:700}
+.lang a[aria-disabled="true"]{cursor:default;opacity:.62}
+.lang-sep{opacity:.4;font-weight:300}
+.head-actions .lang{margin-right:6px}
+.nav-links .lang-item{list-style:none;display:flex;align-items:center}
+.nav-panel .lang{margin-top:28px;font-size:13px}
+.nav-panel .lang a{
+  display:inline;padding:0;border:0;border-bottom:0;
+  font-family:inherit;font-size:13px;font-weight:400;
+  letter-spacing:.14em;color:inherit;
+}
+.nav-panel .lang a[aria-current="true"]{color:var(--terracota);font-weight:700}
+@media(max-width:960px){
+  .head-actions .lang{display:none}
+}
+
+
 /* —— Corners (v4/v5) —— */
 .ra{border-radius:var(--radius) 0 var(--radius) 0;overflow:hidden}
 .rb{border-radius:0 var(--radius) 0 var(--radius);overflow:hidden}
