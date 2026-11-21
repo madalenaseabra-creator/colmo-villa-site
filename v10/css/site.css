@@ -202,38 +202,12 @@ html.js body.is-home .brand{visibility:hidden;pointer-events:none}
 .split.intro{padding-top:calc(var(--nav) + 48px)}
 .split .media{min-height:0}
 .split .media img{width:100%;height:min(74vh,760px);object-fit:cover;display:block}
-.stats-row{
-  max-width:calc(var(--max) + var(--gutter)*2);
-  margin:0 auto;
-  padding:4px var(--gutter) 40px;
-}
-.stats{
-  display:flex;
-  flex-wrap:nowrap;
-  align-items:flex-start;
-  justify-content:space-between;
-  gap:32px;
-  margin:0;
-  width:100%;
-}
-.stats > div{flex:1 1 0;min-width:0}
+.stats{display:flex;gap:36px;margin-top:28px;flex-wrap:wrap}
 .stats b{
   display:block;font-family:Archivo,sans-serif;font-weight:600;font-stretch:88%;
-  font-size:clamp(36px,5vw,56px);line-height:1;letter-spacing:-.03em;color:var(--terra);
+  font-size:28px;color:var(--terra);
 }
-.stats span{
-  display:block;margin-top:8px;
-  font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--oliva);
-  line-height:1.35;
-}
-.stats .stat-short{display:none}
-@media(max-width:720px){
-  .stats{gap:12px}
-  .stats b{font-size:clamp(28px,8vw,36px)}
-  .stats span{font-size:9px;letter-spacing:.08em}
-  .stats .stat-full{display:none}
-  .stats .stat-short{display:block}
-}
+.stats span{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--oliva)}
 
 /* —— Teasers (home, same card every time) —— */
 .tease{
