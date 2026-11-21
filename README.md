@@ -1,7 +1,8 @@
-# COLMO VILLA — website preview (EN)
+# COLMO VILLA — website previews (EN)
 
-Multi-page HTML preview of the COLMO VILLA site, to be browsed in the browser.
+Two multi-page design previews, to be browsed in the browser.
 
-Live: https://madalenaseabra-creator.github.io/colmo-villa-site/
+- v8 (G2 lockup test, with the house sketch): https://madalenaseabra-creator.github.io/colmo-villa-site/
+- v9 (closer to the v6 feel, official logo): https://madalenaseabra-creator.github.io/colmo-villa-site/v9/
 
-This is a design preview, not the final booking site. The header, entrance and footer use lockup G2 as a test; the official logo is kept in `logo-oficial-backup/` so it can be restored.
+These are design previews, not the final booking site. The official logo is also kept in `logo-oficial-backup/`.

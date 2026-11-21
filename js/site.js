@@ -1,21 +1,76 @@
 (function () {
+  document.documentElement.classList.add("js");
+
   const head = document.querySelector(".site-head");
   const toggle = document.querySelector(".nav-toggle");
   const panel = document.querySelector(".nav-panel");
   const entrance = document.querySelector(".entrance");
+  const fly = document.querySelector(".fly-logo");
+  const brand = document.querySelector(".brand");
+  const isHome = document.body.classList.contains("is-home");
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function lerp(a, b, t) { return a + (b - a) * t; }
+  function ease(t) { return t * t * (3 - 2 * t); }
+
+  let ticking = false;
 
   function syncHead() {
-    if (!head) return;
-    const open = panel && panel.classList.contains("is-open");
-    if (!document.body.classList.contains("is-home") || !entrance) {
-      head.classList.toggle("is-solid", true);
+    ticking = false;
+    const open = !!(panel && panel.classList.contains("is-open"));
+
+    if (!isHome || !entrance || !fly || !head || !brand) {
+      if (head) {
+        head.classList.add("is-solid");
+        head.classList.add("is-visible");
+      }
       return;
     }
-    const threshold = Math.max(entrance.offsetHeight - 88, 40);
-    head.classList.toggle("is-solid", open || window.scrollY > threshold);
+
+    const navH = head.offsetHeight || 112;
+    const threshold = Math.max(entrance.offsetHeight - navH, 80);
+    let t = Math.min(1, Math.max(0, window.scrollY / threshold));
+    if (reduce) t = window.scrollY > 24 ? 1 : 0;
+    const e = ease(t);
+
+    const vw = document.documentElement.clientWidth;
+    const startW = Math.min(520, vw * (vw < 700 ? 0.82 : 0.72));
+    const startTop = Math.max(64, Math.min(132, entrance.offsetHeight * 0.13));
+    const startLeft = (vw - startW) / 2;
+
+    const slotImg = brand.querySelector(".wm-dark") || brand.querySelector("img");
+    const slot = (slotImg || brand).getBoundingClientRect();
+    const headBox = head.getBoundingClientRect();
+    const cream = fly.querySelector(".logo-cream");
+    const ratio = (cream && cream.naturalWidth) ? (cream.naturalWidth / cream.naturalHeight) : 1.91;
+    const endW = Math.min(slot.width || 200, vw < 700 ? 148 : 200);
+    const endH = endW / ratio;
+    const endLeft = slot.left || 48;
+    const endTop = headBox.top + Math.max(8, (headBox.height - endH) / 2);
+
+    fly.style.transform = "none";
+    fly.style.width = lerp(startW, endW, e) + "px";
+    fly.style.height = "auto";
+    fly.style.left = lerp(startLeft, endLeft, e) + "px";
+    fly.style.top = lerp(startTop, endTop, e) + "px";
+
+    const docked = t >= 0.78 || open;
+    head.classList.toggle("is-solid", docked);
+    head.classList.toggle("is-visible", docked);
+    fly.classList.toggle("is-on-cream", docked);
   }
-  window.addEventListener("scroll", syncHead, { passive: true });
-  window.addEventListener("resize", syncHead);
+
+  function requestSync() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(syncHead);
+  }
+
+  window.addEventListener("scroll", requestSync, { passive: true });
+  window.addEventListener("resize", requestSync);
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(requestSync);
+  }
   syncHead();
 
   function closePanel() {
@@ -23,7 +78,7 @@
     panel.classList.remove("is-open");
     toggle && toggle.setAttribute("aria-expanded", "false");
     document.body.style.overflow = "";
-    syncHead();
+    requestSync();
   }
   if (toggle && panel) {
     toggle.addEventListener("click", function () {
@@ -31,7 +86,7 @@
       panel.classList.toggle("is-open", open);
       toggle.setAttribute("aria-expanded", open ? "true" : "false");
       document.body.style.overflow = open ? "hidden" : "";
-      syncHead();
+      requestSync();
     });
     panel.querySelectorAll("a").forEach(function (a) {
       a.addEventListener("click", closePanel);
