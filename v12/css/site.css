@@ -514,7 +514,8 @@ form .btn{justify-self:start;margin-top:6px}
   margin:0 0 26px;
 }
 .hero-copy .hero-sketch{
-  display:block;width:min(100%, 11.5em);
+  display:block;
+  width:clamp(133px,18.5vw,267px);
   max-width:none;height:auto;
   margin:0;
 }
@@ -566,7 +567,8 @@ form .btn{justify-self:start;margin-top:6px}
 .hero.entrance .scroll-hint{z-index:4;color:var(--cream)}
 
 .ticker{
-  background:var(--terracota);color:var(--cream);
+  /* rosa velho: v10 map fill rgba(168,87,58,.4) over cream #F1EBDD */
+  background:#D3B09B;color:var(--ink);
   overflow:hidden;white-space:nowrap;padding:18px 0;
 }
 .ticker .tk{
@@ -575,7 +577,7 @@ form .btn{justify-self:start;margin-top:6px}
   font-family:Archivo,sans-serif;font-weight:700;font-stretch:80%;
   font-size:15px;letter-spacing:.12em;text-transform:uppercase;
 }
-.ticker i{font-style:normal;color:var(--sand);font-size:11px}
+.ticker i{font-style:normal;color:var(--ink);font-size:11px;opacity:.7}
 @keyframes tk{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @media(prefers-reduced-motion:reduce){
   .ticker .tk{animation:none}

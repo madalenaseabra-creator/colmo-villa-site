@@ -174,15 +174,3 @@ document.querySelectorAll('.lang a[aria-disabled="true"]').forEach(function(a){
   a.addEventListener('click', function(e){ e.preventDefault(); });
 });
 
-(function(){
-  var sketch = document.querySelector(".hero-copy .hero-sketch");
-  var classic = document.querySelector(".hero-copy .classic");
-  if (!sketch || !classic) return;
-  function sync(){
-    var w = classic.getBoundingClientRect().width;
-    if (w > 40) sketch.style.width = w + "px";
-  }
-  sync();
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(sync);
-  window.addEventListener("resize", sync);
-})();
