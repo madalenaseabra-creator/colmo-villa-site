@@ -5,8 +5,13 @@
   const entrance = document.querySelector(".entrance");
 
   function syncHead() {
-    const threshold = entrance ? Math.max(entrance.offsetHeight - 88, 40) : 40;
+    if (!head) return;
     const open = panel && panel.classList.contains("is-open");
+    if (!document.body.classList.contains("is-home") || !entrance) {
+      head.classList.toggle("is-solid", true);
+      return;
+    }
+    const threshold = Math.max(entrance.offsetHeight - 88, 40);
     head.classList.toggle("is-solid", open || window.scrollY > threshold);
   }
   window.addEventListener("scroll", syncHead, { passive: true });
@@ -18,6 +23,7 @@
     panel.classList.remove("is-open");
     toggle && toggle.setAttribute("aria-expanded", "false");
     document.body.style.overflow = "";
+    syncHead();
   }
   if (toggle && panel) {
     toggle.addEventListener("click", function () {
@@ -32,7 +38,6 @@
     });
   }
 
-  // Lightbox
   const items = Array.from(document.querySelectorAll("[data-lightbox]"));
   const lb = document.querySelector(".lb");
   if (lb && items.length) {
@@ -54,7 +59,6 @@
     }
     items.forEach(function (el, idx) {
       el.addEventListener("click", function () { show(idx); });
-      el.style.cursor = "pointer";
     });
     lb.querySelector(".lb-close").addEventListener("click", hide);
     lb.querySelector(".lb-prev").addEventListener("click", function () { show(i - 1); });
@@ -68,7 +72,6 @@
     });
   }
 
-  // Virtual tour placeholder
   const tourBtn = document.querySelector(".tour-play");
   const tourModal = document.querySelector(".modal-tour");
   if (tourBtn && tourModal) {
@@ -85,7 +88,6 @@
     });
   }
 
-  // Booking form → mailto
   const form = document.querySelector("#book-form");
   if (form) {
     form.addEventListener("submit", function (e) {
@@ -99,10 +101,9 @@
         "",
         d.get("message") || ""
       ].join("\n");
-      const href = "mailto:madalena.seabra@gmail.com?subject=" +
+      window.location.href = "mailto:madalena.seabra@gmail.com?subject=" +
         encodeURIComponent("COLMO VILLA — request for dates") +
         "&body=" + encodeURIComponent(body);
-      window.location.href = href;
     });
   }
 })();
