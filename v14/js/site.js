@@ -165,7 +165,7 @@
       var d = new FormData(form);
       var arrival = d.get("arrival") || "";
       var departure = d.get("departure") || "";
-      var dates = (arrival && departure) ? (arrival + " — " + departure) : (d.get("dates") || "");
+      var dates = (arrival && departure) ? (arrival + " - " + departure) : (d.get("dates") || "");
       var body = [
         "Name: " + (d.get("name") || ""),
         "Email: " + (d.get("email") || ""),
@@ -186,7 +186,7 @@
 
       if (FORMSPREE_ID) {
         var payload = new FormData(form);
-        payload.set("_subject", "COLMO VILLA — request for dates");
+        payload.set("_subject", "COLMO VILLA: request for dates");
         if (!payload.get("email")) payload.set("email", d.get("email"));
         var btn = form.querySelector('[type="submit"]');
         if (btn) btn.disabled = true;
@@ -206,7 +206,7 @@
       }
 
       window.location.href = "mailto:" + MAILTO +
-        "?subject=" + encodeURIComponent("COLMO VILLA — request for dates") +
+        "?subject=" + encodeURIComponent("COLMO VILLA: request for dates") +
         "&body=" + encodeURIComponent(body);
       show(fallback);
     });
@@ -325,7 +325,7 @@ document.querySelectorAll('.lang a[aria-disabled="true"]').forEach(function(a){
     grid.innerHTML = html;
     if (legend){
       legend.textContent = isJune
-        ? "Sand: already reserved · Outline: open · Terracotta: 19–25 June, seven nights · Dashed: departure on the 26th."
+        ? "Sand: already reserved · Outline: open · Terracotta: 19-25 June, seven nights · Dashed: departure on the 26th."
         : "Outline: open in this example.";
     }
   }

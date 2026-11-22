@@ -37,7 +37,7 @@ def header(active):
   <div class="head-actions">
     <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false"><span></span></button>
     <div class="lang" aria-label="Language"><a href="#" lang="en" aria-current="true">EN</a><span class="lang-sep" aria-hidden="true">|</span><a href="#" lang="pt" aria-disabled="true" title="Portuguese version coming soon">PT</a></div>
-    <a class="btn btn-book" href="availability.html">Book Now</a>
+    <a class="btn btn-book" href="availability.html">Request dates</a>
   </div>
 </header>
 <div class="nav-panel">
@@ -92,7 +92,7 @@ CHROME = """
     <button class="btn" type="button" data-close>Close</button>
   </div>
 </div>
-<script src="js/site.js?v=1413"></script>
+<script src="js/site.js?v=1414"></script>
 """
 
 FLY = """<a class="fly-logo" href="index.html" aria-label="COLMO VILLA · Comporta Retreat">
@@ -129,8 +129,8 @@ def page(title, desc, active, body, home=False, footer_current="", og_image="Fin
 <meta name="twitter:image" content="%s">
 <link rel="icon" href="images/esquisso.png" type="image/png">
 <meta name="robots" content="noindex, nofollow">
-<link rel="stylesheet" href="fonts/fonts.css?v=1413">
-<link rel="stylesheet" href="css/site.css?v=1413">
+<link rel="stylesheet" href="fonts/fonts.css?v=1414">
+<link rel="stylesheet" href="css/site.css?v=1414">
 <script>document.documentElement.classList.add("js");</script>
 </head>
 <body%s>
@@ -139,6 +139,9 @@ def page(title, desc, active, body, home=False, footer_current="", og_image="Fin
 %s
 %s
 %s
+<div class="request-bar">
+  <a class="btn request-bar-btn" href="availability.html">Request dates</a>
+</div>
 </body>
 </html>
 """ % (title, desc, url, title, desc, url, image, title, desc, image, cls, header(active), fly, body, footer(footer_current), CHROME)
@@ -245,16 +248,38 @@ def home():
 <section class="home-below home-story-block" id="story">
   <div class="home-story">
     <h2 class="disp">The refuge of """ + acc("simplicity") + """.</h2>
-    <p>Nothing was bought online. Little by little, the house was furnished with pieces from all over the world — found on family travels and at fairs. A decoration that is unique, personal, and special.</p>
+    <p>Nothing was bought online. Little by little, the house was furnished with pieces from all over the world, found on family travels and at fairs. A decoration that is unique, personal, and special.</p>
     <p class="home-facts">Comporta Retreat, gated estate<span> · </span>Architecture: Cristina Jorge de Carvalho<span> · </span>Interiors: Basalto Interiores</p>
-    <p class="home-press"><a href="https://www.nit.pt/fora-de-casa/turismos-rurais-e-hoteis/esta-villa-escondida-na-comporta-tem-ginasio-cinema-e-decoracao-do-mundo-inteiro" target="_blank" rel="noopener noreferrer">As featured in NiT</a></p>
+    <p class="home-press">As featured in NiT, May 2026</p>
   </div>
+</section>
+<section class="home-below home-times" id="times">
+  <h2 class="disp">A little time for """ + acc("everything") + """.</h2>
+  <div class="home-times-grid">
+    <figure>
+      <img src="images/Final-53.webp" alt="The pool at COLMO VILLA, Comporta" data-lightbox data-caption="Time to do nothing.">
+      <figcaption>Time to do nothing.</figcaption>
+    </figure>
+    <figure>
+      <img src="images/37.webp" alt="The gym at COLMO VILLA, Comporta" data-lightbox data-caption="Time for yourself.">
+      <figcaption>Time for yourself.</figcaption>
+    </figure>
+    <figure>
+      <img src="images/40.webp" alt="The cinema room at COLMO VILLA, Comporta" data-lightbox data-caption="Time to switch off.">
+      <figcaption>Time to switch off.</figcaption>
+    </figure>
+    <figure>
+      <img src="images/Final-61.webp" alt="Bicycles at COLMO VILLA, Comporta" data-lightbox data-caption="Time to have fun.">
+      <figcaption>Time to have fun.</figcaption>
+    </figure>
+  </div>
+  <p class="home-times-link"><a class="discover" href="days-at-colmo.html">Days at Colmo</a></p>
 </section>
 <section class="band-dark home-cta">
   <div class="band-inner home-cta-inner">
     <h2 class="disp">The whole villa, for your group only.</h2>
     <p>Daily housekeeping, included.</p>
-    <p>A request is not a booking — once we confirm, you will receive the terms.</p>
+    <p>A request is not a booking. Once we confirm, you will receive the terms.</p>
     <p><a class="btn" href="availability.html">Request dates</a></p>
   </div>
 </section>
@@ -268,7 +293,7 @@ def house_map():
     raw = (ROOT / "images" / "esquisso.svg").read_text()
     paths = re.findall(r"<path[^>]*>", raw)
     outline = "\n    ".join(paths)
-    # Owner-confirmed (aerial 1–3): the long wing is building 1; the mid wing
+    # Owner-confirmed (aerial 1-3): the long wing is building 1; the mid wing
     # is the four bedrooms; the left volume is the annex. The small cottage
     # behind the long wing is the garage and is not a hover zone yet.
     zones = [
@@ -478,7 +503,7 @@ def house():
   <div class="zone-band-inner">
   <h2 class="zone-title">Annex</h2>
   <p class="zone-lead">A separate guest house, independent from the main house, and part of the same stay.</p>
-  <p class="zone-inside">2 en-suite bedrooms — one with a double bed, one with two beds pushed together — a living room, and a kitchenette corner with fridge, coffee machine and microwave (no cooking). Included in the same booking.</p>
+  <p class="zone-inside">2 en-suite bedrooms: one with a double bed, one with two beds pushed together, a living room, and a kitchenette corner with fridge, coffee machine and microwave (no cooking). Included in the same booking.</p>
   """ + zone_carousel([
         ("Final-13.jpg", "The Annex at COLMO VILLA among the pines, Comporta", "The annex"),
         ("30.jpg", "The rust bedroom at COLMO VILLA, Comporta, with two beds pushed together", "The rust bedroom, two beds pushed together"),
@@ -523,7 +548,7 @@ def house():
     <li>Check-in from 16:00 to 23:00 · Check-out by 11:00</li>
     <li>Daily housekeeping, 4 hours, included</li>
     <li>A welcome tour of the house when you arrive</li>
-    <li>Pets welcome — tell us about them when you write for dates</li>
+    <li>Pets welcome: tell us about them when you write for dates</li>
     <li>Direct access to the pine forest</li>
     <li>Air conditioning · Wifi · A fireplace</li>
   </ul>
@@ -551,7 +576,7 @@ def house():
   </div>
 </section>
 """
-    body = intro + included + house_map() + living + rest + annex + sleeps + outside + know + close
+    body = intro + included + sleeps + house_map() + living + rest + annex + outside + know + close
     return page("The House · COLMO VILLA, Comporta",
                 "Six en-suite bedrooms for 16 guests, across three private houses in Comporta Retreat, Carvalhal.",
                 "the-house.html", body)
@@ -585,7 +610,7 @@ def gallery():
 def experiences():
     body = split("Days at Colmo", "A little time for " + acc("everything") + ".",
        "Swim. Gather. Switch off.",
-       ["The house holds both: the long table and the quiet room, the pool and the hour you take for yourself. Not a list of features — a day that can open or close as you like."],
+       ["The house holds both: the long table and the quiet room, the pool and the hour you take for yourself. Not a list of features: a day that can open or close as you like."],
        "Final-1.jpg", "Pool at COLMO VILLA from above, among the pines, Comporta", intro=True,
        h1="Days at Colmo, hour by hour") + """
 <div class="exp-grid">
@@ -615,7 +640,7 @@ def experiences():
     <p class="kicker">A day here</p>
     <h2 class="disp">One day at """ + acc("Colmo") + """.</h2>
     <p class="classic lede">Together all day.<br>Alone whenever you like.</p>
-    <p class="day-note">A suggested rhythm — not a timetable.</p>
+    <p class="day-note">A suggested rhythm: not a timetable.</p>
     <div class="day-marquee-wrap">
     <button class="day-nav day-prev" type="button" aria-label="Previous hours">&#8249;</button>
     <div class="day-marquee" data-day-marquee>
@@ -697,7 +722,7 @@ def comporta():
     <div class="around-grid">
       <article class="around-card">
         <h2>The beaches</h2>
-        <p>The Atlantic is close — about 5 min to the beach. Comporta, Carvalhal, Pego and Melides follow the shore from north to south.</p>
+        <p>The Atlantic is close: about 5 min to the beach. Comporta, Carvalhal, Pego and Melides follow the shore from north to south.</p>
       </article>
     </div>
     <div class="around-photos">
@@ -767,7 +792,7 @@ def availability():
         <span class="open">28</span><span class="open">29</span><span class="open">30</span>
         <span class="empty"></span><span class="empty"></span><span class="empty"></span><span class="empty"></span>
       </div>
-      <p class="cal-legend">Outline: open · Terracotta: 19–25 June, seven nights · Dashed: departure on the 26th.</p>
+      <p class="cal-legend">Outline: open · Terracotta: 19-25 June, seven nights · Dashed: departure on the 26th.</p>
       <p class="cal-note">This calendar is an example, to show how a stay can look.</p>
     </div>
     <div class="rates">
@@ -775,7 +800,7 @@ def availability():
       <table>
         <thead><tr><th>Season</th><th>When</th><th>Minimum stay</th></tr></thead>
         <tbody>
-          <tr><td>Low</td><td>November–March, not festive</td><td>4 nights</td></tr>
+          <tr><td>Low</td><td>November-March, not festive</td><td>4 nights</td></tr>
           <tr><td>Mid</td><td>April, May, October</td><td>4 nights</td></tr>
           <tr><td>High</td><td>June, September, Christmas &amp; Easter</td><td>5 nights</td></tr>
           <tr><td>Peak</td><td>July and August</td><td>7 nights</td></tr>
@@ -843,7 +868,7 @@ def availability():
 def story():
     body = split("Our Story", "The refuge of " + acc("simplicity") + ".",
        "“Nothing was bought online.”",
-       ["A house for friends, and for anyone who needs to stop. Under the reed, between the pines and the Atlantic. The pool, the gym, the sauna &amp; steam room and the cinema are there when you want them — proof of a life lived slowly, not a list of features."],
+       ["A house for friends, and for anyone who needs to stop. Under the reed, between the pines and the Atlantic. The pool, the gym, the sauna &amp; steam room and the cinema are there when you want them. Proof of a life lived slowly, not a list of features."],
        "Final-57.jpg", "Looking back at COLMO VILLA from the garden, Comporta", intro=True, h1="Our story") + split(
        "The way it was made", "Portuguese tradition, held " + acc("lightly") + ".",
        "What is natural, and lasts.",
@@ -871,7 +896,7 @@ def contact():
     <p class="kicker">Contact</p>
     <h1 class="page-h1">Get in touch</h1>
     <p>COLMO VILLA sits in the Comporta Retreat, in Carvalhal, Comporta, on the Alentejo coast. Pines around the house, the Atlantic beyond.</p>
-    <p class="contact-address">Alameda das Praias, Comporta Retreat, Lote 1, 7570-779 Carvalhal — Grândola</p>
+    <p class="contact-address">Alameda das Praias, Comporta Retreat, Lote 1, 7570-779 Carvalhal - Grândola</p>
     <p><a class="btn" href="availability.html">Request dates</a></p>
     <p class="mail-note"><a href="mailto:colmovilla@gmail.com">colmovilla@gmail.com</a></p>
   </div>
@@ -891,7 +916,7 @@ def contact():
   <div class="copy">
     <h2 class="disp">Write to """ + acc("us") + """.</h2>
     <p class="classic lede">For dates, or for a question about the house.</p>
-    <p>Use the form on Availability, or write directly — for a stay, or for a chef or massages on request.</p>
+    <p>Use the form on Availability, or write directly, for a stay, or for a chef or massages on request.</p>
     <p><a class="btn" href="availability.html">Request dates</a></p>
     <div class="contact-actions">
       <p class="mail-note"><a href="mailto:colmovilla@gmail.com">colmovilla@gmail.com</a></p>

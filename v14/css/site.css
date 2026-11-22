@@ -29,7 +29,7 @@ button,input,textarea,select{font:inherit}
 a{color:var(--terracota);text-decoration:none}
 a:hover{text-decoration:underline}
 
-/* —— Type scale (same everywhere) —— */
+/* ---- Type scale (same everywhere) ---- */
 .kicker{
   margin:0 0 14px;
   font-size:11px;font-weight:500;
@@ -89,7 +89,7 @@ h3.section-label{
 .copy p{margin:0 0 12px;max-width:36em}
 .muted{color:var(--oliva)}
 
-/* —— Header —— */
+/* ---- Header ---- */
 .site-head{
   position:fixed;inset:0 0 auto 0;z-index:60;
   height:var(--nav);
@@ -199,7 +199,7 @@ html.js body.is-home .brand{visibility:hidden;pointer-events:none}
 .nav-panel.is-open{display:block}
 
 /* Hide the entrance and header logos when the mobile menu is open, so they
-   cannot sit over the links or catch the tap. Book Now stays visible. */
+   cannot sit over the links or catch the tap. Request dates stays available in the menu and the mobile bar. */
 body.is-nav-open .fly-logo,
 body.is-nav-open .site-head .brand{
   visibility:hidden !important;
@@ -254,12 +254,12 @@ body.is-nav-open .site-head .brand{
 }
 
 
-/* —— Corners (v4/v5) —— */
+/* ---- Corners (v4/v5) ---- */
 .ra{border-radius:var(--radius) 0 var(--radius) 0;overflow:hidden}
 .rb{border-radius:0 var(--radius) 0 var(--radius);overflow:hidden}
 .ra img,.rb img{width:100%;height:100%;object-fit:cover;display:block}
 
-/* —— Layout: split (the page pattern) —— */
+/* ---- Layout: split (the page pattern) ---- */
 .wrap{padding:0 var(--gutter)}
 .split{
   display:grid;
@@ -292,7 +292,7 @@ body.is-nav-open .site-head .brand{
   .stats .stat-label-short{display:block}
 }
 
-/* —— Teasers (home, same card every time) —— */
+/* ---- Teasers (home, same card every time) ---- */
 .tease{
   display:grid;
   grid-template-columns:minmax(0,.85fr) minmax(0,1.25fr);
@@ -313,7 +313,7 @@ body.is-nav-open .site-head .brand{
 }
 .discover:hover{filter:brightness(1.05)}
 
-/* —— Gallery grid —— */
+/* ---- Gallery grid ---- */
 .grid{
   display:grid;
   grid-template-columns:repeat(3,minmax(0,1fr));
@@ -351,7 +351,7 @@ body.is-nav-open .site-head .brand{
 }
 .split .copy .zone-title{margin:0 0 14px;padding:0;max-width:none}
 
-/* —— Experiences grid (proven 2×2) —— */
+/* ---- Experiences grid (proven 2×2) ---- */
 .exp-grid{
   display:grid;grid-template-columns:1fr 1fr;gap:18px;
   padding:0 var(--gutter) 72px;
@@ -366,7 +366,7 @@ body.is-nav-open .site-head .brand{
 .band-sand{background:var(--sand)}
 .tease.alt,.split.alt{background:var(--sand)}
 
-/* —— Dark band (one per page + footer) —— */
+/* ---- Dark band (one per page + footer) ---- */
 #day{scroll-margin-top:calc(var(--nav) + 16px)}
 .band-dark{
   background:var(--ink);color:var(--cream);
@@ -399,7 +399,7 @@ body.is-nav-open .site-head .brand{
   color:var(--terracota);margin-bottom:4px;font-weight:500;
 }
 
-/* —— Entrance (home only, the one full-bleed with text) —— */
+/* ---- Entrance (home only, the one full-bleed with text) ---- */
 .entrance{
   position:relative;min-height:100vh;color:var(--cream);overflow:hidden;
 }
@@ -494,7 +494,7 @@ html.js body.is-home h1.entrance-h1 span.brand{visibility:visible;pointer-events
   font-size:11px;letter-spacing:.2em;text-transform:uppercase;opacity:.85;color:var(--cream);
 }
 
-/* —— Map —— */
+/* ---- Map ---- */
 .map-card{background:var(--sand);padding:8px;margin:28px auto 0;max-width:920px}
 .map-card svg{width:100%;height:auto;display:block}
 .arrive-map{padding-bottom:88px}
@@ -503,7 +503,7 @@ html.js body.is-home h1.entrance-h1 span.brand{visibility:visible;pointer-events
   .map-card svg{min-width:520px}
 }
 
-/* —— Book / forms —— */
+/* ---- Book / forms ---- */
 .book-card{background:var(--sand);padding:36px 36px 40px}
 .hours{
   background:var(--terracota);color:var(--cream);
@@ -575,13 +575,13 @@ form .btn{justify-self:start;margin-top:6px}
 .contact-actions .mail-note{margin:0}
 .contact-actions .mail-note a{font-size:16px;color:var(--ink)}
 
-/* —— House sketch —— */
+/* ---- House sketch ---- */
 .sketch{
   display:block;width:110px;margin:8px auto 8px;opacity:.4;
 }
 .sketch-break{padding:8px 0 0;text-align:center}
 
-/* —— Tour play —— */
+/* ---- Tour play ---- */
 .tour{position:relative}
 .tour-play{
   position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
@@ -594,7 +594,7 @@ form .btn{justify-self:start;margin-top:6px}
 .tour-play b{font-family:Archivo,sans-serif;font-weight:600;font-stretch:88%;font-size:22px;line-height:1}
 .tour-play span{font-size:9px;letter-spacing:.08em;text-transform:uppercase;margin-top:4px}
 
-/* —— Footer (dark, same on every page) —— */
+/* ---- Footer (dark, same on every page) ---- */
 .site-foot{
   background:var(--ink);color:var(--cream);
   padding:64px var(--gutter) 36px;
@@ -728,7 +728,7 @@ form .btn{justify-self:start;margin-top:6px}
 
 
 
-/* —— Around (Comporta) —— */
+/* ---- Around (Comporta) ---- */
 .around-intro{grid-template-columns:1fr;padding-bottom:40px}
 .around-intro .copy{max-width:36em}
 .around{padding:64px var(--gutter) 80px;background:var(--sand)}
@@ -750,7 +750,7 @@ form .btn{justify-self:start;margin-top:6px}
 }
 .around-card p{margin:0;color:var(--ink);max-width:28em}
 
-/* —— Lightbox / modal —— */
+/* ---- Lightbox / modal ---- */
 .lb[hidden],.modal[hidden]{display:none}
 .lb{
   position:fixed;inset:0;z-index:80;
@@ -861,7 +861,7 @@ form .btn{justify-self:start;margin-top:6px}
 }
 
 
-/* —— Interactive house volumes (The House) —— */
+/* ---- Interactive house volumes (The House) ---- */
 .house-map{
   padding:12px var(--gutter) 72px;
   max-width:calc(var(--max) + var(--gutter)*2);
@@ -1015,7 +1015,7 @@ form .btn{justify-self:start;margin-top:6px}
   .house-map-frame{margin-top:28px}
 }
 
-/* —— Map reveal (The House) —— */
+/* ---- Map reveal (The House) ---- */
 .house-map-reveal{
   display:grid;
   grid-template-rows:0fr;
@@ -1054,7 +1054,7 @@ form .btn{justify-self:start;margin-top:6px}
   .house-map-svg .zone polygon{transition:none}
 }
 
-/* —— One day timeline (compact marquee note) —— */
+/* ---- One day timeline (compact marquee note) ---- */
 .day-note{max-width:28em;margin:0 0 4px;color:var(--sand);font-size:15px}
 .day-marquee-wrap{
   position:relative;
@@ -1156,7 +1156,7 @@ form .btn{justify-self:start;margin-top:6px}
   to{transform:translateX(-50%)}
 }
 
-/* —— Good to know (Gallery) —— */
+/* ---- Good to know (Gallery) ---- */
 .good-to-know{
   padding:72px var(--gutter) 96px;
   max-width:calc(var(--max) + var(--gutter)*2);
@@ -1179,7 +1179,7 @@ form .btn{justify-self:start;margin-top:6px}
   .good-to-know{padding:56px var(--gutter) 72px}
 }
 
-/* —— Gallery best-of (quiet captions) —— */
+/* ---- Gallery best-of (quiet captions) ---- */
 .gallery-best{padding-bottom:24px}
 .gallery-best .section-label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
 .gallery-best .grid figcaption{
@@ -1247,7 +1247,7 @@ form .btn{justify-self:start;margin-top:6px}
 .book-confirm[hidden]{display:none}
 
 
-/* —— Home discreet included line —— */
+/* ---- Home discreet included line ---- */
 .home-included-band{
   max-width:calc(var(--max) + var(--gutter)*2);
   margin:0 auto;
@@ -1261,7 +1261,7 @@ form .btn{justify-self:start;margin-top:6px}
   color:var(--oliva);
 }
 
-/* —— The House reorg —— */
+/* ---- The House reorg ---- */
 .house-hero{padding-top:var(--nav);background:var(--cream)}
 .house-hero-photo{margin:0}
 .house-hero-photo img{
@@ -1354,7 +1354,7 @@ h3.photo-title{
   font-family:inherit;font-stretch:normal;font-style:normal;
 }
 
-/* —— The House zone bands (watercolour from the volumes sketch) —— */
+/* ---- The House zone bands (watercolour from the volumes sketch) ---- */
 .house-volume.zone-band{
   max-width:none;
   width:100%;
@@ -1514,7 +1514,7 @@ h3.photo-title{
   }
 }
 
-/* —— Home: H1 and story sit just below the entrance photograph —— */
+/* ---- Home: H1 and story sit just below the entrance photograph ---- */
 .home-below{
   max-width:calc(var(--max) + var(--gutter)*2);
   margin:0 auto;
@@ -1563,12 +1563,22 @@ h3.photo-title{
 .zone-back{margin:28px 0 0}
 .zone-back a{
   display:inline-flex;align-items:center;gap:8px;
-  color:#3B3228;text-decoration:none;
+  background:#3B3228;color:#F1EBDD;
+  text-decoration:none;
   font-size:13px;letter-spacing:.08em;text-transform:uppercase;
   font-weight:500;
+  padding:10px 18px;
+  border-radius:999px;
+  min-height:44px;
+  line-height:1;
 }
-.zone-back a:hover,.zone-back a:focus-visible{text-decoration:underline;outline:none}
-.zone-back svg{width:18px;height:18px;display:block}
+.zone-back a:hover,.zone-back a:focus-visible{
+  filter:brightness(1.08);
+  text-decoration:none;
+  outline:2px solid #3B3228;
+  outline-offset:3px;
+}
+.zone-back svg{width:18px;height:18px;display:block;flex:0 0 auto}
 
 /* Request-dates form */
 .form-block .form-row label input[type="date"],
@@ -1600,7 +1610,7 @@ h3.photo-title{
 }
 
 
-/* v14 content pass — key facts, press, on request, Comporta photos, address */
+/* v14 content pass -- key facts, press, on request, Comporta photos, address */
 .home-keyline{
   margin:0 0 8px;
   font-size:15px;
@@ -1650,4 +1660,74 @@ h3.photo-title{
 @media (max-width:700px){
   .around-photos{grid-template-columns:1fr}
   .on-request{padding:48px var(--gutter) 64px}
+}
+
+/* Home: A little time for everything. (v1414) */
+.home-press{
+  color:var(--terra);
+  font-size:14px;
+  line-height:1.7;
+}
+.home-times{padding-top:8px;padding-bottom:72px}
+.home-times .disp{margin:0 0 28px;max-width:20em}
+.home-times-grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:18px;
+  margin:0 0 28px;
+}
+.home-times-grid figure{margin:0}
+.home-times-grid img{
+  width:100%;
+  aspect-ratio:3/2;
+  height:auto;
+  object-fit:cover;
+  display:block;
+  cursor:pointer;
+}
+.home-times-grid figcaption{
+  margin:10px 2px 0;
+  font-size:14px;
+  line-height:1.4;
+  color:var(--ink);
+}
+.home-times-link{margin:0}
+@media(max-width:900px){
+  .home-times-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+}
+
+
+/* Mobile fixed Request dates bar (v1414) */
+.request-bar{display:none}
+@media(max-width:960px){
+  .site-head .btn-book{display:none}
+  .request-bar{
+    display:block;
+    position:fixed;
+    left:0;right:0;bottom:0;
+    z-index:55;
+    padding:10px 20px calc(10px + env(safe-area-inset-bottom, 0px));
+    background:#F1EBDD;
+    box-shadow:0 -1px 0 rgba(81,70,56,.16);
+  }
+  .request-bar-btn{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:100%;
+    min-height:48px;
+    padding:0 18px;
+    background:#8F4530;
+    color:#F1EBDD !important;
+    font-size:13px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    font-weight:500;
+    text-decoration:none !important;
+    border-radius:2px;
+  }
+  .request-bar-btn:hover{filter:brightness(1.06)}
+  body{padding-bottom:calc(78px + env(safe-area-inset-bottom, 0px))}
+  .site-foot{padding-bottom:calc(28px + 8px)}
+  body.is-nav-open .request-bar{display:none}
 }
