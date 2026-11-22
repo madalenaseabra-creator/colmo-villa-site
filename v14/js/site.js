@@ -145,27 +145,67 @@
     });
   }
 
-  const form = document.querySelector("#book-form");
+  /* Set this to your Formspree form id (formspree.io) to send requests
+     to colmovillacomporta@gmail.com. Leave empty to use the mailto fallback. */
+  var FORMSPREE_ID = "";
+  var MAILTO = "colmovillacomporta@gmail.com";
+  var form = document.querySelector("#book-form");
   if (form) {
     form.addEventListener("submit", function (e) {
       e.preventDefault();
-      const d = new FormData(form);
-      const body = [
+      var confirm = document.getElementById("book-confirm");
+      var fallback = document.getElementById("book-fallback");
+      var err = document.getElementById("book-error");
+      if (confirm) confirm.hidden = true;
+      if (fallback) fallback.hidden = true;
+      if (err) err.hidden = true;
+
+      var d = new FormData(form);
+      var arrival = d.get("arrival") || "";
+      var departure = d.get("departure") || "";
+      var dates = (arrival && departure) ? (arrival + " — " + departure) : (d.get("dates") || "");
+      var body = [
         "Name: " + (d.get("name") || ""),
         "Email: " + (d.get("email") || ""),
-        "Dates: " + (d.get("dates") || ""),
+        "Arrival: " + arrival,
+        "Departure: " + departure,
         "Guests: " + (d.get("guests") || ""),
         "",
         d.get("message") || ""
       ].join("\n");
-      window.location.href = "mailto:madalena.seabra@gmail.com?subject=" +
-        encodeURIComponent("COLMO VILLA — request for dates") +
-        "&body=" + encodeURIComponent(body);
-      const confirm = document.getElementById("book-confirm");
-      if (confirm) {
-        confirm.hidden = false;
-        form.querySelectorAll("input,textarea,button").forEach(function(el){ el.disabled = true; });
+
+      function show(el) { if (el) el.hidden = false; }
+      function lock() {
+        form.querySelectorAll("input,select,textarea,button").forEach(function (el) {
+          if (el.type !== "hidden") el.disabled = true;
+        });
       }
+
+      if (FORMSPREE_ID) {
+        var payload = new FormData(form);
+        payload.set("_subject", "COLMO VILLA — request for dates");
+        if (!payload.get("email")) payload.set("email", d.get("email"));
+        var btn = form.querySelector('[type="submit"]');
+        if (btn) btn.disabled = true;
+        fetch("https://formspree.io/f/" + FORMSPREE_ID, {
+          method: "POST",
+          body: payload,
+          headers: { "Accept": "application/json" }
+        }).then(function (res) {
+          if (!res.ok) throw new Error("formspree");
+          show(confirm);
+          lock();
+        }).catch(function () {
+          if (btn) btn.disabled = false;
+          show(err);
+        });
+        return;
+      }
+
+      window.location.href = "mailto:" + MAILTO +
+        "?subject=" + encodeURIComponent("COLMO VILLA — request for dates") +
+        "&body=" + encodeURIComponent(body);
+      show(fallback);
     });
   }
 })();
@@ -330,7 +370,7 @@ document.querySelectorAll('.lang a[aria-disabled="true"]').forEach(function(a){
   root.addEventListener("touchcancel", resume);
 })();
 
-  /* The House zone carousels: arrows, dots, swipe, keyboard */
+  /* The House zone carousels: arrows, dots, swipe, keyboard, autoplay */
   document.querySelectorAll("[data-carousel]").forEach(function (root) {
     var track = root.querySelector(".carousel-track");
     var slides = Array.from(root.querySelectorAll(".carousel-slide"));
@@ -341,6 +381,12 @@ document.querySelectorAll('.lang a[aria-disabled="true"]').forEach(function(a){
 
     var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     var index = 0;
+    var timer = null;
+    var hovering = false;
+    var focused = false;
+    var touching = false;
+    var onScreen = false;
+    var DELAY = 4000;
 
     function slideWidth() {
       var first = slides[0];
@@ -348,10 +394,15 @@ document.querySelectorAll('.lang a[aria-disabled="true"]').forEach(function(a){
       return first.getBoundingClientRect().width + gap;
     }
 
+    function wrap(i) {
+      var n = slides.length;
+      return ((i % n) + n) % n;
+    }
+
     function currentIndex() {
       var w = slideWidth();
       if (!w) return 0;
-      return Math.max(0, Math.min(slides.length - 1, Math.round(track.scrollLeft / w)));
+      return wrap(Math.round(track.scrollLeft / w));
     }
 
     function sync(i) {
@@ -362,12 +413,12 @@ document.querySelectorAll('.lang a[aria-disabled="true"]').forEach(function(a){
         if (on) dot.setAttribute("aria-current", "true");
         else dot.removeAttribute("aria-current");
       });
-      if (prev) prev.disabled = i <= 0;
-      if (next) next.disabled = i >= slides.length - 1;
+      if (prev) prev.disabled = false;
+      if (next) next.disabled = false;
     }
 
     function go(i, instant) {
-      i = Math.max(0, Math.min(slides.length - 1, i));
+      i = wrap(i);
       var left = i * slideWidth();
       if (instant || reduce) {
         var prevBehavior = track.style.scrollBehavior;
@@ -380,6 +431,18 @@ document.querySelectorAll('.lang a[aria-disabled="true"]').forEach(function(a){
       sync(i);
     }
 
+    function stop() {
+      if (timer) { clearInterval(timer); timer = null; }
+    }
+
+    function play() {
+      stop();
+      if (reduce || hovering || focused || touching || !onScreen || slides.length < 2) return;
+      timer = setInterval(function () {
+        go(currentIndex() + 1);
+      }, DELAY);
+    }
+
     var ticking = false;
     track.addEventListener("scroll", function () {
       if (ticking) return;
@@ -390,19 +453,47 @@ document.querySelectorAll('.lang a[aria-disabled="true"]').forEach(function(a){
       });
     }, { passive: true });
 
-    if (prev) prev.addEventListener("click", function () { go(currentIndex() - 1); });
-    if (next) next.addEventListener("click", function () { go(currentIndex() + 1); });
+    function manual(i) {
+      go(i);
+      play();
+    }
+
+    if (prev) prev.addEventListener("click", function () { manual(currentIndex() - 1); });
+    if (next) next.addEventListener("click", function () { manual(currentIndex() + 1); });
 
     dots.forEach(function (dot, n) {
-      dot.addEventListener("click", function () { go(n); });
+      dot.addEventListener("click", function () { manual(n); });
     });
 
     track.addEventListener("keydown", function (e) {
-      if (e.key === "ArrowLeft") { e.preventDefault(); go(currentIndex() - 1); }
-      if (e.key === "ArrowRight") { e.preventDefault(); go(currentIndex() + 1); }
-      if (e.key === "Home") { e.preventDefault(); go(0); }
-      if (e.key === "End") { e.preventDefault(); go(slides.length - 1); }
+      if (e.key === "ArrowLeft") { e.preventDefault(); manual(currentIndex() - 1); }
+      if (e.key === "ArrowRight") { e.preventDefault(); manual(currentIndex() + 1); }
+      if (e.key === "Home") { e.preventDefault(); manual(0); }
+      if (e.key === "End") { e.preventDefault(); manual(slides.length - 1); }
     });
+
+    root.addEventListener("mouseenter", function () { hovering = true; stop(); });
+    root.addEventListener("mouseleave", function () { hovering = false; play(); });
+    root.addEventListener("focusin", function () { focused = true; stop(); });
+    root.addEventListener("focusout", function () {
+      if (!root.contains(document.activeElement)) { focused = false; play(); }
+    });
+    root.addEventListener("touchstart", function () { touching = true; stop(); }, { passive: true });
+    root.addEventListener("touchend", function () { touching = false; play(); });
+    root.addEventListener("touchcancel", function () { touching = false; play(); });
+
+    if ("IntersectionObserver" in window) {
+      var io = new IntersectionObserver(function (entries) {
+        var e = entries[0];
+        onScreen = !!(e && e.isIntersecting && e.intersectionRatio >= 0.35);
+        if (onScreen) play();
+        else stop();
+      }, { threshold: [0, 0.35, 0.6] });
+      io.observe(root);
+    } else {
+      onScreen = true;
+      play();
+    }
 
     window.addEventListener("resize", function () { go(currentIndex(), true); });
     sync(0);

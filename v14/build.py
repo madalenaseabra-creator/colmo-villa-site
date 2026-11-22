@@ -6,10 +6,8 @@ ROOT = Path(__file__).parent
 MAP = (ROOT / "images" / "map.svg").read_text()
 
 NAV = [
-    ("Our Story", "our-story.html"),
     ("The House", "the-house.html"),
-    ("The Moments", "the-moments.html"),
-    ("Gallery", "gallery.html"),
+    ("Days at Colmo", "days-at-colmo.html"),
     ("Comporta", "comporta.html"),
     ("Contact", "contact.html"),
 ]
@@ -90,11 +88,11 @@ CHROME = """
 <div class="modal modal-tour" hidden>
   <div class="modal-card">
     <p class="disp modal-title">Take the virtual tour</p>
-    <p>The visit will live here, once we have it from the house. For now, the rooms on this page are the closest walk through.</p>
+    <p>The virtual tour is not online yet. For now, the photographs on these pages are the closest walk through.</p>
     <button class="btn" type="button" data-close>Close</button>
   </div>
 </div>
-<script src="js/site.js?v=1405"></script>
+<script src="js/site.js?v=1406"></script>
 """
 
 FLY = """<a class="fly-logo" href="index.html" aria-label="COLMO VILLA · Comporta Retreat">
@@ -103,9 +101,14 @@ FLY = """<a class="fly-logo" href="index.html" aria-label="COLMO VILLA · Compor
 </a>
 """
 
-def page(title, desc, active, body, home=False, footer_current=""):
+SITE = "https://madalenaseabra-creator.github.io/colmo-villa-site/v14/"
+
+def page(title, desc, active, body, home=False, footer_current="", og_image="Final-51.jpg"):
     cls = ' class="is-home"' if home else ""
     fly = FLY if home else ""
+    path = active or footer_current or "index.html"
+    url = SITE + path
+    image = SITE + "images/" + og_image
     return """<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -113,9 +116,20 @@ def page(title, desc, active, body, home=False, footer_current=""):
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>%s</title>
 <meta name="description" content="%s">
+<link rel="canonical" href="%s">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="COLMO VILLA">
+<meta property="og:title" content="%s">
+<meta property="og:description" content="%s">
+<meta property="og:url" content="%s">
+<meta property="og:image" content="%s">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="%s">
+<meta name="twitter:description" content="%s">
+<meta name="twitter:image" content="%s">
 <link rel="icon" href="images/esquisso.png" type="image/png">
-<link rel="stylesheet" href="fonts/fonts.css?v=1405">
-<link rel="stylesheet" href="css/site.css?v=1405">
+<link rel="stylesheet" href="fonts/fonts.css?v=1406">
+<link rel="stylesheet" href="css/site.css?v=1406">
 <script>document.documentElement.classList.add("js");</script>
 </head>
 <body%s>
@@ -126,7 +140,7 @@ def page(title, desc, active, body, home=False, footer_current=""):
 %s
 </body>
 </html>
-""" % (title, desc, cls, header(active), fly, body, footer(footer_current), CHROME)
+""" % (title, desc, url, title, desc, url, image, title, desc, image, cls, header(active), fly, body, footer(footer_current), CHROME)
 
 def media(src, alt, corner="rb", caption=None):
     cap = caption or alt
@@ -218,22 +232,26 @@ def home():
 <section class="entrance" id="top">
   <img class="bg" src="images/Final-51.jpg" alt="Pool at COLMO VILLA among the pines, Comporta, looking to the pavilion">
   <div class="veil"></div>
-  <div class="entrance-ident">
-    <p class="entrance-kicker">One whole house. One whole group. <span class="acc">Nothing else.</span></p>
-    <h1 class="page-h1 entrance-h1"><span class="brand">Colmo Villa</span>,<br> three private houses<br> in a gated estate in Comporta</h1>
+</section>
+<section class="home-below" id="story">
+  <h1 class="page-h1 entrance-h1"><span class="brand">Colmo Villa</span>, a private villa for 14<br> in a gated estate in Comporta</h1>
+  <div class="home-story">
+    <h2 class="disp">The refuge of """ + acc("simplicity") + """.</h2>
+    <p>Nothing was bought online. Little by little, the house was furnished with pieces from all over the world — found on family travels and at fairs. A decoration that is unique, personal, and special.</p>
+    <p>A house for friends, and for anyone who needs to stop.</p>
+    <p class="home-facts">Comporta Retreat, gated estate<span> · </span>Architecture: Cristina Jorge de Carvalho<span> · </span>Interiors: Basalto Interiores</p>
   </div>
-  <p class="scroll-hint">Scroll</p>
 </section>
 <section class="home-included-band">
-  <p>The pool, the gym, the sauna &amp; Turkish bath, the cinema, bicycles and the 4x4 — all included. Daily housekeeping, 4 hours, included.</p>
+  <p>The gym, the sauna &amp; Turkish bath, the cinema, bicycles and the 4x4 — all included. The pool, heated on request (extra). Daily housekeeping, 4 hours, included.</p>
 </section>
 """ + tease("The House", "A house with " + acc("roots") + ".",
        "Room for everyone. A place to slow down, and to gather.",
        "the-house.html", "Discover the house", "4.jpg", "The sitting and dining room at COLMO VILLA, Comporta",
        lede="Go on holiday. Stay right here. All yours.") + tease(
-       "The Moments", "A little time for " + acc("everything") + ".",
-       "The pool, the gym, the sauna &amp; Turkish bath, the cinema — all included.",
-       "the-moments.html", "Discover The Moments", "Final-60.jpg", "A sitting area by the pool at COLMO VILLA, Comporta", True, True) + duo([
+       "Days at Colmo", "A little time for " + acc("everything") + ".",
+       "The gym, the sauna &amp; Turkish bath, the cinema — all included. The pool, heated on request (extra).",
+       "days-at-colmo.html", "Discover Days at Colmo", "Final-60.jpg", "A sitting area by the pool at COLMO VILLA, Comporta", True, True) + duo([
         ("31.jpg", "The long sitting room at COLMO VILLA, opening to the pines, Comporta", "The long room", "rb"),
         ("Final-52.jpg", "The pool and pavilion at COLMO VILLA, Comporta", "The pool at COLMO VILLA, Comporta", "ra"),
     ]) + tease(
@@ -257,7 +275,7 @@ def home():
 </section>
 """
     return page("COLMO VILLA · Private Villa in Comporta, Portugal",
-                "Three private houses in a gated estate in Comporta, for 14 guests, and +2. Go on holiday. Stay right here. All yours.",
+                "A private villa for 14 in a gated estate in Comporta, and +2. Go on holiday. Stay right here. All yours.",
                 "index.html", body, home=True)
 
 
@@ -439,6 +457,7 @@ def house():
         ("17.jpg", "An en-suite bedroom in the Living house at COLMO VILLA, Comporta", "An en-suite bedroom"),
         ("39.jpg", "The Turkish bath at COLMO VILLA, Comporta", "The Turkish bath"),
     ]) + """
+  <p class="zone-back"><a href="#volumes" aria-label="Back to the sketch of the houses"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5.5 11.5 12 5l6.5 6.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg> The sketch</a></p>
   </div>
 </section>
 """
@@ -453,7 +472,7 @@ def house():
         ("30.jpg", "A bedroom at COLMO VILLA, Comporta, opening to the light", "Bedroom 2"),
         ("20.jpg", "A bedroom at COLMO VILLA, Comporta, in white linen", "Bedroom 3"),
         ("24.jpg", "A bedroom at COLMO VILLA looking to the pines, Comporta", "Bedroom 4"),
-        ("15.jpg", "A sitting place in the Rest house at COLMO VILLA, Comporta", "A place to sit"),
+        ("15.jpg", "The TV room in the Rest house at COLMO VILLA, Comporta", "The TV room"),
         ("22.jpg", "A desk and the view in the Rest house at COLMO VILLA, Comporta", "A desk, and the view"),
         ("25.jpg", "A corner of the Rest house at COLMO VILLA, Comporta", "A corner of the house"),
         ("18.jpg", "A bathroom in the Rest house at COLMO VILLA, Comporta", "A bathroom"),
@@ -462,6 +481,7 @@ def house():
         ("23.jpg", "A bedroom with the bath just beyond, at COLMO VILLA, Comporta", "The bath, just beyond"),
         ("13.jpg", "A glazed passage of light in the Rest house at COLMO VILLA, Comporta", "A passage of light"),
     ]) + """
+  <p class="zone-back"><a href="#volumes" aria-label="Back to the sketch of the houses"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5.5 11.5 12 5l6.5 6.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg> The sketch</a></p>
   </div>
 </section>
 """
@@ -476,6 +496,7 @@ def house():
         ("26.jpg", "A quiet bedroom in the Annex at COLMO VILLA, Comporta", "Suite 1"),
         ("33.jpg", "A bedroom in the Annex opening to the pines, Comporta", "Suite 2"),
     ]) + """
+  <p class="zone-back"><a href="#volumes" aria-label="Back to the sketch of the houses"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5.5 11.5 12 5l6.5 6.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg> The sketch</a></p>
   </div>
 </section>
 """
@@ -509,19 +530,11 @@ def house():
     <li>Three houses: 1 suite in Living, 4 in Rest, 2 in the Annex</li>
     <li>The Annex is a separate guest house with 2 suites, included in the booking</li>
     <li>A kitchen made for many hands</li>
-    <li>A wine cellar</li>
-    <li>A library corner</li>
     <li>A pantry and a utility room</li>
     <li>A TV room</li>
-    <li>A gym and a sauna &amp; Turkish bath</li>
-    <li>A cinema</li>
-    <li>A pool among the pines — heated on request (extra)</li>
     <li>A fireplace</li>
     <li>Air conditioning</li>
     <li>Wifi</li>
-    <li>Bicycles at the house</li>
-    <li>The 4x4</li>
-    <li>Daily housekeeping, 4 hours, included</li>
     <li>The house, for your people only</li>
   </ul>
 </section>
@@ -570,11 +583,11 @@ def gallery():
 def experiences():
     facts = """<p class="moments-facts">7 en-suite bedrooms · 14 guests + 2 · about 5 min to the beach · about 1h15 from Lisbon</p>
 <p class="moments-include">Gym, sauna &amp; Turkish bath, bicycles, cinema and the 4x4 — all included in your stay.</p>"""
-    body = split("The Moments", "A little time for " + acc("everything") + ".",
+    body = split("Days at Colmo", "A little time for " + acc("everything") + ".",
        "Swim. Gather. Switch off.",
        ["The house holds both: the long table and the quiet room, the pool and the hour you take for yourself. Not a list of features — a day that can open or close as you like."],
        "Final-1.jpg", "Pool at COLMO VILLA from above, among the pines, Comporta", intro=True, extra=facts,
-       h1="A day here, hour by hour") + """
+       h1="Days at Colmo, hour by hour") + """
 <div class="exp-grid">
   <figure class="exp-card">
     <div class="ra"><img src="images/29.jpg" alt="A quiet bedroom at COLMO VILLA, Comporta" data-lightbox data-caption="A quiet room"></div>
@@ -644,7 +657,7 @@ def experiences():
           </figure>
           <figure>
             <span class="hour">20<small>h</small></span>
-            <div><img src="images/Final-49.jpg" alt="The terrace at COLMO VILLA, Comporta, in the evening" data-lightbox data-caption="A swim"></div>
+            <div><img src="images/Final-53.jpg" alt="The pool at COLMO VILLA, Comporta, among the pines" data-lightbox data-caption="A swim"></div>
             <figcaption>A swim</figcaption>
           </figure>
           <figure>
@@ -659,9 +672,9 @@ def experiences():
   </div>
 </section>
 """
-    return page("The Moments · COLMO VILLA, Comporta",
+    return page("Days at Colmo · COLMO VILLA, Comporta",
                 "A little time for everything: the pool, the cinema, the gym and the sauna &amp; Turkish bath, and a day at Colmo.",
-                "the-moments.html", body)
+                "days-at-colmo.html", body)
 
 def comporta():
     body = """<section class="split intro around-intro">
@@ -675,6 +688,20 @@ def comporta():
 </section>
 <section class="around">
   <div class="around-inner">
+    <div class="around-photos">
+      <figure>
+        <img src="images/Final-58.jpg" alt="COLMO VILLA among the pines, Comporta, the Atlantic beyond" data-lightbox data-caption="The pines, and the Atlantic beyond">
+        <figcaption>The pines, and the Atlantic beyond</figcaption>
+      </figure>
+      <figure>
+        <img src="images/Final-5.jpg" alt="The pines of the Comporta Retreat around COLMO VILLA" data-lightbox data-caption="The pines of the Comporta Retreat">
+        <figcaption>The pines of the Comporta Retreat</figcaption>
+      </figure>
+      <figure>
+        <img src="images/Final-47.jpg" alt="The sand and the pines around the houses at COLMO VILLA, Comporta" data-lightbox data-caption="Around the houses">
+        <figcaption>Around the houses</figcaption>
+      </figure>
+    </div>
     <div class="around-grid">
       <article class="around-card">
         <h2>The beaches</h2>
@@ -698,7 +725,6 @@ def comporta():
 <section class="around-guide" id="around-guide">
   <p class="kicker">Nearby</p>
   <h2 class="disp">A guide to what's <span class="acc">around</span>.</h2>
-  <p class="muted">A map of places around the house will live here.</p>
   <ul class="guide-cats">
     <li>Beaches</li>
     <li>Restaurants</li>
@@ -716,7 +742,7 @@ def comporta():
 
 def availability():
     body = split("Availability", "Book the " + acc("house") + ".",
-       "The house, and the studio, for your people only.",
+       "The house, for your people only.",
        ["A request is not a booking. Once we confirm, you will receive the terms and the payment to hold the dates."],
        "2.jpg", "The sitting room at COLMO VILLA, Comporta, at the end of the day", intro=True, h1="Request your dates") + """
 <section class="band-dark">
@@ -727,7 +753,7 @@ def availability():
   </div>
 </section>
 <section class="split alt" style="grid-template-columns:1fr;max-width:820px">
-  <div class="copy book-card" style="background:transparent;padding:0;max-width:none">
+  <div class="copy book-card avail-stack" style="background:transparent;padding:0;max-width:none">
     <div class="cal-wrap">
       <div class="cal-head">
         <button type="button" class="cal-nav cal-prev" aria-label="Previous month">&#8249;</button>
@@ -752,7 +778,7 @@ def availability():
         <span class="empty"></span><span class="empty"></span><span class="empty"></span><span class="empty"></span>
       </div>
       <p class="cal-legend">Sand: already reserved · Outline: open · Terracotta: 19–25 June, seven nights · Dashed: departure on the 26th.</p>
-      <p class="cal-note">This calendar is an example. It is not connected to a booking platform yet.</p>
+      <p class="cal-note">This calendar is an example, to show how a stay can look.</p>
     </div>
     <div class="rates">
       <h2 class="rates-title">Indicative rates</h2>
@@ -770,22 +796,46 @@ def availability():
         7 nights in High season, 7 × €3,200 = €22,400, plus cleaning €550.<br>
         <strong>€22,950</strong> for the house. Security deposit, example: €1,500.
       </div>
-      <p class="hint">Example terms: 30% to hold the dates once confirmed, the balance 60 days before arrival, free cancellation up to 60 days. All figures are indicative, and will be removed or revised if the client prefers.</p>
+      <p class="hint">Example terms: 30% to hold the dates once confirmed, the balance 60 days before arrival, free cancellation up to 60 days. Figures are indicative. The terms of a stay are confirmed in writing.</p>
     </div>
-    <form id="book-form" class="form-block" action="mailto:madalena.seabra@gmail.com" method="post" enctype="text/plain">
+    <form id="book-form" class="form-block avail-form" method="post" action="#">
       <h2 class="form-title">Request these dates</h2>
       <div class="form-row">
         <label>Name <input type="text" name="name" required autocomplete="name"></label>
         <label>Email <input type="email" name="email" required autocomplete="email"></label>
       </div>
       <div class="form-row">
-        <label>Dates <input type="text" name="dates" placeholder="Arrival — departure" required></label>
-        <label>Guests <input type="text" name="guests" placeholder="14" required></label>
+        <label>Arrival <input type="date" name="arrival" required></label>
+        <label>Departure <input type="date" name="departure" required></label>
+      </div>
+      <div class="form-row">
+        <label>Guests
+          <select name="guests" required>
+            <option value="" disabled selected>Choose</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+            <option value="13">13</option>
+            <option value="14">14</option>
+            <option value="14+2">14+2</option>
+          </select>
+        </label>
       </div>
       <label>Message <textarea name="message" rows="4" placeholder="Tell us a little about the stay."></textarea></label>
       <button class="btn" type="submit">Request dates</button>
-      <p class="mail-note">Or write to <a href="mailto:madalena.seabra@gmail.com">madalena.seabra@gmail.com</a>.</p>
-      <p class="book-confirm" id="book-confirm" hidden>Thank you. Your request has been prepared in an email. Send it from your mail, and we will come back to you.</p>
+      <p class="mail-note">Or write to <a href="mailto:colmovillacomporta@gmail.com">colmovillacomporta@gmail.com</a>.</p>
+      <p class="book-confirm" id="book-confirm" hidden>Thank you. Your request has been sent, and we will come back to you.</p>
+      <p class="book-fallback" id="book-fallback" hidden>If your email did not open, write to <a href="mailto:colmovillacomporta@gmail.com">colmovillacomporta@gmail.com</a> with your dates.</p>
+      <p class="book-error" id="book-error" hidden>The request could not be sent. Please write to <a href="mailto:colmovillacomporta@gmail.com">colmovillacomporta@gmail.com</a>.</p>
     </form>
   </div>
 </section>
@@ -816,7 +866,7 @@ def story():
                 "The refuge of simplicity. A house under the reed, between the pines and the Atlantic.",
                 "our-story.html", body)
 
-ARRIVE_MAP = '<div class="map-card rb"><svg class="cmap" viewBox="0 0 560 500" xmlns="http://www.w3.org/2000/svg" aria-label="Illustrated map of Comporta and surroundings, north to south">\n  <rect width="560" height="500" fill="#F1EBDD"/>\n  <path d="M0 0 H148 C170 80 150 150 168 230 C186 310 140 370 155 500 H0 Z" fill="#B7A58A"/>\n  <path d="M0 0 H128 C150 90 132 160 150 240 C168 320 122 380 136 500 H0 Z" fill="#B7A58A" opacity=".55"/>\n  <text x="36" y="250" fill="#514638" font-family="Jost,sans-serif" font-size="10" letter-spacing="3" font-weight="500">ATLANTIC</text>\n  <path d="M148 0 H560 V500 H155 C140 370 186 310 168 230 C150 150 170 80 148 0 Z" fill="#E2D7C2"/>\n  <g fill="none" stroke="#B7A58A" stroke-width="1" opacity=".7">\n    <path d="M400 230 h90 v70 h-90 z"/>\n    <path d="M408 244 h74 M408 258 h74 M408 272 h74 M408 286 h74"/>\n    <path d="M430 310 h70 v55 h-70 z"/>\n    <path d="M438 322 h54 M438 336 h54 M438 350 h54"/>\n  </g>\n  <text x="400" y="218" fill="#5E5D48" font-family="Jost,sans-serif" font-size="9" letter-spacing="1.6">RICE FIELDS</text>\n  <g fill="#77765B" opacity=".85">\n    <g transform="translate(288,188)"><path d="M0 22 L6 0 L12 22 Z"/><rect x="5" y="22" width="2" height="6"/></g>\n    <g transform="translate(308,176)"><path d="M0 26 L7 0 L14 26 Z"/><rect x="6" y="26" width="2" height="6"/></g>\n    <g transform="translate(328,196)"><path d="M0 20 L5 0 L10 20 Z"/><rect x="4" y="20" width="2" height="5"/></g>\n    <g transform="translate(298,210)"><path d="M0 18 L5 0 L10 18 Z"/><rect x="4" y="18" width="2" height="5"/></g>\n    <g transform="translate(318,222)"><path d="M0 16 L4 0 L8 16 Z"/><rect x="3.5" y="16" width="1.5" height="4"/></g>\n    <g transform="translate(278,226)"><path d="M0 20 L5 0 L10 20 Z"/><rect x="4" y="20" width="2" height="5"/></g>\n    <g transform="translate(338,214)"><path d="M0 22 L6 0 L12 22 Z"/><rect x="5" y="22" width="2" height="5"/></g>\n  </g>\n  <text x="300" y="178" fill="#5E5D48" font-family="Jost,sans-serif" font-size="9" letter-spacing="1.6">PINES</text>\n  <!-- North to south along the coast -->\n  <circle cx="152" cy="130" r="5" fill="#514638"/>\n  <text x="166" y="126" fill="#514638" font-family="Jost,sans-serif" font-size="11">Comporta beach</text>\n  <text x="166" y="139" fill="#5E5D48" font-family="Jost,sans-serif" font-size="9">to be confirmed</text>\n  <circle cx="148" cy="210" r="5" fill="#514638"/>\n  <text x="162" y="206" fill="#514638" font-family="Jost,sans-serif" font-size="11">Carvalhal beach</text>\n  <text x="162" y="219" fill="#5E5D48" font-family="Jost,sans-serif" font-size="9">to be confirmed</text>\n  <circle cx="145" cy="290" r="5" fill="#514638"/>\n  <text x="159" y="286" fill="#514638" font-family="Jost,sans-serif" font-size="11">Pego beach</text>\n  <text x="159" y="299" fill="#5E5D48" font-family="Jost,sans-serif" font-size="9">to be confirmed</text>\n  <circle cx="150" cy="400" r="4.5" fill="#514638"/>\n  <text x="164" y="396" fill="#514638" font-family="Jost,sans-serif" font-size="11">Melides</text>\n  <text x="164" y="409" fill="#5E5D48" font-family="Jost,sans-serif" font-size="9">to the south</text>\n  <!-- Colmo -->\n  <circle cx="248" cy="262" r="7" fill="#A8573A"/>\n  <circle cx="248" cy="262" r="11" fill="none" stroke="#A8573A" stroke-width="1.2"/>\n  <text x="264" y="258" fill="#A8573A" font-family="Jost,sans-serif" font-size="12" font-weight="500" letter-spacing="0.8">COLMO VILLA</text>\n  <text x="264" y="272" fill="#5E5D48" font-family="Jost,sans-serif" font-size="9">Comporta Retreat</text>\n  <!-- village inland, near northern Comporta -->\n  <circle cx="355" cy="145" r="4.5" fill="#514638"/>\n  <text x="367" y="141" fill="#514638" font-family="Jost,sans-serif" font-size="11">Comporta village</text>\n  <text x="367" y="154" fill="#5E5D48" font-family="Jost,sans-serif" font-size="9">shops · restaurants</text>\n  <circle cx="340" cy="330" r="4.5" fill="#514638"/>\n  <text x="352" y="326" fill="#514638" font-family="Jost,sans-serif" font-size="11">Restaurants</text>\n  <text x="352" y="339" fill="#5E5D48" font-family="Jost,sans-serif" font-size="9">to be confirmed</text>\n  <text x="430" y="48" fill="#5E5D48" font-family="Jost,sans-serif" font-size="9" letter-spacing="1.2">↑ LISBON</text>\n  <text x="430" y="62" fill="#5E5D48" font-family="Jost,sans-serif" font-size="9">airport · to be confirmed</text>\n  <text x="36" y="480" fill="#5E5D48" font-family="Jost,sans-serif" font-size="8" letter-spacing="1">ILLUSTRATIVE · NOT TO SCALE · NORTH TO SOUTH</text>\n</svg></div>'
+ARRIVE_MAP = '<div class="map-card rb"><svg class="cmap" viewBox="0 0 560 500" xmlns="http://www.w3.org/2000/svg" aria-label="Illustrated map of Comporta and surroundings, north to south">\n  <rect width="560" height="500" fill="#F1EBDD"/>\n  <path d="M0 0 H148 C170 80 150 150 168 230 C186 310 140 370 155 500 H0 Z" fill="#B7A58A"/>\n  <path d="M0 0 H128 C150 90 132 160 150 240 C168 320 122 380 136 500 H0 Z" fill="#B7A58A" opacity=".55"/>\n  <text x="36" y="250" fill="#514638" font-family="Jost,sans-serif" font-size="10" letter-spacing="3" font-weight="500">ATLANTIC</text>\n  <path d="M148 0 H560 V500 H155 C140 370 186 310 168 230 C150 150 170 80 148 0 Z" fill="#E2D7C2"/>\n  <g fill="none" stroke="#B7A58A" stroke-width="1" opacity=".7">\n    <path d="M400 230 h90 v70 h-90 z"/>\n    <path d="M408 244 h74 M408 258 h74 M408 272 h74 M408 286 h74"/>\n    <path d="M430 310 h70 v55 h-70 z"/>\n    <path d="M438 322 h54 M438 336 h54 M438 350 h54"/>\n  </g>\n  <text x="400" y="218" fill="#5E5D48" font-family="Jost,sans-serif" font-size="9" letter-spacing="1.6">RICE FIELDS</text>\n  <g fill="#77765B" opacity=".85">\n    <g transform="translate(288,188)"><path d="M0 22 L6 0 L12 22 Z"/><rect x="5" y="22" width="2" height="6"/></g>\n    <g transform="translate(308,176)"><path d="M0 26 L7 0 L14 26 Z"/><rect x="6" y="26" width="2" height="6"/></g>\n    <g transform="translate(328,196)"><path d="M0 20 L5 0 L10 20 Z"/><rect x="4" y="20" width="2" height="5"/></g>\n    <g transform="translate(298,210)"><path d="M0 18 L5 0 L10 18 Z"/><rect x="4" y="18" width="2" height="5"/></g>\n    <g transform="translate(318,222)"><path d="M0 16 L4 0 L8 16 Z"/><rect x="3.5" y="16" width="1.5" height="4"/></g>\n    <g transform="translate(278,226)"><path d="M0 20 L5 0 L10 20 Z"/><rect x="4" y="20" width="2" height="5"/></g>\n    <g transform="translate(338,214)"><path d="M0 22 L6 0 L12 22 Z"/><rect x="5" y="22" width="2" height="5"/></g>\n  </g>\n  <text x="300" y="178" fill="#5E5D48" font-family="Jost,sans-serif" font-size="9" letter-spacing="1.6">PINES</text>\n  <!-- North to south along the coast -->\n  <circle cx="152" cy="130" r="5" fill="#514638"/>\n  <text x="166" y="126" fill="#514638" font-family="Jost,sans-serif" font-size="11">Comporta beach</text>\n  \n  <circle cx="148" cy="210" r="5" fill="#514638"/>\n  <text x="162" y="206" fill="#514638" font-family="Jost,sans-serif" font-size="11">Carvalhal beach</text>\n  \n  <circle cx="145" cy="290" r="5" fill="#514638"/>\n  <text x="159" y="286" fill="#514638" font-family="Jost,sans-serif" font-size="11">Pego beach</text>\n  \n  <circle cx="150" cy="400" r="4.5" fill="#514638"/>\n  <text x="164" y="396" fill="#514638" font-family="Jost,sans-serif" font-size="11">Melides</text>\n  <text x="164" y="409" fill="#5E5D48" font-family="Jost,sans-serif" font-size="9">to the south</text>\n  <!-- Colmo -->\n  <circle cx="248" cy="262" r="7" fill="#A8573A"/>\n  <circle cx="248" cy="262" r="11" fill="none" stroke="#A8573A" stroke-width="1.2"/>\n  <text x="264" y="258" fill="#A8573A" font-family="Jost,sans-serif" font-size="12" font-weight="500" letter-spacing="0.8">COLMO VILLA</text>\n  <text x="264" y="272" fill="#5E5D48" font-family="Jost,sans-serif" font-size="9">Comporta Retreat</text>\n  <!-- village inland, near northern Comporta -->\n  <circle cx="355" cy="145" r="4.5" fill="#514638"/>\n  <text x="367" y="141" fill="#514638" font-family="Jost,sans-serif" font-size="11">Comporta village</text>\n  <text x="367" y="154" fill="#5E5D48" font-family="Jost,sans-serif" font-size="9">shops · restaurants</text>\n  <circle cx="340" cy="330" r="4.5" fill="#514638"/>\n  <text x="352" y="326" fill="#514638" font-family="Jost,sans-serif" font-size="11">Restaurants</text>\n  \n  <text x="430" y="48" fill="#5E5D48" font-family="Jost,sans-serif" font-size="9" letter-spacing="1.2">↑ LISBON</text>\n  <text x="430" y="62" fill="#5E5D48" font-family="Jost,sans-serif" font-size="9">airport</text>\n  <text x="36" y="480" fill="#5E5D48" font-family="Jost,sans-serif" font-size="8" letter-spacing="1">ILLUSTRATIVE · NOT TO SCALE · NORTH TO SOUTH</text>\n</svg></div>'
 
 def contact():
     body = """
@@ -874,7 +924,7 @@ def policy_page(filename, title, desc, heading, lede, paras):
     return page(title, desc, "", body, footer_current=filename)
 
 def policies():
-    mail = '<a href="mailto:madalena.seabra@gmail.com">madalena.seabra@gmail.com</a>'
+    mail = '<a href="mailto:colmovillacomporta@gmail.com">colmovillacomporta@gmail.com</a>'
     return {
         "privacy.html": policy_page(
             "privacy.html",
@@ -927,34 +977,40 @@ def main():
         "index.html": home(),
         "the-house.html": house(),
         "gallery.html": gallery(),
-        "the-moments.html": experiences(),
+        "days-at-colmo.html": experiences(),
         "comporta.html": comporta(),
         "availability.html": availability(),
-        "our-story.html": story(),
         "contact.html": contact(),
     }
     pages.update(policies())
     for name, html in pages.items():
         (ROOT / name).write_text(html)
         print(name, len(html))
-    stub = """<!DOCTYPE html>
+    stubs = [
+        ("experiences.html", "days-at-colmo.html", "Days at Colmo · COLMO VILLA, Comporta", "Days at Colmo at COLMO VILLA, Comporta", False),
+        ("the-moments.html", "days-at-colmo.html", "Days at Colmo · COLMO VILLA, Comporta", "Days at Colmo at COLMO VILLA, Comporta", False),
+        ("our-story.html", "index.html#story", "COLMO VILLA · Private Villa in Comporta, Portugal", "The story of COLMO VILLA, Comporta", True),
+    ]
+    for name, dest, title, label, fixed in stubs:
+        script = 'location.replace("%s");' % dest if fixed else 'location.replace("%s" + location.hash + location.search);' % dest
+        html = """<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The Moments · COLMO VILLA, Comporta</title>
-<link rel="canonical" href="the-moments.html">
-<meta http-equiv="refresh" content="0;url=the-moments.html">
-<script>location.replace("the-moments.html" + location.hash + location.search);</script>
+<title>%s</title>
+<link rel="canonical" href="%s">
+<meta http-equiv="refresh" content="0;url=%s">
+<script>%s</script>
 </head>
 <body>
-<p><a href="the-moments.html">The Moments at COLMO VILLA, Comporta</a></p>
+<p><a href="%s">%s</a></p>
 </body>
 </html>
-"""
-    (ROOT / "experiences.html").write_text(stub)
-    print("experiences.html redirect stub")
-    print("built", len(pages) + 1)
+""" % (title, dest, dest, script, dest, label)
+        (ROOT / name).write_text(html)
+        print(name, "redirect stub")
+    print("built", len(pages) + len(stubs))
 
 if __name__ == "__main__":
     main()

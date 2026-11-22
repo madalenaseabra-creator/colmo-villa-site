@@ -105,27 +105,13 @@ h3.section-label{
   min-width:0;
 }
 html.js body.is-home .site-head{
-  background:transparent;color:var(--terra);
+  background:transparent;color:var(--cream);
   box-shadow:none;
-  opacity:0;pointer-events:none;
-  transform:translateY(-10px);
+  opacity:1;pointer-events:auto;transform:none;
 }
 html.js body.is-home .site-head.is-visible{
-  opacity:1;pointer-events:auto;transform:none;
-  background:var(--cream);
-  color:var(--terra);
+  background:var(--cream);color:var(--terra);
   box-shadow:0 1px 0 rgba(81,70,56,.08);
-}
-@media(min-width:961px){
-  html.js body.is-home .site-head{
-    opacity:1;pointer-events:auto;transform:none;
-    background:transparent;color:var(--cream);
-    box-shadow:none;
-  }
-  html.js body.is-home .site-head.is-visible{
-    background:var(--cream);color:var(--terra);
-    box-shadow:0 1px 0 rgba(81,70,56,.08);
-  }
 }
 .brand{
   display:flex;align-items:center;
@@ -378,7 +364,12 @@ html.js body.is-home .brand{visibility:hidden;pointer-events:none}
 .band-dark .disp{color:var(--cream)}
 .band-dark .classic,.band-dark .lede{color:var(--sand)}
 .band-dark .disp .acc{color:var(--terracota)}
-.band-dark .kicker{color:var(--terracota)}
+.band-dark .kicker,
+.band-dark .arrive-title,
+.band-dark .zone-title{color:#D49474} /* 4.95:1 on ink */
+.band-dark .disp .acc,
+.band-dark .poetic .acc,
+.band-dark .acc{color:#D49474}
 .band-dark .muted, .band-dark figcaption{color:var(--sand)}
 .band-dark p{color:var(--cream)}
 .band-inner{
@@ -437,11 +428,14 @@ html.js body.is-home .brand{visibility:hidden;pointer-events:none}
 }
 .entrance-ident .disp,
 .entrance-ident .page-h1,
-.entrance-h1{
+.entrance .entrance-h1{
   margin:0;
   font-size:clamp(22px,2.8vw,36px);
   color:var(--cream);
   line-height:1.15;
+}
+.home-below .entrance-h1{
+  color:var(--terra);
 }
 .entrance-ident .acc{color:var(--cream);font-style:italic}
 /* Home H1: "Colmo Villa" uses the official wordmark letterforms (path-based logo).
@@ -455,7 +449,7 @@ h1.entrance-h1 span.brand{
   margin:0 0.02em 0 0;
   overflow:hidden;
   white-space:nowrap;
-  background:url("../images/logo-g2-name-cream.svg") center / contain no-repeat;
+  background:url("../images/logo-g2-name-ink.svg") center / contain no-repeat;
   color:transparent;
   font-weight:400;
   font-style:normal;
@@ -474,6 +468,7 @@ html.js body.is-home h1.entrance-h1 span.brand{visibility:visible;pointer-events
   .entrance-ident .disp,
   .entrance-ident .page-h1,
   .entrance-h1{font-size:clamp(20px,5.6vw,28px)}
+  .home-below .entrance-h1 br{display:none}
   .entrance-kicker{font-size:clamp(16px,4.2vw,20px)}
   .entrance-tag{font-size:13px}
 }
@@ -805,8 +800,8 @@ form .btn{justify-self:start;margin-top:6px}
   .around-grid{grid-template-columns:1fr;gap:12px}
   .around-card{padding:22px 22px 24px}
   .nav-links{display:none}
-  .nav-toggle{display:block}
-  .btn-book{padding:8px 12px;font-size:10px}
+  .nav-toggle{display:flex;align-items:center;justify-content:center;width:44px;height:44px;min-width:44px;min-height:44px;padding:0}
+  .btn-book{padding:0 16px;min-height:44px;font-size:12px;letter-spacing:.1em;display:inline-flex;align-items:center;justify-content:center}
   .brand img{max-width:148px}
   .fly-logo{width:min(420px,82vw);top:10vh}
   .split,.tease,.split.flip,.tease.flip{grid-template-columns:1fr;gap:24px}
@@ -1480,3 +1475,71 @@ h3.photo-title{
   }
 }
 
+/* —— Home: H1 and story sit just below the entrance photograph —— */
+.home-below{
+  max-width:calc(var(--max) + var(--gutter)*2);
+  margin:0 auto;
+  padding:56px var(--gutter) 12px;
+  scroll-margin-top:calc(var(--nav) + 8px);
+}
+.home-below .page-h1{
+  margin:0 0 36px;
+  max-width:22em;
+}
+.home-story{max-width:36em}
+.home-story .disp{margin:0 0 16px}
+.home-story p{margin:0 0 14px;max-width:36em}
+.home-facts{
+  margin:22px 0 0;
+  padding:16px 0 0;
+  border-top:1px solid var(--areia);
+  font-size:14px;
+  line-height:1.7;
+  color:var(--terra);
+  max-width:36em;
+}
+.home-facts span{white-space:nowrap}
+@media(max-width:720px){
+  .home-facts span{white-space:normal}
+  .home-below{padding-top:36px}
+}
+
+/* Back to the volumes sketch */
+.zone-back{margin:28px 0 0}
+.zone-back a{
+  display:inline-flex;align-items:center;gap:8px;
+  color:#3B3228;text-decoration:none;
+  font-size:13px;letter-spacing:.08em;text-transform:uppercase;
+  font-weight:500;
+}
+.zone-back a:hover,.zone-back a:focus-visible{text-decoration:underline;outline:none}
+.zone-back svg{width:18px;height:18px;display:block}
+
+/* Request-dates form */
+.form-block .form-row label input[type="date"],
+.form-block select{
+  width:100%;
+  font:inherit;
+}
+.book-confirm,.book-fallback,.book-error{margin:14px 0 0;font-size:15px}
+.book-error{color:var(--terracota)}
+
+@media(max-width:960px){
+  .avail-stack{display:flex;flex-direction:column}
+  .avail-form{order:-1}
+}
+
+
+.around-photos{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:18px;
+  margin:0 0 36px;
+}
+.around-photos figure{margin:0}
+.around-photos img{width:100%;height:min(36vh,280px);object-fit:cover;display:block;cursor:pointer}
+.around-photos figcaption{margin:10px 2px 0;font-size:14px;color:var(--oliva)}
+@media(max-width:720px){
+  .around-photos{grid-template-columns:1fr;gap:16px}
+  .around-photos img{height:min(42vh,260px)}
+}
