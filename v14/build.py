@@ -92,7 +92,7 @@ CHROME = """
     <button class="btn" type="button" data-close>Close</button>
   </div>
 </div>
-<script src="js/site.js?v=1410"></script>
+<script src="js/site.js?v=1411"></script>
 """
 
 FLY = """<a class="fly-logo" href="index.html" aria-label="COLMO VILLA · Comporta Retreat">
@@ -128,8 +128,8 @@ def page(title, desc, active, body, home=False, footer_current="", og_image="Fin
 <meta name="twitter:description" content="%s">
 <meta name="twitter:image" content="%s">
 <link rel="icon" href="images/esquisso.png" type="image/png">
-<link rel="stylesheet" href="fonts/fonts.css?v=1410">
-<link rel="stylesheet" href="css/site.css?v=1410">
+<link rel="stylesheet" href="fonts/fonts.css?v=1411">
+<link rel="stylesheet" href="css/site.css?v=1411">
 <script>document.documentElement.classList.add("js");</script>
 </head>
 <body%s>
