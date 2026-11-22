@@ -148,9 +148,9 @@
   }
 
   /* Set this to your Formspree form id (formspree.io) to send requests
-     to colmovillacomporta@gmail.com. Leave empty to use the mailto fallback. */
+     to colmovilla@gmail.com. Leave empty to use the mailto fallback. */
   var FORMSPREE_ID = "";
-  var MAILTO = "colmovillacomporta@gmail.com";
+  var MAILTO = "colmovilla@gmail.com";
   var form = document.querySelector("#book-form");
   if (form) {
     form.addEventListener("submit", function (e) {

@@ -92,7 +92,7 @@ CHROME = """
     <button class="btn" type="button" data-close>Close</button>
   </div>
 </div>
-<script src="js/site.js?v=1409"></script>
+<script src="js/site.js?v=1410"></script>
 """
 
 FLY = """<a class="fly-logo" href="index.html" aria-label="COLMO VILLA · Comporta Retreat">
@@ -128,8 +128,8 @@ def page(title, desc, active, body, home=False, footer_current="", og_image="Fin
 <meta name="twitter:description" content="%s">
 <meta name="twitter:image" content="%s">
 <link rel="icon" href="images/esquisso.png" type="image/png">
-<link rel="stylesheet" href="fonts/fonts.css?v=1409">
-<link rel="stylesheet" href="css/site.css?v=1409">
+<link rel="stylesheet" href="fonts/fonts.css?v=1410">
+<link rel="stylesheet" href="css/site.css?v=1410">
 <script>document.documentElement.classList.add("js");</script>
 </head>
 <body%s>
@@ -788,10 +788,10 @@ def availability():
       </div>
       <label>Message <textarea name="message" rows="4" placeholder="Tell us a little about the stay."></textarea></label>
       <button class="btn" type="submit">Request dates</button>
-      <p class="mail-note">Or write to <a href="mailto:colmovillacomporta@gmail.com">colmovillacomporta@gmail.com</a>.</p>
+      <p class="mail-note">Or write to <a href="mailto:colmovilla@gmail.com">colmovilla@gmail.com</a>.</p>
       <p class="book-confirm" id="book-confirm" hidden>Thank you. Your request has been sent, and we will come back to you.</p>
-      <p class="book-fallback" id="book-fallback" hidden>If your email did not open, write to <a href="mailto:colmovillacomporta@gmail.com">colmovillacomporta@gmail.com</a> with your dates.</p>
-      <p class="book-error" id="book-error" hidden>The request could not be sent. Please write to <a href="mailto:colmovillacomporta@gmail.com">colmovillacomporta@gmail.com</a>.</p>
+      <p class="book-fallback" id="book-fallback" hidden>If your email did not open, write to <a href="mailto:colmovilla@gmail.com">colmovilla@gmail.com</a> with your dates.</p>
+      <p class="book-error" id="book-error" hidden>The request could not be sent. Please write to <a href="mailto:colmovilla@gmail.com">colmovilla@gmail.com</a>.</p>
     </form>
   </div>
 </section>
@@ -832,7 +832,7 @@ def contact():
     <h1 class="page-h1">Get in touch</h1>
     <p>COLMO VILLA sits in the Comporta Retreat, in Comporta, on the Alentejo coast. Pines and dunes around the house, the Atlantic beyond. The exact address will be shared once a stay is confirmed.</p>
     <p><a class="btn" href="availability.html">Request dates</a></p>
-    <p class="mail-note"><a href="mailto:colmovillacomporta@gmail.com">colmovillacomporta@gmail.com</a></p>
+    <p class="mail-note"><a href="mailto:colmovilla@gmail.com">colmovilla@gmail.com</a></p>
   </div>
   <div class="media ra">
   <img src="images/Final-5.jpg" alt="The pines of the Comporta Retreat around COLMO VILLA" data-lightbox data-caption="The pines of the Comporta Retreat around COLMO VILLA">
@@ -853,7 +853,7 @@ def contact():
     <p>Use the form on Availability, or write directly — for a stay, or for a chef or massages on request.</p>
     <p><a class="btn" href="availability.html">Request dates</a></p>
     <div class="contact-actions">
-      <p class="mail-note"><a href="mailto:colmovillacomporta@gmail.com">colmovillacomporta@gmail.com</a></p>
+      <p class="mail-note"><a href="mailto:colmovilla@gmail.com">colmovilla@gmail.com</a></p>
       <p class="mail-note"><a href="https://www.instagram.com/colmo_villa_comporta_retreat_/" target="_blank" rel="noopener noreferrer">Follow on Instagram · @colmo_villa_comporta_retreat_</a></p>
     </div>
   </div>
@@ -863,7 +863,7 @@ def contact():
 </section>
 """
     return page("Contact · COLMO VILLA, Comporta",
-                "Write to COLMO VILLA. We reply within 48 hours. In the Comporta Retreat, on the Alentejo coast. colmovillacomporta@gmail.com",
+                "Write to COLMO VILLA. We reply within 48 hours. In the Comporta Retreat, on the Alentejo coast. colmovilla@gmail.com",
                 "contact.html", body)
 
 def policy_page(filename, title, desc, heading, lede, paras):
@@ -879,7 +879,7 @@ def policy_page(filename, title, desc, heading, lede, paras):
     return page(title, desc, "", body, footer_current=filename)
 
 def policies():
-    mail = '<a href="mailto:colmovillacomporta@gmail.com">colmovillacomporta@gmail.com</a>'
+    mail = '<a href="mailto:colmovilla@gmail.com">colmovilla@gmail.com</a>'
     return {
         "privacy.html": policy_page(
             "privacy.html",
