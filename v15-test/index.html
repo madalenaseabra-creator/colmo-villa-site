@@ -10,7 +10,7 @@
 <link rel="icon" href="img/esquisso.png" type="image/png">
 <link rel="preload" as="image" href="img/arrival-pool-houses.webp">
 <link rel="stylesheet" href="../v14/fonts/fonts.css?v=1413">
-<link rel="stylesheet" href="css/home.css?v=1502">
+<link rel="stylesheet" href="css/home.css?v=1503">
 </head>
 <body>
 <header class="hd">
@@ -109,11 +109,14 @@
   <h2>Room for everyone, and a door to close.</h2>
   <p class="lead">Six bedrooms for sixteen. Each with its own bathroom.</p>
   <figure class="plan">
-    <svg viewBox="143 280 239.5 79.5" role="img" aria-label="Sketch of the three houses: Annex, Rest and Living">
+    <svg viewBox="143 280 245 79.5" role="img" aria-label="Sketch of the houses: Annex, Rest, Living and the garage">
+      <defs><filter id="wc" x="-30%" y="-30%" width="160%" height="160%"><feTurbulence type="fractalNoise" baseFrequency="0.09" numOctaves="3" seed="7"/><feDisplacementMap in="SourceGraphic" scale="5"/><feGaussianBlur stdDeviation="0.6"/></filter></defs>
+      <path class="plan-wash" filter="url(#wc)" d="M340 307 L351 298 L362 295 L377 302 L378 320 L371 328 L363 327 L363 313 L340 313 Z"/>
       <g class="plan-labels">
         <text x="168" y="294" text-anchor="middle">Annex</text>
         <text x="220" y="290" text-anchor="middle">Rest</text>
-        <text x="314" y="292" text-anchor="middle">Living</text>
+        <text x="306" y="292" text-anchor="middle">Living</text>
+        <text x="366" y="290" text-anchor="middle">Garage</text>
       </g>
       <g class="outline" aria-hidden="true">
         <path fill-rule="nonzero" fill="currentColor" fill-opacity="1" d="M 380.097656 320.371094 C 379.585938 321.234375 378.621094 321.597656 377.871094 322.1875 C 375 324.441406 371.792969 327.007812 369.382812 329.726562 C 368.585938 330.628906 367.917969 331.636719 367.089844 332.511719 C 367.074219 332.660156 366.988281 332.890625 367.152344 332.90625 C 368.921875 333.085938 370.664062 333.359375 372.425781 333.566406 C 373.257812 333.667969 374.21875 333.65625 375.050781 333.742188 C 375.210938 333.761719 375.828125 333.828125 375.808594 334.058594 C 374.019531 334.046875 372.230469 333.765625 370.453125 333.5625 C 368.375 333.324219 366.265625 333.105469 364.183594 332.742188 C 363.914062 332.691406 363.640625 332.808594 363.441406 332.492188 C 364.003906 332.242188 366.695312 332.953125 366.890625 332.726562 C 366.914062 332.46875 366.960938 332.25 367.089844 332.019531 C 368.820312 328.894531 374.835938 324.011719 377.800781 321.789062 C 378.5 321.265625 379.25 320.574219 380.097656 320.371094 "/>
@@ -127,7 +130,6 @@
   <div class="houses">
     <div class="house">
       <h3>Living</h3>
-      <p class="house-n">No bedrooms</p>
       <p>Kitchen, living room, library, wine cellar, gym and cinema.</p>
     </div>
     <div class="house">
