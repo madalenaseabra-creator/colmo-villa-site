@@ -344,3 +344,35 @@ document.querySelectorAll('.lang a[aria-disabled="true"]').forEach(function(a){
     render();
   });
 })();
+
+
+(function(){
+  var root = document.querySelector("[data-day-marquee]");
+  if (!root) return;
+  var track = root.querySelector(".day-track");
+  var set = root.querySelector(".day-set");
+  if (!track || !set) return;
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduce){
+    root.classList.add("is-static");
+    return;
+  }
+  var clone = set.cloneNode(true);
+  clone.setAttribute("aria-hidden", "true");
+  clone.querySelectorAll("[data-lightbox]").forEach(function(img){
+    img.removeAttribute("data-lightbox");
+  });
+  track.appendChild(clone);
+  root.classList.add("is-animated");
+  function pause(){ root.classList.add("is-paused"); }
+  function resume(){ root.classList.remove("is-paused"); }
+  root.addEventListener("mouseenter", pause);
+  root.addEventListener("mouseleave", resume);
+  root.addEventListener("focusin", pause);
+  root.addEventListener("focusout", function(){
+    if (!root.contains(document.activeElement)) resume();
+  });
+  root.addEventListener("touchstart", pause, {passive:true});
+  root.addEventListener("touchend", resume);
+  root.addEventListener("touchcancel", resume);
+})();
