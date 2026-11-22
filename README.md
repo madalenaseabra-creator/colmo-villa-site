@@ -8,5 +8,6 @@ Two multi-page design previews, to be browsed in the browser.
 - v11 (between v8 and v10, a little more photo-oriented): https://madalenaseabra-creator.github.io/colmo-villa-site/v11/
 - v12 (Earth homepage template, option D): https://madalenaseabra-creator.github.io/colmo-villa-site/v12/
 - v13 (v10 with the new menu, plus latitude): https://madalenaseabra-creator.github.io/colmo-villa-site/v13/
+- v14 (guest experience pass on v10): https://madalenaseabra-creator.github.io/colmo-villa-site/v14/
 
 These are design previews, not the final booking site. The official logo is also kept in `logo-oficial-backup/`.
