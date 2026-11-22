@@ -228,6 +228,21 @@ html.js body.is-home .brand{visibility:hidden;pointer-events:none}
 .lang a[aria-current="true"]{color:var(--terracota);opacity:1;font-weight:700}
 .lang a[aria-disabled="true"]{cursor:default;opacity:1}
 .lang-sep{color:var(--oliva);opacity:1;font-weight:300}
+/* Home first screen: EN | PT must read on the sky */
+@media(min-width:961px){
+  html.js body.is-home .site-head:not(.is-visible) .lang a,
+  html.js body.is-home .site-head:not(.is-visible) .lang-sep{
+    color:var(--cream);
+  }
+  html.js body.is-home .site-head:not(.is-visible) .lang a[aria-current="true"]{
+    color:var(--cream);
+    font-weight:700;
+  }
+  html.js body.is-home .site-head:not(.is-visible) .lang a:hover{
+    color:var(--cream);
+  }
+}
+
 .head-actions .lang{margin-right:6px}
 .nav-links .lang-item{list-style:none;display:flex;align-items:center}
 .nav-panel .lang{margin-top:24px;font-size:12px;justify-content:flex-end}
@@ -429,6 +444,28 @@ html.js body.is-home .brand{visibility:hidden;pointer-events:none}
   line-height:1.15;
 }
 .entrance-ident .acc{color:var(--cream);font-style:italic}
+/* Home H1: "Colmo Villa" uses the official wordmark letterforms (path-based logo).
+   The HTML keeps the words in a span; the rest of the sentence stays in Archivo. */
+h1.entrance-h1 span.brand{
+  display:inline-block;
+  width:calc(0.95em * 10.8876);
+  height:0.95em;
+  flex:none;
+  vertical-align:-0.06em;
+  margin:0 0.02em 0 0;
+  overflow:hidden;
+  white-space:nowrap;
+  background:url("../images/logo-g2-name-cream.svg") center / contain no-repeat;
+  color:transparent;
+  font-weight:400;
+  font-style:normal;
+  font-stretch:normal;
+  line-height:1;
+  visibility:visible;
+  pointer-events:none;
+}
+html.js body.is-home h1.entrance-h1 span.brand{visibility:visible;pointer-events:none}
+
 @media(max-width:960px){
   .entrance-ident{
     top:auto;bottom:12vh;
@@ -1292,3 +1329,154 @@ h3.photo-title{
   color:var(--oliva);text-transform:none;
   font-family:inherit;font-stretch:normal;font-style:normal;
 }
+
+/* —— The House zone bands (watercolour from the volumes sketch) —— */
+.house-volume.zone-band{
+  max-width:none;
+  width:100%;
+  margin:0;
+  padding:56px 0 64px;
+  scroll-margin-top:var(--nav);
+}
+.zone-band-inner{
+  max-width:calc(var(--max) + var(--gutter)*2);
+  margin:0 auto;
+  padding:0 var(--gutter);
+}
+.zone-band--azul{background:#8BA3A3}   /* Living: sketch azul over cream */
+.zone-band--rose{background:#D3B09B}   /* Rest: sketch rose over cream */
+.zone-band--olive{background:#BEBAA6}  /* Annex: sketch olive over cream */
+
+/* Ink on all three washes: 4.70 / 6.25 / 6.43. Terracotta and olive fail on azul. */
+.zone-band,
+.zone-band .zone-title,
+.zone-band .zone-lead,
+.zone-band .zone-inside,
+.zone-band .photo-title,
+.zone-band figcaption{
+  color:#3B3228;
+}
+.zone-band .zone-title{
+  color:#4B271A; /* darkened terracotta, 4.90 on azul */
+  padding-left:0;padding-right:0;margin:0 0 14px;max-width:none;
+}
+.zone-band .zone-lead{
+  color:#3B3228;
+  max-width:28em;
+}
+.zone-band .zone-inside{color:#3B3228}
+
+/* Single-row horizontal carousel */
+.zone-carousel{
+  position:relative;
+  margin:28px 0 0;
+}
+.carousel-viewport{
+  overflow:hidden;
+}
+.carousel-track{
+  display:flex;
+  gap:16px;
+  overflow-x:auto;
+  overflow-y:hidden;
+  scroll-snap-type:x mandatory;
+  scroll-behavior:smooth;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+  overscroll-behavior-x:contain;
+  padding:0 0 8px;
+  outline:none;
+}
+.carousel-track::-webkit-scrollbar{display:none}
+.carousel-slide{
+  flex:0 0 min(640px,78%);
+  margin:0;
+  scroll-snap-align:start;
+  scroll-snap-stop:always;
+}
+.carousel-media{
+  margin:0;
+  overflow:hidden;
+}
+.carousel-media img{
+  width:100%;
+  height:min(56vh,480px);
+  object-fit:cover;
+  display:block;
+  cursor:pointer;
+}
+.carousel-slide figcaption{
+  margin:10px 2px 0;
+}
+.zone-band h3.photo-title{
+  color:#3B3228;
+}
+.carousel-btn{
+  position:absolute;
+  top:calc(min(56vh,480px) / 2);
+  transform:translateY(-50%);
+  z-index:2;
+  width:44px;height:44px;
+  border:0;border-radius:50%;
+  background:#F1EBDD;
+  color:#3B3228;
+  cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  padding:0;
+  box-shadow:0 1px 4px rgba(59,50,40,.22);
+}
+.carousel-btn svg{width:22px;height:22px;display:block}
+.carousel-btn:hover,
+.carousel-btn:focus-visible{
+  background:#3B3228;color:#F1EBDD;outline:none;
+}
+.carousel-btn:disabled{
+  opacity:.35;cursor:default;
+  background:#F1EBDD;color:#3B3228;
+}
+.carousel-prev{left:4px}
+.carousel-next{right:4px}
+@media(min-width:961px){
+  .carousel-prev{left:-8px}
+  .carousel-next{right:-8px}
+  .carousel-slide{flex-basis:min(680px,72%)}
+}
+.carousel-dots{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:8px;
+  margin:16px 0 0;
+}
+.carousel-dot{
+  width:9px;height:9px;
+  padding:0;
+  border:0;
+  border-radius:50%;
+  background:#3B3228;
+  opacity:.28;
+  cursor:pointer;
+}
+.carousel-dot.is-active,
+.carousel-dot[aria-current="true"]{
+  opacity:1;
+}
+.carousel-dot:hover,
+.carousel-dot:focus-visible{
+  opacity:1;
+  outline:2px solid #3B3228;
+  outline-offset:2px;
+}
+@media(prefers-reduced-motion:reduce){
+  .carousel-track{scroll-behavior:auto}
+}
+@media(max-width:720px){
+  .house-volume.zone-band{padding:40px 0 48px}
+  .carousel-slide{flex-basis:86%}
+  .carousel-media img{height:min(48vh,360px)}
+  .carousel-btn{
+    width:40px;height:40px;
+    top:calc(min(48vh,360px) / 2);
+  }
+}
+

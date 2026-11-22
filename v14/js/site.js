@@ -6,7 +6,7 @@
   const panel = document.querySelector(".nav-panel");
   const entrance = document.querySelector(".entrance");
   const fly = document.querySelector(".fly-logo");
-  const brand = document.querySelector(".brand");
+  const brand = document.querySelector(".site-head .brand, a.brand");
   const isHome = document.body.classList.contains("is-home");
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -329,3 +329,82 @@ document.querySelectorAll('.lang a[aria-disabled="true"]').forEach(function(a){
   root.addEventListener("touchend", resume);
   root.addEventListener("touchcancel", resume);
 })();
+
+  /* The House zone carousels: arrows, dots, swipe, keyboard */
+  document.querySelectorAll("[data-carousel]").forEach(function (root) {
+    var track = root.querySelector(".carousel-track");
+    var slides = Array.from(root.querySelectorAll(".carousel-slide"));
+    var prev = root.querySelector(".carousel-prev");
+    var next = root.querySelector(".carousel-next");
+    var dots = Array.from(root.querySelectorAll(".carousel-dot"));
+    if (!track || !slides.length) return;
+
+    var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var index = 0;
+
+    function slideWidth() {
+      var first = slides[0];
+      var gap = parseFloat(getComputedStyle(track).gap) || 0;
+      return first.getBoundingClientRect().width + gap;
+    }
+
+    function currentIndex() {
+      var w = slideWidth();
+      if (!w) return 0;
+      return Math.max(0, Math.min(slides.length - 1, Math.round(track.scrollLeft / w)));
+    }
+
+    function sync(i) {
+      index = i;
+      dots.forEach(function (dot, n) {
+        var on = n === i;
+        dot.classList.toggle("is-active", on);
+        if (on) dot.setAttribute("aria-current", "true");
+        else dot.removeAttribute("aria-current");
+      });
+      if (prev) prev.disabled = i <= 0;
+      if (next) next.disabled = i >= slides.length - 1;
+    }
+
+    function go(i, instant) {
+      i = Math.max(0, Math.min(slides.length - 1, i));
+      var left = i * slideWidth();
+      if (instant || reduce) {
+        var prevBehavior = track.style.scrollBehavior;
+        track.style.scrollBehavior = "auto";
+        track.scrollLeft = left;
+        track.style.scrollBehavior = prevBehavior;
+      } else {
+        track.scrollTo({ left: left, behavior: "smooth" });
+      }
+      sync(i);
+    }
+
+    var ticking = false;
+    track.addEventListener("scroll", function () {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function () {
+        ticking = false;
+        sync(currentIndex());
+      });
+    }, { passive: true });
+
+    if (prev) prev.addEventListener("click", function () { go(currentIndex() - 1); });
+    if (next) next.addEventListener("click", function () { go(currentIndex() + 1); });
+
+    dots.forEach(function (dot, n) {
+      dot.addEventListener("click", function () { go(n); });
+    });
+
+    track.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowLeft") { e.preventDefault(); go(currentIndex() - 1); }
+      if (e.key === "ArrowRight") { e.preventDefault(); go(currentIndex() + 1); }
+      if (e.key === "Home") { e.preventDefault(); go(0); }
+      if (e.key === "End") { e.preventDefault(); go(slides.length - 1); }
+    });
+
+    window.addEventListener("resize", function () { go(currentIndex(), true); });
+    sync(0);
+  });
+
