@@ -1598,3 +1598,56 @@ h3.photo-title{
   .around-photos{grid-template-columns:1fr;gap:16px}
   .around-photos img{height:min(42vh,260px)}
 }
+
+
+/* v14 content pass — key facts, press, on request, Comporta photos, address */
+.home-keyline{
+  margin:0 0 8px;
+  font-size:15px;
+  letter-spacing:.04em;
+  font-weight:600;
+  color:var(--ink);
+}
+.home-press{margin:14px 0 0}
+.home-press a{
+  color:var(--terracota-text);
+  text-decoration:none;
+  border-bottom:1px solid var(--terracota-text);
+  padding-bottom:1px;
+}
+.home-press a:hover{filter:brightness(1.05)}
+.on-request{
+  padding:56px var(--gutter) 72px;
+  max-width:1120px;
+  margin:0 auto;
+}
+.on-request .disp{margin:0 0 8px}
+.on-request .know-list{margin-top:28px}
+.on-request .request-note{
+  margin:22px 0 0;
+  max-width:32em;
+  color:var(--terra);
+}
+.around-hero-photo{
+  max-width:1120px;
+  margin:0 auto;
+  padding:0 var(--gutter) 32px;
+}
+.around-hero-photo img{width:100%;height:auto;display:block}
+.around-photos{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+  max-width:1120px;
+  margin:8px auto 32px;
+  padding:0;
+}
+.around-photos img{width:100%;height:auto;display:block}
+.contact-address{
+  margin:0 0 16px;
+  color:var(--ink);
+}
+@media (max-width:700px){
+  .around-photos{grid-template-columns:1fr}
+  .on-request{padding:48px var(--gutter) 64px}
+}

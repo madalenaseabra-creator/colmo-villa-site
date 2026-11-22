@@ -172,6 +172,7 @@
         "Arrival: " + arrival,
         "Departure: " + departure,
         "Guests: " + (d.get("guests") || ""),
+        "How did you hear about us?: " + (d.get("how_heard") || ""),
         "",
         d.get("message") || ""
       ].join("\n");

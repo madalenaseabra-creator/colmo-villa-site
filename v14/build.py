@@ -92,7 +92,7 @@ CHROME = """
     <button class="btn" type="button" data-close>Close</button>
   </div>
 </div>
-<script src="js/site.js?v=1411"></script>
+<script src="js/site.js?v=1413"></script>
 """
 
 FLY = """<a class="fly-logo" href="index.html" aria-label="COLMO VILLA · Comporta Retreat">
@@ -128,8 +128,9 @@ def page(title, desc, active, body, home=False, footer_current="", og_image="Fin
 <meta name="twitter:description" content="%s">
 <meta name="twitter:image" content="%s">
 <link rel="icon" href="images/esquisso.png" type="image/png">
-<link rel="stylesheet" href="fonts/fonts.css?v=1411">
-<link rel="stylesheet" href="css/site.css?v=1411">
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="fonts/fonts.css?v=1413">
+<link rel="stylesheet" href="css/site.css?v=1413">
 <script>document.documentElement.classList.add("js");</script>
 </head>
 <body%s>
@@ -235,8 +236,9 @@ def home():
 </section>
 <section class="home-below home-intro" id="intro">
   <h1 class="page-h1 entrance-h1"><span class="brand">Colmo Villa</span>, three private houses<br> in a gated estate in Comporta</h1>
+  <p class="home-keyline">6 Bedrooms · 16 Guests · Comporta Retreat, Carvalhal</p>
   <p class="home-meta">About 5 min to the beach · about 1h15 from Lisbon</p>
-  <p>A house for friends, and for anyone who needs to stop.</p>
+  <p>A house for family and friends, and for anyone who needs to stop.</p>
   <p class="home-links"><a class="discover" href="the-house.html">The House</a><a class="discover" href="days-at-colmo.html">Days at Colmo</a></p>
   <p class="home-intro-cta"><a class="btn" href="availability.html">Request dates</a></p>
 </section>
@@ -245,18 +247,20 @@ def home():
     <h2 class="disp">The refuge of """ + acc("simplicity") + """.</h2>
     <p>Nothing was bought online. Little by little, the house was furnished with pieces from all over the world — found on family travels and at fairs. A decoration that is unique, personal, and special.</p>
     <p class="home-facts">Comporta Retreat, gated estate<span> · </span>Architecture: Cristina Jorge de Carvalho<span> · </span>Interiors: Basalto Interiores</p>
+    <p class="home-press"><a href="https://www.nit.pt/fora-de-casa/turismos-rurais-e-hoteis/esta-villa-escondida-na-comporta-tem-ginasio-cinema-e-decoracao-do-mundo-inteiro" target="_blank" rel="noopener noreferrer">As featured in NiT</a></p>
   </div>
 </section>
 <section class="band-dark home-cta">
   <div class="band-inner home-cta-inner">
-    <h2 class="disp">The whole estate, for your group only.</h2>
+    <h2 class="disp">The whole villa, for your group only.</h2>
+    <p>Daily housekeeping, included.</p>
     <p>A request is not a booking — once we confirm, you will receive the terms.</p>
     <p><a class="btn" href="availability.html">Request dates</a></p>
   </div>
 </section>
 """
     return page("COLMO VILLA · Private Villa in Comporta, Portugal",
-                "Three private houses in a gated estate in Comporta. A decoration that is unique, personal, and special.",
+                "Six en-suite bedrooms for 16 guests, three private houses among the pines of Comporta Retreat, Carvalhal. Private gym, sauna and cinema.",
                 "index.html", body, home=True)
 
 
@@ -290,7 +294,7 @@ def house_map():
             "tone": "azul",
             "href": "#kitchen",
             "label": "Living",
-            "note": "Kitchen, living room, wine cellar, a library corner, an en-suite bedroom, pantry, utility room, gym and cinema room.",
+            "note": "Kitchen, living room, wine cellar, a library corner, pantry, utility room, gym and cinema room.",
             "pts": [
                 "256,328 258,314 264,301 280,298 302,300 322,297 338,300 348,305 352,311 362,313 370,322 371,334 366,344 348,350 322,353 292,351 270,348 256,342 254,334",
             ],
@@ -321,13 +325,12 @@ def house_map():
       <g class="outline" aria-hidden="true">
         %s
       </g>
-      <text class="garage-label" x="370" y="316" text-anchor="middle">Garage</text>
     </svg>
     <p class="house-map-live" aria-live="polite"><span>Click or tap a house.</span></p>
     <ul class="house-map-picks">
       <li><button type="button" class="house-map-pick" data-href="#kitchen" aria-pressed="false">
         <i class="swatch swatch--azul" aria-hidden="true"></i>
-        <span class="pick-copy"><strong>Living</strong><span class="pick-note">Kitchen, living room, wine cellar, a library corner, an en-suite bedroom, pantry, utility room, gym and cinema room.</span></span>
+        <span class="pick-copy"><strong>Living</strong><span class="pick-note">Kitchen, living room, wine cellar, a library corner, pantry, utility room, gym and cinema room.</span></span>
       </button></li>
       <li><button type="button" class="house-map-pick" data-href="#bedrooms" aria-pressed="false">
         <i class="swatch swatch--rose" aria-hidden="true"></i>
@@ -384,13 +387,12 @@ def zone_carousel(slides):
 def house():
     suites = """
     <ul class="suite-list">
-      <li><span class="suite-name">Suite Living</span><span class="suite-zone">Living</span><span class="suite-bed">Bed type —</span></li>
-      <li><span class="suite-name">Bedroom 1</span><span class="suite-zone">Rest</span><span class="suite-bed">Bed type —</span></li>
-      <li><span class="suite-name">Bedroom 2</span><span class="suite-zone">Rest</span><span class="suite-bed">Bed type —</span></li>
-      <li><span class="suite-name">Bedroom 3</span><span class="suite-zone">Rest</span><span class="suite-bed">Bed type —</span></li>
-      <li><span class="suite-name">Bedroom 4</span><span class="suite-zone">Rest</span><span class="suite-bed">Bed type —</span></li>
-      <li><span class="suite-name">Suite 1</span><span class="suite-zone">Annex</span><span class="suite-bed">Bed type —</span></li>
-      <li><span class="suite-name">Suite 2</span><span class="suite-zone">Annex</span><span class="suite-bed">Bed type —</span></li>
+      <li><span class="suite-name">The beige bedroom</span><span class="suite-zone">Rest</span><span class="suite-bed">Double · sleeps 2</span></li>
+      <li><span class="suite-name">The yellow bedroom</span><span class="suite-zone">Rest</span><span class="suite-bed">Twin beds · sleeps 2</span></li>
+      <li><span class="suite-name">The green bedroom</span><span class="suite-zone">Rest</span><span class="suite-bed">Twin beds · sleeps 2</span></li>
+      <li><span class="suite-name">The bunk room</span><span class="suite-zone">Rest</span><span class="suite-bed">Bunk beds, for six · sleeps 6</span></li>
+      <li><span class="suite-name">The rust bedroom</span><span class="suite-zone">Annex</span><span class="suite-bed">Two beds pushed together · sleeps 2</span></li>
+      <li><span class="suite-name">The double bedroom</span><span class="suite-zone">Annex</span><span class="suite-bed">Double · sleeps 2</span></li>
     </ul>"""
     intro = """
 <section class="house-hero">
@@ -399,9 +401,10 @@ def house():
   </figure>
   <div class="house-hero-copy">
     <p class="kicker">The House</p>
-    <h1 class="page-h1">Three houses, seven en-suite bedrooms</h1>
-    <p class="house-keyline">7 Bedrooms · 14 Guests · +2 Guests · All en-suite</p>
-    <p class="house-place">Comporta Retreat, gated estate · Comporta</p>
+    <h1 class="page-h1">Three houses, six en-suite bedrooms</h1>
+    <p class="house-keyline">6 Bedrooms · 16 Guests</p>
+    <p class="house-place">Each bedroom has its own bathroom.</p>
+    <p class="house-place">Comporta Retreat, gated estate · Carvalhal, Comporta</p>
   </div>
 </section>
 """
@@ -409,16 +412,15 @@ def house():
 <section class="included" id="included">
   <p class="kicker">Included</p>
   <h2 class="disp">What's """ + acc("included") + """.</h2>
-  <p class="included-highlight">Daily housekeeping, 4 hours, included.</p>
+  <p class="included-highlight">Daily housekeeping, included.</p>
   <ul class="included-list">
-    <li>A pool among the pines — heated on request (extra)</li>
+    <li>The pool</li>
     <li>A gym</li>
-    <li>A sauna &amp; Turkish bath</li>
+    <li>A sauna &amp; steam room</li>
     <li>A cinema</li>
     <li>A wine cellar</li>
     <li>A library corner</li>
     <li>Bicycles at the house</li>
-    <li>The 4x4</li>
   </ul>
 </section>
 """
@@ -427,7 +429,7 @@ def house():
   <div class="zone-band-inner">
   <h2 class="zone-title">Living</h2>
   <p class="zone-lead">A sitting room open to the pines, and a kitchen made for many hands.</p>
-  <p class="zone-inside">1 en-suite bedroom, a kitchen, a living room, a wine cellar, a library corner, a pantry and a utility room, the gym and the cinema.</p>
+  <p class="zone-inside">A kitchen, a living room, a wine cellar, a library corner, a pantry and a utility room, the gym and the cinema.</p>
   """ + zone_carousel([
         ("1.jpg", "The sitting and dining room at COLMO VILLA, Comporta", "The sitting and dining room"),
         ("11.jpg", "The living room at COLMO VILLA, Comporta", "The living room"),
@@ -435,8 +437,11 @@ def house():
         ("5.jpg", "A cabinet and a wall of small things at COLMO VILLA, Comporta", "A wall of small things"),
         ("7.jpg", "The kitchen at COLMO VILLA, Comporta", "The kitchen"),
         ("6.jpg", "The kitchen at COLMO VILLA, looking along the room, Comporta", "The kitchen, looking along"),
-        ("17.jpg", "An en-suite bedroom in the Living house at COLMO VILLA, Comporta", "An en-suite bedroom"),
-        ("39.jpg", "The Turkish bath at COLMO VILLA, Comporta", "The Turkish bath"),
+        ("wine-cellar.webp", "The wine cellar at COLMO VILLA, Comporta", "The wine cellar"),
+        ("051-library-vintage-desk-nook.webp", "The library at COLMO VILLA, Comporta", "The library corner"),
+        ("37.jpg", "The gym at COLMO VILLA, Comporta", "The gym"),
+        ("39.jpg", "The steam room at COLMO VILLA, Comporta", "The steam room"),
+        ("38.jpg", "The sauna at COLMO VILLA, beside the steam room, Comporta", "The sauna"),
     ]) + """
   <p class="zone-back"><a href="#volumes" aria-label="Back to the sketch of the houses"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5.5 11.5 12 5l6.5 6.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg> The sketch</a></p>
   </div>
@@ -448,11 +453,13 @@ def house():
   <h2 class="zone-title">Rest</h2>
   <p class="zone-lead">Four en-suite bedrooms, and a TV room.</p>
   """ + zone_carousel([
-        ("16.jpg", "A bedroom at COLMO VILLA, Comporta, dressed in linen", "Bedroom 1"),
-        ("30.jpg", "A bedroom at COLMO VILLA, Comporta, opening to the light", "Bedroom 2"),
-        ("20.jpg", "A bedroom at COLMO VILLA, Comporta, in white linen", "Bedroom 3"),
-        ("24.jpg", "A bedroom at COLMO VILLA looking to the pines, Comporta", "Bedroom 4"),
-        ("28.jpg", "A bedroom at COLMO VILLA, Comporta, with a patterned rug", "A patterned rug"),
+        ("16.jpg", "The green bedroom at COLMO VILLA, Comporta, with twin beds", "The green bedroom, twin beds"),
+        ("17.jpg", "The green bedroom at COLMO VILLA, Comporta, with twin beds", "The green bedroom"),
+        ("20.jpg", "The yellow bedroom in the Rest house at COLMO VILLA, Comporta, with twin beds", "The yellow bedroom, twin beds"),
+        ("23.jpg", "The yellow bedroom at COLMO VILLA, with the bath just beyond", "The yellow bedroom, the bath just beyond"),
+        ("24.jpg", "The beige bedroom at COLMO VILLA, Comporta, with a double bed", "The beige bedroom, double"),
+        ("beliches-3.webp", "Bunk beds at COLMO VILLA, Comporta", "The bunk room, for six"),
+        ("beliches-2.webp", "Bunk beds at COLMO VILLA, Comporta", "The bunk room, for six"),
         ("15.jpg", "The TV room in the Rest house at COLMO VILLA, Comporta", "The TV room"),
         ("22.jpg", "A desk and the view in the Rest house at COLMO VILLA, Comporta", "A desk, and the view"),
         ("25.jpg", "A corner of the Rest house at COLMO VILLA, Comporta", "A corner of the house"),
@@ -460,7 +467,6 @@ def house():
         ("18.jpg", "A bathroom in the Rest house at COLMO VILLA, Comporta", "A bathroom"),
         ("35.jpg", "A bathroom with an oval window at COLMO VILLA, Comporta", "The oval window"),
         ("36.jpg", "A bathroom opening to a court at COLMO VILLA, Comporta", "Opening to a court"),
-        ("23.jpg", "A bedroom with the bath just beyond, at COLMO VILLA, Comporta", "The bath, just beyond"),
         ("13.jpg", "A glazed passage of light in the Rest house at COLMO VILLA, Comporta", "A passage of light"),
     ]) + """
   <p class="zone-back"><a href="#volumes" aria-label="Back to the sketch of the houses"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5.5 11.5 12 5l6.5 6.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg> The sketch</a></p>
@@ -472,11 +478,13 @@ def house():
   <div class="zone-band-inner">
   <h2 class="zone-title">Annex</h2>
   <p class="zone-lead">A separate guest house, independent from the main house, and part of the same stay.</p>
-  <p class="zone-inside">2 en-suite bedrooms, a living room, and a kitchenette corner with fridge, coffee machine and microwave (no cooking). Included in the same booking.</p>
+  <p class="zone-inside">2 en-suite bedrooms — one with a double bed, one with two beds pushed together — a living room, and a kitchenette corner with fridge, coffee machine and microwave (no cooking). Included in the same booking.</p>
   """ + zone_carousel([
         ("Final-13.jpg", "The Annex at COLMO VILLA among the pines, Comporta", "The annex"),
-        ("26.jpg", "A quiet bedroom in the Annex at COLMO VILLA, Comporta", "Suite 1"),
-        ("33.jpg", "A bedroom in the Annex opening to the pines, Comporta", "Suite 2"),
+        ("30.jpg", "The rust bedroom at COLMO VILLA, Comporta, with two beds pushed together", "The rust bedroom, two beds pushed together"),
+        ("28.jpg", "The rust bedroom at COLMO VILLA, Comporta, with two beds pushed together", "The rust bedroom, two beds pushed together"),
+        ("26.jpg", "A quiet bedroom in the Annex at COLMO VILLA, Comporta", "A bedroom in the Annex"),
+        ("33.jpg", "A bedroom in the Annex opening to the pines, Comporta", "A bedroom in the Annex, opening to the pines"),
     ]) + """
   <p class="zone-back"><a href="#volumes" aria-label="Back to the sketch of the houses"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5.5 11.5 12 5l6.5 6.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg> The sketch</a></p>
   </div>
@@ -486,7 +494,7 @@ def house():
 <section class="sleeps" id="who-sleeps-where">
   <p class="kicker">The house</p>
   <h2 class="disp">Who sleeps """ + acc("where") + """.</h2>
-  <p class="classic lede">Seven en-suite bedrooms, across the three houses.</p>
+  <p class="classic lede">Six en-suite bedrooms, across the three houses. 16 guests in total. Each bedroom has its own bathroom.</p>
   """ + suites + """
 </section>
 """
@@ -494,7 +502,7 @@ def house():
 <section class="house-outside" id="outside">
   <h2 class="zone-title zone-title-plain">Outside</h2>
   <p class="zone-lead">The pool, the decks, the long table, the pines.</p>
-  <p class="zone-inside">The pool, heated on request (extra), the deck and the porch, among the pines.</p>
+  <p class="zone-inside">The pool among the pines, the deck and the porch.</p>
   <div class="grid zone-grid">
   """ + fig("Final-53.jpg","The pool at COLMO VILLA, Comporta","The pool","rb", heading=True) + """
   """ + fig("Final-54.jpg","The deck and the pool at COLMO VILLA, Comporta","The deck and the pool","ra", heading=True) + """
@@ -510,19 +518,27 @@ def house():
 <section class="good-to-know" id="good-to-know">
   <p class="kicker">The house</p>
   <h2 class="disp">Good to """ + acc("know") + """.</h2>
-  <p class="classic lede">What is already here.</p>
+  <p class="classic lede">Before you arrive.</p>
   <ul class="know-list">
-    <li>Three houses: 1 suite in Living, 4 in Rest, 2 in the Annex</li>
-    <li>The Annex is a separate guest house with 2 suites, included in the booking</li>
-    <li>Annex: kitchenette corner with fridge, coffee machine and microwave (no cooking)</li>
-    <li>A kitchen made for many hands</li>
-    <li>A pantry and a utility room</li>
-    <li>A TV room</li>
-    <li>A fireplace</li>
-    <li>Air conditioning</li>
-    <li>Wifi</li>
-    <li>The house, for your people only</li>
+    <li>Check-in from 16:00 to 23:00 · Check-out by 11:00</li>
+    <li>Daily housekeeping, 4 hours, included</li>
+    <li>A welcome tour of the house when you arrive</li>
+    <li>Pets welcome — tell us about them when you write for dates</li>
+    <li>Direct access to the pine forest</li>
+    <li>Air conditioning · Wifi · A fireplace</li>
   </ul>
+</section>
+<section class="on-request" id="on-request">
+  <p class="kicker">The house</p>
+  <h2 class="disp">On """ + acc("request") + """.</h2>
+  <ul class="know-list">
+    <li>A private chef</li>
+    <li>Massages at the house</li>
+    <li>Groceries in the house before you arrive</li>
+    <li>Pool heating</li>
+    <li>A 4x4</li>
+  </ul>
+  <p class="request-note">Some services carry an extra cost. Ask when you write for dates.</p>
 </section>
 """
     close = """
@@ -530,14 +546,14 @@ def house():
   <div class="band-inner" style="text-align:center">
     """ + media("Final-3.jpg", "The house and the annex at COLMO VILLA among the pines, Comporta", "rb") + """
     <p class="kicker" style="margin-top:36px">The house</p>
-    <p class="disp">The whole estate, for your group only.</p>
+    <p class="disp">The whole villa, for your group only.</p>
     <p><a class="btn" href="availability.html">Request dates</a></p>
   </div>
 </section>
 """
     body = intro + included + house_map() + living + rest + annex + sleeps + outside + know + close
     return page("The House · COLMO VILLA, Comporta",
-                "7 en-suite bedrooms for 14 guests, and +2, across three houses in the pines of Comporta. Comporta Retreat, a gated estate.",
+                "Six en-suite bedrooms for 16 guests, across three private houses in Comporta Retreat, Carvalhal.",
                 "the-house.html", body)
 
 
@@ -622,9 +638,8 @@ def experiences():
           </figure>
           <figure>
             <span class="hour">14<small>h</small></span>
-            <div class="day-typo-panel">
-              <p>An off-road drive — the 4x4 is yours to take.</p>
-            </div>
+            <div class="rb"><img src="images/051-library-vintage-desk-nook.webp" alt="The library at COLMO VILLA, Comporta" data-lightbox data-caption="A book in the library"></div>
+            <figcaption>A book in the library</figcaption>
           </figure>
           <figure>
             <span class="hour">17<small>h</small></span>
@@ -633,13 +648,13 @@ def experiences():
           </figure>
           <figure>
             <span class="hour">18<small>h</small></span>
-            <div><img src="images/Final-50.jpg" alt="Chairs around the fire pit among the pines at COLMO VILLA, Comporta" data-lightbox data-caption="Evening by the fire"></div>
+            <div><img src="images/046-living-fireplace-detail.webp" alt="The fireplace in the living room at COLMO VILLA, Comporta" data-lightbox data-caption="Evening by the fire"></div>
             <figcaption>Evening by the fire</figcaption>
           </figure>
           <figure>
             <span class="hour">19<small>h</small></span>
-            <div class="rb"><img src="images/38.jpg" alt="The sauna &amp; Turkish bath at COLMO VILLA, Comporta" data-lightbox data-caption="Sauna &amp; Turkish bath"></div>
-            <figcaption>Sauna &amp; Turkish bath</figcaption>
+            <div class="rb"><img src="images/38.jpg" alt="The sauna at COLMO VILLA, beside the steam room, Comporta" data-lightbox data-caption="Sauna &amp; steam room"></div>
+            <figcaption>Sauna &amp; steam room</figcaption>
           </figure>
           <figure>
             <span class="hour">20<small>h</small></span>
@@ -661,7 +676,7 @@ def experiences():
 </section>
 """
     return page("Days at Colmo · COLMO VILLA, Comporta",
-                "A little time for everything: the pool, the cinema, the gym and the sauna &amp; Turkish bath, and a day at Colmo.",
+                "A little time for everything: the pool, the cinema, the gym and the sauna &amp; steam room, and a day at Colmo.",
                 "days-at-colmo.html", body)
 
 def comporta():
@@ -671,9 +686,12 @@ def comporta():
     <p class="poetic">Pines behind, Atlantic <span class="acc">ahead</span>.</p>
     <h1 class="page-h1">Around Comporta</h1>
     <p class="classic lede">Beaches, rice fields, the village, restaurants.</p>
-    <p>COLMO VILLA is in the Comporta Retreat, on the Alentejo coast. About 5 min to the beach · about 1h15 from Lisbon.</p>
+    <p>COLMO VILLA is in the Comporta Retreat, in Carvalhal, on the Alentejo coast, with direct access to the pine forest. About 5 min to the beach · about 1h15 from Lisbon.</p>
   </div>
 </section>
+<figure class="around-hero-photo">
+  <div class="rb"><img src="images/034-pavilion-boardwalk-pines.webp" alt="A wooden boardwalk among the pines at COLMO VILLA, Comporta" data-lightbox data-caption="Among the pines"></div>
+</figure>
 <section class="around">
   <div class="around-inner">
     <div class="around-grid">
@@ -681,6 +699,16 @@ def comporta():
         <h2>The beaches</h2>
         <p>The Atlantic is close — about 5 min to the beach. Comporta, Carvalhal, Pego and Melides follow the shore from north to south.</p>
       </article>
+    </div>
+    <div class="around-photos">
+      <figure>
+        <div class="rb"><img src="images/028-dune-path-pine-forest-approach.webp" alt="A sandy path through the pines near COLMO VILLA, Comporta" data-lightbox data-caption="A path through the pines"></div>
+      </figure>
+      <figure>
+        <div class="ra"><img src="images/032-pavilions-boardwalk-dune-garden.webp" alt="The boardwalk and dune garden at COLMO VILLA, Comporta" data-lightbox data-caption="The boardwalk and dune garden"></div>
+      </figure>
+    </div>
+    <div class="around-grid">
       <article class="around-card">
         <h2>The rice fields</h2>
         <p>Rice fields are part of the landscape of the region, between the pines and the water.</p>
@@ -703,8 +731,8 @@ def comporta():
 
 
 def availability():
-    body = split("Availability", "Book the " + acc("house") + ".",
-       "The house, for your people only.",
+    body = split("Availability", "Book the " + acc("villa") + ".",
+       "",
        ["A request is not a booking. Once we confirm, you will receive the terms and the payment to hold the dates."],
        "2.jpg", "The sitting room at COLMO VILLA, Comporta, at the end of the day", intro=True, h1="Request your dates") + """
 <section class="band-dark">
@@ -782,10 +810,22 @@ def availability():
             <option value="12">12</option>
             <option value="13">13</option>
             <option value="14">14</option>
-            <option value="14+2">14+2</option>
+            <option value="15">15</option>
+            <option value="16">16</option>
           </select>
         </label>
       </div>
+      <label>How did you hear about us?
+        <select name="how_heard">
+          <option value="" selected>Choose if you like</option>
+          <option value="Instagram">Instagram</option>
+          <option value="Comporta Homepage">Comporta Homepage</option>
+          <option value="Dune Collections">Dune Collections</option>
+          <option value="A friend">A friend</option>
+          <option value="Press">Press</option>
+          <option value="Other">Other</option>
+        </select>
+      </label>
       <label>Message <textarea name="message" rows="4" placeholder="Tell us a little about the stay."></textarea></label>
       <button class="btn" type="submit">Request dates</button>
       <p class="mail-note">Or write to <a href="mailto:colmovilla@gmail.com">colmovilla@gmail.com</a>.</p>
@@ -803,7 +843,7 @@ def availability():
 def story():
     body = split("Our Story", "The refuge of " + acc("simplicity") + ".",
        "“Nothing was bought online.”",
-       ["A house for friends, and for anyone who needs to stop. Under the reed, between the pines and the Atlantic. The pool, the gym, the sauna &amp; Turkish bath and the cinema are there when you want them — proof of a life lived slowly, not a list of features."],
+       ["A house for friends, and for anyone who needs to stop. Under the reed, between the pines and the Atlantic. The pool, the gym, the sauna &amp; steam room and the cinema are there when you want them — proof of a life lived slowly, not a list of features."],
        "Final-57.jpg", "Looking back at COLMO VILLA from the garden, Comporta", intro=True, h1="Our story") + split(
        "The way it was made", "Portuguese tradition, held " + acc("lightly") + ".",
        "What is natural, and lasts.",
@@ -830,7 +870,8 @@ def contact():
   <div class="copy">
     <p class="kicker">Contact</p>
     <h1 class="page-h1">Get in touch</h1>
-    <p>COLMO VILLA sits in the Comporta Retreat, in Comporta, on the Alentejo coast. Pines and dunes around the house, the Atlantic beyond. The exact address will be shared once a stay is confirmed.</p>
+    <p>COLMO VILLA sits in the Comporta Retreat, in Carvalhal, Comporta, on the Alentejo coast. Pines around the house, the Atlantic beyond.</p>
+    <p class="contact-address">Alameda das Praias, Comporta Retreat, Lote 1, 7570-779 Carvalhal — Grândola</p>
     <p><a class="btn" href="availability.html">Request dates</a></p>
     <p class="mail-note"><a href="mailto:colmovilla@gmail.com">colmovilla@gmail.com</a></p>
   </div>
@@ -863,7 +904,7 @@ def contact():
 </section>
 """
     return page("Contact · COLMO VILLA, Comporta",
-                "Write to COLMO VILLA. We reply within 48 hours. In the Comporta Retreat, on the Alentejo coast. colmovilla@gmail.com",
+                "Write to COLMO VILLA. We reply within 48 hours. In the Comporta Retreat, in Carvalhal, on the Alentejo coast. colmovilla@gmail.com",
                 "contact.html", body)
 
 def policy_page(filename, title, desc, heading, lede, paras):
@@ -954,6 +995,7 @@ def main():
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>%s</title>
+<meta name="robots" content="noindex, nofollow">
 <link rel="canonical" href="%s">
 <meta http-equiv="refresh" content="0;url=%s">
 <script>%s</script>
