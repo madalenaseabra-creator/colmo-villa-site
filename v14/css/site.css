@@ -5,6 +5,7 @@
   --oliva:#5E5D48;
   --terra:#514638;
   --terracota:#A8573A;
+  --terracota-text:#8F4530; /* 5.77:1 on cream, 4.81:1 on sand */
   --ink:#3B3228;
   --radius:64px;
   --gutter:48px;
@@ -33,7 +34,7 @@ a:hover{text-decoration:underline}
   margin:0 0 14px;
   font-size:11px;font-weight:500;
   letter-spacing:.22em;text-transform:uppercase;
-  color:var(--terracota);
+  color:var(--terracota-text);
 }
 .disp{
   font-family:Archivo,sans-serif;
@@ -48,7 +49,7 @@ a:hover{text-decoration:underline}
   font-style:italic;font-weight:400;
   letter-spacing:0;
 }
-.disp .acc{color:var(--terracota)}
+.disp .acc{color:var(--terracota-text)}
 .classic{line-height:1.2;color:var(--terra)}
 h1.disp{font-size:clamp(36px,4.6vw,62px);margin:0 0 18px}
 h2.disp{font-size:clamp(30px,3.6vw,48px);margin:0 0 16px}
@@ -60,7 +61,7 @@ h2.disp{font-size:clamp(30px,3.6vw,48px);margin:0 0 16px}
   letter-spacing:0;line-height:1.2;
   color:var(--terra);
 }
-.poetic .acc{color:var(--terracota)}
+.poetic .acc{color:var(--terracota-text)}
 .page-h1{
   font-family:Archivo,sans-serif;
   font-weight:600;font-stretch:88%;
@@ -72,12 +73,12 @@ h2.disp{font-size:clamp(30px,3.6vw,48px);margin:0 0 16px}
   margin:0 0 16px;
 }
 .band-dark .poetic,.band-dark .page-h1{color:var(--cream)}
-.band-dark .poetic .acc{color:var(--terracota)}
+.band-dark .poetic .acc{color:var(--terracota-text)}
 .zone-title,.arrive-title{
   margin:0 0 14px;
   font-size:11px;font-weight:500;
   letter-spacing:.22em;text-transform:uppercase;
-  color:var(--terracota);
+  color:var(--terracota-text);
 }
 h3.section-label{
   font-size:11px;font-weight:500;
@@ -151,7 +152,7 @@ html.js body.is-home .brand{visibility:hidden;pointer-events:none}
 .nav-links a{color:inherit;text-decoration:none;opacity:1}
 .nav-links a:hover{opacity:1;text-decoration:none}
 .nav-links a[aria-current="page"]{
-  color:var(--terracota);opacity:1;font-weight:600;
+  color:var(--terracota-text);opacity:1;font-weight:600;
   box-shadow:inset 0 -2px 0 currentColor;
   padding-bottom:2px;
 }
@@ -196,13 +197,23 @@ html.js body.is-home .brand{visibility:hidden;pointer-events:none}
   text-align:right;
 }
 .nav-panel.is-open{display:block}
+
+/* Hide the entrance and header logos when the mobile menu is open, so they
+   cannot sit over the links or catch the tap. Book Now stays visible. */
+body.is-nav-open .fly-logo,
+body.is-nav-open .site-head .brand{
+  visibility:hidden !important;
+  pointer-events:none !important;
+  opacity:0 !important;
+}
+
 .nav-panel a{
   display:block;text-decoration:none;color:var(--terra);
   padding:20px 0;border-bottom:1px solid var(--areia);
   font-family:Archivo,sans-serif;font-weight:600;font-stretch:88%;font-size:24px;
   line-height:1.2;
 }
-.nav-panel a[aria-current="page"]{color:var(--terracota)}
+.nav-panel a[aria-current="page"]{color:var(--terracota-text)}
 
 .lang{
   display:flex;align-items:baseline;gap:7px;
@@ -211,7 +222,7 @@ html.js body.is-home .brand{visibility:hidden;pointer-events:none}
 }
 .lang a{color:var(--oliva);text-decoration:none;opacity:1;font-weight:400}
 .lang a:hover{color:var(--terra);text-decoration:none}
-.lang a[aria-current="true"]{color:var(--terracota);opacity:1;font-weight:700}
+.lang a[aria-current="true"]{color:var(--terracota-text);opacity:1;font-weight:700}
 .lang a[aria-disabled="true"]{cursor:default;opacity:1}
 .lang-sep{color:var(--oliva);opacity:1;font-weight:300}
 /* Home first screen: EN | PT must read on the sky */
@@ -237,7 +248,7 @@ html.js body.is-home .brand{visibility:hidden;pointer-events:none}
   font-family:inherit;font-size:12px;font-weight:400;
   letter-spacing:.14em;color:var(--oliva);
 }
-.nav-panel .lang a[aria-current="true"]{color:var(--terracota);font-weight:700}
+.nav-panel .lang a[aria-current="true"]{color:var(--terracota-text);font-weight:700}
 @media(max-width:960px){
   .head-actions .lang{display:none}
 }
@@ -363,7 +374,7 @@ html.js body.is-home .brand{visibility:hidden;pointer-events:none}
 }
 .band-dark .disp{color:var(--cream)}
 .band-dark .classic,.band-dark .lede{color:var(--sand)}
-.band-dark .disp .acc{color:var(--terracota)}
+.band-dark .disp .acc{color:var(--terracota-text)}
 .band-dark .kicker,
 .band-dark .arrive-title,
 .band-dark .zone-title{color:#D49474} /* 4.95:1 on ink */
@@ -1045,14 +1056,44 @@ form .btn{justify-self:start;margin-top:6px}
 
 /* —— One day timeline (compact marquee note) —— */
 .day-note{max-width:28em;margin:0 0 4px;color:var(--sand);font-size:15px}
-.day-marquee{
-  overflow:hidden;
+.day-marquee-wrap{
+  position:relative;
   margin-top:24px;
-  width:100%;
 }
-.day-track{display:flex;width:max-content;will-change:transform}
-.day-set{display:flex;gap:14px;padding-right:14px}
-.day-set figure{margin:0;flex:0 0 auto;width:clamp(112px,13.8vw,176px)}
+.day-marquee{
+  overflow-x:auto;
+  overflow-y:hidden;
+  -webkit-overflow-scrolling:touch;
+  scroll-snap-type:x mandatory;
+  scrollbar-width:thin;
+  width:100%;
+  touch-action:pan-x;
+  cursor:grab;
+  overscroll-behavior-x:contain;
+}
+.day-marquee:focus-visible{outline:2px solid var(--sand);outline-offset:4px}
+.day-marquee.is-dragging{
+  cursor:grabbing;
+  scroll-snap-type:none;
+  scroll-behavior:auto;
+  user-select:none;
+}
+.day-marquee img{-webkit-user-drag:none;user-select:none;pointer-events:auto}
+
+.day-track{display:flex;width:max-content}
+.day-set{display:flex;gap:14px;padding-right:clamp(48px,18vw,160px)} /* peek of the next card */
+.day-set figure{margin:0;flex:0 0 auto;width:clamp(112px,13.8vw,176px);scroll-snap-align:start}
+.day-nav{
+  position:absolute;top:42%;transform:translateY(-50%);
+  z-index:2;
+  width:40px;height:40px;border:0;border-radius:50%;
+  background:var(--cream);color:var(--ink);
+  font-size:22px;line-height:1;cursor:pointer;
+  box-shadow:0 1px 6px rgba(59,50,40,.18);
+}
+.day-nav:hover,.day-nav:focus-visible{outline:none;background:#fff8ee}
+.day-prev{left:4px}
+.day-next{right:4px}
 .day-set figure > div{overflow:hidden}
 .day-set img{width:100%;aspect-ratio:3/4;height:auto;object-fit:cover;display:block;cursor:pointer}
 .day-set img.day-kitchen{object-position:42% 50%}
@@ -1072,7 +1113,7 @@ form .btn{justify-self:start;margin-top:6px}
   font-family:Archivo,sans-serif;font-weight:600;font-stretch:88%;
   font-size:clamp(22px,2.4vw,32px);letter-spacing:-.02em;color:var(--cream);
 }
-.day-close .acc{color:var(--terracota)}
+.day-close .acc{color:#D49474} /* 4.95:1 on ink */
 .day-set .day-typo-panel{
   aspect-ratio:3/4;
   box-sizing:border-box;
@@ -1113,18 +1154,6 @@ form .btn{justify-self:start;margin-top:6px}
 @keyframes dayMarquee{
   from{transform:translateX(0)}
   to{transform:translateX(-50%)}
-}
-.day-marquee.is-animated .day-track{
-  animation:dayMarquee 56s linear infinite;
-}
-.day-marquee.is-animated:hover .day-track,
-.day-marquee.is-animated.is-paused .day-track,
-.day-marquee.is-animated:focus-within .day-track{
-  animation-play-state:paused;
-}
-@media(prefers-reduced-motion:reduce){
-  .day-marquee{overflow-x:auto;-webkit-overflow-scrolling:touch}
-  .day-marquee .day-track{animation:none;will-change:auto}
 }
 
 /* —— Good to know (Gallery) —— */
@@ -1367,7 +1396,7 @@ h3.photo-title{
   margin:28px 0 0;
 }
 .carousel-viewport{
-  overflow:hidden;
+  overflow:visible;
 }
 .carousel-track{
   display:flex;
@@ -1379,9 +1408,19 @@ h3.photo-title{
   -webkit-overflow-scrolling:touch;
   scrollbar-width:none;
   overscroll-behavior-x:contain;
+  touch-action:pan-x;
+  cursor:grab;
   padding:0 0 8px;
   outline:none;
 }
+.carousel-track.is-dragging{
+  cursor:grabbing;
+  scroll-snap-type:none;
+  scroll-behavior:auto;
+  user-select:none;
+}
+.carousel-track img{-webkit-user-drag:none;user-select:none}
+
 .carousel-track::-webkit-scrollbar{display:none}
 .carousel-slide{
   flex:0 0 min(640px,78%);
@@ -1503,6 +1542,22 @@ h3.photo-title{
   .home-facts span{white-space:normal}
   .home-below{padding-top:36px}
 }
+
+.home-intro .home-meta{
+  margin:-12px 0 18px;
+  font-size:15px;
+  letter-spacing:.02em;
+  color:var(--terra);
+}
+.home-intro > p{margin:0 0 16px;max-width:36em}
+.home-links{display:flex;flex-wrap:wrap;gap:18px 28px;margin:8px 0 22px !important}
+.home-links .discover{margin:0}
+.home-intro-cta{margin:8px 0 0}
+.home-story-block{padding-top:24px;padding-bottom:64px}
+.home-cta-inner{text-align:center;max-width:36em;margin:0 auto;padding:56px var(--gutter)}
+.home-cta-inner .disp{margin:0 0 16px}
+.home-cta-inner p{margin:0 0 18px}
+
 
 /* Back to the volumes sketch */
 .zone-back{margin:28px 0 0}

@@ -78,6 +78,7 @@
   function closePanel() {
     if (!panel) return;
     panel.classList.remove("is-open");
+    document.body.classList.remove("is-nav-open");
     toggle && toggle.setAttribute("aria-expanded", "false");
     document.body.style.overflow = "";
     requestSync();
@@ -86,6 +87,7 @@
     toggle.addEventListener("click", function () {
       const open = !panel.classList.contains("is-open");
       panel.classList.toggle("is-open", open);
+      document.body.classList.toggle("is-nav-open", open);
       toggle.setAttribute("aria-expanded", open ? "true" : "false");
       document.body.style.overflow = open ? "hidden" : "";
       requestSync();
@@ -339,35 +341,190 @@ document.querySelectorAll('.lang a[aria-disabled="true"]').forEach(function(a){
 })();
 
 
+
+  function bindLateralScroll(el, opts) {
+    opts = opts || {};
+    var onInteract = opts.onInteract || function () {};
+    var onInteractEnd = opts.onInteractEnd || function () {};
+    var stepFn = opts.step || function () { return Math.max(120, el.clientWidth * 0.8); };
+    var keyboard = opts.keyboard !== false;
+
+    var wheelIdle = null;
+    el.addEventListener("wheel", function (e) {
+      var dx = e.deltaX;
+      var dy = e.deltaY;
+      if (e.deltaMode === 1) { dx *= 16; dy *= 16; }
+      if (e.deltaMode === 2) { dx *= el.clientWidth; dy *= el.clientHeight; }
+      if (e.shiftKey && Math.abs(dy) >= Math.abs(dx)) dx = dy;
+      if (!dx) return;
+      var max = el.scrollWidth - el.clientWidth;
+      if (max <= 0) return;
+      var next = Math.max(0, Math.min(max, el.scrollLeft + dx));
+      if (next === el.scrollLeft) return;
+      e.preventDefault();
+      el.classList.add("is-dragging");
+      el.scrollLeft = next;
+      onInteract();
+      if (wheelIdle) clearTimeout(wheelIdle);
+      wheelIdle = setTimeout(function () {
+        wheelIdle = null;
+        el.classList.remove("is-dragging");
+        onInteractEnd();
+      }, 180);
+    }, { passive: false });
+
+    var startX = 0, startLeft = 0, dragging = false, moved = false;
+    el.addEventListener("pointerdown", function (e) {
+      if (e.pointerType === "touch") { onInteract(); return; }
+      if (e.button !== 0) return;
+      if (e.target.closest && e.target.closest("button, a, input, select, textarea")) return;
+      startX = e.clientX;
+      startLeft = el.scrollLeft;
+      dragging = true;
+      moved = false;
+      try { el.setPointerCapture(e.pointerId); } catch (err) {}
+    });
+    el.addEventListener("pointermove", function (e) {
+      if (!dragging) return;
+      var dx = e.clientX - startX;
+      if (!moved && Math.abs(dx) < 6) return;
+      moved = true;
+      el.classList.add("is-dragging");
+      el.scrollLeft = startLeft - dx;
+      onInteract();
+    });
+    function endDrag() {
+      if (!dragging) return;
+      dragging = false;
+      el.classList.remove("is-dragging");
+      if (moved) {
+        var prevent = function (ev) {
+          ev.preventDefault();
+          ev.stopPropagation();
+          el.removeEventListener("click", prevent, true);
+        };
+        el.addEventListener("click", prevent, true);
+      }
+      onInteractEnd();
+    }
+    el.addEventListener("pointerup", endDrag);
+    el.addEventListener("pointercancel", endDrag);
+
+    if (keyboard) {
+      el.addEventListener("keydown", function (e) {
+        if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+        e.preventDefault();
+        var dir = e.key === "ArrowLeft" ? -1 : 1;
+        el.scrollBy({ left: dir * stepFn(), behavior: "smooth" });
+        onInteract();
+        onInteractEnd();
+      });
+    }
+  }
+
 (function(){
   var root = document.querySelector("[data-day-marquee]");
   if (!root) return;
-  var track = root.querySelector(".day-track");
-  var set = root.querySelector(".day-set");
-  if (!track || !set) return;
+  var wrap = root.closest(".day-marquee-wrap") || root;
+  var prev = wrap.querySelector(".day-prev");
+  var next = wrap.querySelector(".day-next");
+  var figures = Array.from(root.querySelectorAll(".day-set figure"));
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (reduce){
-    root.classList.add("is-static");
-    return;
+  var timer = null;
+  var idle = null;
+  var hovering = false;
+  var focused = false;
+  var touching = false;
+  var onScreen = false;
+  var DELAY = 4000;
+  var IDLE = 5000;
+
+  root.setAttribute("tabindex", "0");
+  root.setAttribute("role", "region");
+  root.setAttribute("aria-label", "One day at Colmo");
+
+  function step(){
+    var first = figures[0];
+    if (!first) return 200;
+    var set = root.querySelector(".day-set");
+    var gap = set ? (parseFloat(getComputedStyle(set).gap) || 14) : 14;
+    return first.getBoundingClientRect().width + gap;
   }
-  var clone = set.cloneNode(true);
-  clone.setAttribute("aria-hidden", "true");
-  clone.querySelectorAll("[data-lightbox]").forEach(function(img){
-    img.removeAttribute("data-lightbox");
+  function wrapIndex(i){
+    var n = figures.length;
+    if (!n) return 0;
+    return ((i % n) + n) % n;
+  }
+  function currentIndex(){
+    var w = step();
+    if (!w) return 0;
+    return wrapIndex(Math.round(root.scrollLeft / w));
+  }
+  function go(i, instant){
+    i = wrapIndex(i);
+    var left = i * step();
+    if (instant || reduce) {
+      var prevB = root.style.scrollBehavior;
+      root.style.scrollBehavior = "auto";
+      root.scrollLeft = left;
+      root.style.scrollBehavior = prevB;
+    } else {
+      root.scrollTo({ left: left, behavior: "smooth" });
+    }
+  }
+  function stop(){
+    if (timer) { clearInterval(timer); timer = null; }
+    if (idle) { clearTimeout(idle); idle = null; }
+  }
+  function play(){
+    stop();
+    if (reduce || hovering || focused || touching || !onScreen || figures.length < 2) return;
+    timer = setInterval(function(){
+      go(currentIndex() + 1);
+    }, DELAY);
+  }
+  function schedulePlay(){
+    if (idle) clearTimeout(idle);
+    idle = setTimeout(function(){ idle = null; play(); }, IDLE);
+  }
+
+  bindLateralScroll(root, {
+    step: step,
+    keyboard: true,
+    onInteract: function(){ stop(); },
+    onInteractEnd: function(){ schedulePlay(); }
   });
-  track.appendChild(clone);
-  root.classList.add("is-animated");
-  function pause(){ root.classList.add("is-paused"); }
-  function resume(){ root.classList.remove("is-paused"); }
-  root.addEventListener("mouseenter", pause);
-  root.addEventListener("mouseleave", resume);
-  root.addEventListener("focusin", pause);
+
+  function manual(dir){
+    go(currentIndex() + dir);
+    stop();
+    schedulePlay();
+  }
+  if (prev) prev.addEventListener("click", function(){ manual(-1); });
+  if (next) next.addEventListener("click", function(){ manual(1); });
+
+  wrap.addEventListener("mouseenter", function(){ hovering = true; stop(); });
+  wrap.addEventListener("mouseleave", function(){ hovering = false; schedulePlay(); });
+  root.addEventListener("focusin", function(){ focused = true; stop(); });
   root.addEventListener("focusout", function(){
-    if (!root.contains(document.activeElement)) resume();
+    if (!root.contains(document.activeElement)) { focused = false; schedulePlay(); }
   });
-  root.addEventListener("touchstart", pause, {passive:true});
-  root.addEventListener("touchend", resume);
-  root.addEventListener("touchcancel", resume);
+  wrap.addEventListener("touchstart", function(){ touching = true; stop(); }, { passive: true });
+  wrap.addEventListener("touchend", function(){ touching = false; schedulePlay(); });
+  wrap.addEventListener("touchcancel", function(){ touching = false; schedulePlay(); });
+
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function(entries){
+      var e = entries[0];
+      onScreen = !!(e && e.isIntersecting && e.intersectionRatio >= 0.35);
+      if (onScreen) play();
+      else stop();
+    }, { threshold: [0, 0.35, 0.6] });
+    io.observe(wrap);
+  } else {
+    onScreen = true;
+    play();
+  }
 })();
 
   /* The House zone carousels: arrows, dots, swipe, keyboard, autoplay */
@@ -455,8 +612,28 @@ document.querySelectorAll('.lang a[aria-disabled="true"]').forEach(function(a){
 
     function manual(i) {
       go(i);
-      play();
+      stop();
+      schedulePlay();
     }
+
+    var idle = null;
+    var IDLE = 5000;
+    function schedulePlay() {
+      if (idle) clearTimeout(idle);
+      idle = setTimeout(function () { idle = null; play(); }, IDLE);
+    }
+    var _stop = stop;
+    stop = function () {
+      if (idle) { clearTimeout(idle); idle = null; }
+      _stop();
+    };
+
+    bindLateralScroll(track, {
+      keyboard: false,
+      step: slideWidth,
+      onInteract: function () { touching = true; stop(); },
+      onInteractEnd: function () { touching = false; schedulePlay(); }
+    });
 
     if (prev) prev.addEventListener("click", function () { manual(currentIndex() - 1); });
     if (next) next.addEventListener("click", function () { manual(currentIndex() + 1); });
@@ -473,14 +650,14 @@ document.querySelectorAll('.lang a[aria-disabled="true"]').forEach(function(a){
     });
 
     root.addEventListener("mouseenter", function () { hovering = true; stop(); });
-    root.addEventListener("mouseleave", function () { hovering = false; play(); });
+    root.addEventListener("mouseleave", function () { hovering = false; schedulePlay(); });
     root.addEventListener("focusin", function () { focused = true; stop(); });
     root.addEventListener("focusout", function () {
-      if (!root.contains(document.activeElement)) { focused = false; play(); }
+      if (!root.contains(document.activeElement)) { focused = false; schedulePlay(); }
     });
     root.addEventListener("touchstart", function () { touching = true; stop(); }, { passive: true });
-    root.addEventListener("touchend", function () { touching = false; play(); });
-    root.addEventListener("touchcancel", function () { touching = false; play(); });
+    root.addEventListener("touchend", function () { touching = false; schedulePlay(); });
+    root.addEventListener("touchcancel", function () { touching = false; schedulePlay(); });
 
     if ("IntersectionObserver" in window) {
       var io = new IntersectionObserver(function (entries) {
