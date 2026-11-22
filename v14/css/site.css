@@ -386,10 +386,10 @@ html.js body.is-home .brand{visibility:hidden;pointer-events:none}
 }
 .entrance-ident{
   position:absolute;left:50%;z-index:2;
-  top:calc(var(--nav) + min(520px,72vw) / 1.91 + 28px);
+  top:calc(var(--nav) + min(520px,72vw) / 1.91 + 140px);
   transform:translateX(-50%);
   text-align:center;
-  width:min(28em,88vw);
+  width:min(34em,90vw);
   color:var(--cream);
   pointer-events:none;
 }
