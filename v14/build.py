@@ -92,7 +92,7 @@ CHROME = """
     <button class="btn" type="button" data-close>Close</button>
   </div>
 </div>
-<script src="js/site.js?v=1406"></script>
+<script src="js/site.js?v=1407"></script>
 """
 
 FLY = """<a class="fly-logo" href="index.html" aria-label="COLMO VILLA · Comporta Retreat">
@@ -128,8 +128,8 @@ def page(title, desc, active, body, home=False, footer_current="", og_image="Fin
 <meta name="twitter:description" content="%s">
 <meta name="twitter:image" content="%s">
 <link rel="icon" href="images/esquisso.png" type="image/png">
-<link rel="stylesheet" href="fonts/fonts.css?v=1406">
-<link rel="stylesheet" href="css/site.css?v=1406">
+<link rel="stylesheet" href="fonts/fonts.css?v=1407">
+<link rel="stylesheet" href="css/site.css?v=1407">
 <script>document.documentElement.classList.add("js");</script>
 </head>
 <body%s>
@@ -291,7 +291,7 @@ def house_map():
             "tone": "olive",
             "href": "#studio",
             "label": "Annex",
-            "note": "Two en-suite bedrooms, a kitchen and a living room.",
+            "note": "Two en-suite bedrooms, a living room, and a kitchenette corner with fridge, coffee machine and microwave (no cooking).",
             "pts": [
                 "147,333 149,318 157,308 168,303 182,305 192,318 193,336 193,351 168,354 147,352",
             ],
@@ -354,7 +354,7 @@ def house_map():
       </button></li>
       <li><button type="button" class="house-map-pick" data-href="#studio" aria-pressed="false">
         <i class="swatch swatch--olive" aria-hidden="true"></i>
-        <span class="pick-copy"><strong>Annex</strong><span class="pick-note">Two en-suite bedrooms, a kitchen and a living room.</span></span>
+        <span class="pick-copy"><strong>Annex</strong><span class="pick-note">Two en-suite bedrooms, a living room, and a kitchenette corner with fridge, coffee machine and microwave (no cooking).</span></span>
       </button></li>
     </ul>
   </div>
@@ -490,7 +490,7 @@ def house():
   <div class="zone-band-inner">
   <h2 class="zone-title">Annex</h2>
   <p class="zone-lead">A separate guest house, independent from the main house, and part of the same stay.</p>
-  <p class="zone-inside">2 en-suite bedrooms, a kitchen and a living room. Included in the same booking.</p>
+  <p class="zone-inside">2 en-suite bedrooms, a living room, and a kitchenette corner with fridge, coffee machine and microwave (no cooking). Included in the same booking.</p>
   """ + zone_carousel([
         ("Final-13.jpg", "The Annex at COLMO VILLA among the pines, Comporta", "The annex"),
         ("26.jpg", "A quiet bedroom in the Annex at COLMO VILLA, Comporta", "Suite 1"),
@@ -529,6 +529,7 @@ def house():
     <li>7 en-suite bedrooms for 14 guests, and +2</li>
     <li>Three houses: 1 suite in Living, 4 in Rest, 2 in the Annex</li>
     <li>The Annex is a separate guest house with 2 suites, included in the booking</li>
+    <li>Annex: kitchenette corner with fridge, coffee machine and microwave (no cooking)</li>
     <li>A kitchen made for many hands</li>
     <li>A pantry and a utility room</li>
     <li>A TV room</li>
