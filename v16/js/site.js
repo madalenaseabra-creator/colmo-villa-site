@@ -29,6 +29,8 @@
     var eh=entrance.offsetHeight, startW=Math.min(520,vw*(vw<700?0.78:0.4)), startH=startW/ratio,
         startTop=Math.max(24,eh*0.44-startH/2);
     entrance.style.setProperty("--logo-bottom",(startTop+startH)+"px");
+    /* t463u: on a portrait phone the logo rests higher, in the sky above the trees; the title keeps its place */
+    if(vw<960&&eh>vw)startTop=Math.max(24,eh*0.19-startH/2);
     var endW=slot.width||(slot.height*ratio)||90, endH=endW/ratio;
     /* the centred title fades out as the logo flies, so the two never cross */
     var ov=entrance.querySelector(".ov"); if(ov){var gap=parseFloat(getComputedStyle(ov).paddingTop)||30;
