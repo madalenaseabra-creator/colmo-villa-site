@@ -603,3 +603,8 @@ html.js .is-home #arrive .ov{transition:none}
 .fly-logo.hide{transform:translateY(calc(-1 * var(--nav) - 24px))!important}
 @media(prefers-reduced-motion:reduce){.head,.fly-logo{transition:none}}
 @media(max-width:959px){.head .burger{margin-left:auto}.head .btn+.burger{margin-left:0}}
+/* t462u: mobile-only line breaks, Good to know after Who sleeps where */
+.nw{white-space:nowrap}
+@media(min-width:960px){br.mbr{display:none}}
+.gtk-l{margin-top:clamp(40px,6vw,64px)}
+#good-to-know>.sleeps{margin-top:0}
