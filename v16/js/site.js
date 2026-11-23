@@ -284,7 +284,9 @@
       });
     }
     map.on("style.load",paint);map.on("load",paint);
-    var pin=document.createElement("span");pin.className="cv-pin";pin.setAttribute("role","img");pin.setAttribute("aria-label","COLMO VILLA, approximate location");
+    /* t470u: the pin opens Google Maps at village level (Carvalhal), never the house */
+    var gm=document.querySelector(".cv-gmaps");
+    var pin=document.createElement("a");pin.className="cv-pin";pin.href=gm?gm.href:"https://www.google.com/maps/search/?api=1&query=Carvalhal%2C%20Gr%C3%A2ndola%2C%20Portugal";pin.target="_blank";pin.rel="noopener";pin.setAttribute("aria-label","Carvalhal, Comporta, in Google Maps");
     pin.innerHTML='<svg width="30" height="40" viewBox="0 0 32 42" aria-hidden="true"><path d="M16 1C7.7 1 1 7.6 1 15.8c0 10.6 13.2 24.3 14.4 25.6.3.3.9.3 1.2 0C17.8 40.1 31 26.4 31 15.8 31 7.6 24.3 1 16 1z" fill="#8F4530" stroke="#F1EBDD" stroke-width="1.4"/><circle cx="16" cy="15.5" r="5" fill="#F1EBDD"/></svg>';
     new maplibregl.Marker({element:pin,anchor:"bottom"}).setLngLat([LNG,LAT]).addTo(map);
   }
