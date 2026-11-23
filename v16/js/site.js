@@ -155,6 +155,8 @@
       ok.hidden=true;bad.hidden=true;
       var a=f.querySelector("[name=arrival]"), dep=f.querySelector("[name=departure]");
       if(a&&dep&&a.value&&dep.value&&dep.value<=a.value){bad.hidden=false;bad.textContent="Please check the dates: departure comes after arrival.";return;}
+      /* t485u: no request for nights already booked; the departure day may be the first day of a booking */
+      if(a&&dep&&a.value&&dep.value&&window.cvBooked&&window.cvBooked(a.value,dep.value)){bad.hidden=false;bad.textContent="Some of those nights are already booked. Please choose other dates.";return;}
       btn.disabled=true;
       fetch("https://formspree.io/f/xjywaajv",{method:"POST",body:new FormData(f),headers:{Accept:"application/json"}})
         .then(function(r){if(!r.ok)throw new Error("send");ok.hidden=false;f.reset();if(window.calReset)calReset();})
@@ -172,7 +174,7 @@
     var inA=d.querySelector("[name=arrival]"), inB=d.querySelector("[name=departure]");
     function iso(x){return x.getFullYear()+"-"+String(x.getMonth()+1).padStart(2,"0")+"-"+String(x.getDate()).padStart(2,"0");}
     /* t467u: booked nights, kept by hand until a calendar sync exists. [first night, departure day]; the departure day is free to arrive */
-    var BOOKED=[["2027-07-03","2027-08-21"]];
+    var BOOKED=[["2027-07-03","2027-08-22"]];
     /* t468u: data/busy.json is rewritten every 6 hours from the Google Calendar by a GitHub Action (dates only, no names); the list above is the fallback */
     function busy(x){var k=iso(x);return BOOKED.some(function(r){return k>=r[0]&&k<r[1];});}
     function clearRun(a,b){for(var y=new Date(a);y<b;y.setDate(y.getDate()+1))if(busy(y))return false;return true;}
@@ -196,6 +198,8 @@
     d.querySelector(".cal-prev").addEventListener("click",function(){var p=new Date(view.getFullYear(),view.getMonth()-1,1);if(p>=new Date(today.getFullYear(),today.getMonth(),1)){view=p;draw();}});
     d.querySelector(".cal-next").addEventListener("click",function(){view=new Date(view.getFullYear(),view.getMonth()+1,1);draw();});
     window.calReset=function(){A=B=null;draw();};
+    /* t485u: true if any night from arrival (inclusive) to departure (exclusive) is booked, using the current BOOKED list */
+    window.cvBooked=function(a,b){return BOOKED.some(function(r){return a<r[1]&&b>r[0];});};
     if(window.fetch)fetch("data/busy.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.ok?r.json():null;})
       .then(function(j){if(j&&Array.isArray(j.busy)){BOOKED=j.busy;draw();}}).catch(function(){});
     draw();
