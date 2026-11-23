@@ -74,7 +74,7 @@
     var seen=new Set();
     var bio=new IntersectionObserver(function(es){es.forEach(function(e){e.isIntersecting?seen.add(e.target):seen.delete(e.target);});
       bar.classList.toggle("away",seen.size>0);});
-    d.querySelectorAll("main .btn, .foot").forEach(function(b){bio.observe(b);});
+    d.querySelectorAll("main .btn, .site-foot").forEach(function(b){bio.observe(b);});
   }
 
   /* Lightbox */
@@ -236,4 +236,67 @@
   addEventListener("load",function(){measure();pos=half*0.5;m.scrollLeft=pos;});
   measure();pos=half*0.5;m.scrollLeft=pos;
   requestAnimationFrame(frame);
+})();
+
+/* Find us map: MapLibre GL 4.7.1 with the OpenFreeMap Positron style, repainted in the COLMO palette.
+   One approximate pin and a capped zoom, so the exact house is not shown. Loaded only near the screen. */
+(function(){
+  var el=document.getElementById("colmo-map"); if(!el)return;
+  var LNG=-8.77, LAT=38.31; /* approximate: Carvalhal, not the house */
+  function init(){
+    if(!window.maplibregl)return;
+    var touch=("ontouchstart" in window)||navigator.maxTouchPoints>0;
+    var map=new maplibregl.Map({container:el,style:"https://tiles.openfreemap.org/styles/positron",
+      center:[LNG,LAT],zoom:innerWidth<720?9.6:10.3,minZoom:8,maxZoom:12.5,
+      scrollZoom:false,dragPan:!touch,dragRotate:false,pitchWithRotate:false,touchPitch:false,attributionControl:false});
+    map.touchZoomRotate.disableRotation();map.keyboard.disableRotation();
+    map.addControl(new maplibregl.NavigationControl({showCompass:false}),"top-right");
+    var a=document.createElement("a");a.className="cv-attr";a.href="https://www.openstreetmap.org/copyright";a.target="_blank";a.rel="noopener";
+    a.textContent="\u00a9 OpenMapTiles \u00a9 OpenStreetMap";el.appendChild(a);
+    var LAND="#F1EBDD",WATER="#C9C8B3",MOTOR="#B7A58A",MAJOR="#CDBFA5",INK="#5E5D48";
+    var KEEP=["highway_motorway_inner","highway_motorway_subtle","highway_motorway_bridge_inner","tunnel_motorway_inner","highway_major_inner","highway_major_subtle"];
+    var MAJOR_FILTER=["all",["match",["geometry-type"],["LineString","MultiLineString"],true,false],["match",["get","class"],["trunk","primary","secondary"],true,false]];
+    function paint(){
+      function p(id,k,v){try{map.setPaintProperty(id,k,v);}catch(e){}}
+      function off(id){try{map.setLayoutProperty(id,"visibility","none");}catch(e){}}
+      (map.getStyle().layers||[]).forEach(function(ly){
+        var id=ly.id,t=ly.type;
+        if(t==="background")p(id,"background-color",LAND);
+        else if(t==="fill"){if(/water/.test(id))p(id,"fill-color",WATER);else if(/building|aeroway|pier/.test(id))off(id);else{p(id,"fill-color",LAND);p(id,"fill-opacity",1);}}
+        else if(t==="line"){
+          if(/waterway/.test(id))p(id,"line-color",WATER);
+          else if(KEEP.indexOf(id)===-1)off(id);
+          else if(/motorway/.test(id)){p(id,"line-color",MOTOR);p(id,"line-opacity",1);p(id,"line-width",["interpolate",["exponential",1.4],["zoom"],7,0.8,12,2.2]);}
+          else{try{map.setFilter(id,MAJOR_FILTER);}catch(e){}p(id,"line-color",MAJOR);p(id,"line-opacity",1);p(id,"line-width",["interpolate",["exponential",1.4],["zoom"],7,0.5,12,1.4]);}
+        }
+        else if(t==="symbol"){
+          if(/^label_(town|city|village)/.test(id)){p(id,"text-color",INK);p(id,"text-halo-color",LAND);p(id,"text-halo-width",1.2);p(id,"text-halo-blur",0);}
+          else off(id);
+        }
+        else if(t==="fill-extrusion")off(id);
+      });
+    }
+    map.on("style.load",paint);map.on("load",paint);
+    var pin=document.createElement("span");pin.className="cv-pin";pin.setAttribute("role","img");pin.setAttribute("aria-label","COLMO VILLA, approximate location");
+    pin.innerHTML='<svg width="30" height="40" viewBox="0 0 32 42" aria-hidden="true"><path d="M16 1C7.7 1 1 7.6 1 15.8c0 10.6 13.2 24.3 14.4 25.6.3.3.9.3 1.2 0C17.8 40.1 31 26.4 31 15.8 31 7.6 24.3 1 16 1z" fill="#8F4530" stroke="#F1EBDD" stroke-width="1.4"/><circle cx="16" cy="15.5" r="5" fill="#F1EBDD"/></svg>';
+    new maplibregl.Marker({element:pin,anchor:"bottom"}).setLngLat([LNG,LAT]).addTo(map);
+  }
+  var started=false;
+  function load(){if(started)return;started=true;
+    var l=document.createElement("link");l.rel="stylesheet";l.href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css";document.head.appendChild(l);
+    var s=document.createElement("script");s.src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js";s.onload=init;document.head.appendChild(s);}
+  if("IntersectionObserver" in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){io.disconnect();load();}});},{rootMargin:"600px 0px"});io.observe(el);}else load();
+})();
+
+/* v10 "One day at Colmo" strip: loops slowly, pauses on hover, focus and touch; still with reduced motion */
+(function(){
+  var root=document.querySelector("[data-day-marquee]"); if(!root)return;
+  var track=root.querySelector(".day-track"), set=root.querySelector(".day-set"); if(!track||!set)return;
+  if(window.matchMedia("(prefers-reduced-motion: reduce)").matches){root.classList.add("is-static");return;}
+  var clone=set.cloneNode(true); clone.setAttribute("aria-hidden","true"); track.appendChild(clone);
+  root.classList.add("is-animated");
+  function pause(){root.classList.add("is-paused");} function resume(){root.classList.remove("is-paused");}
+  root.addEventListener("mouseenter",pause); root.addEventListener("mouseleave",resume);
+  root.addEventListener("focusin",pause); root.addEventListener("focusout",function(){if(!root.contains(document.activeElement))resume();});
+  root.addEventListener("touchstart",pause,{passive:true}); root.addEventListener("touchend",resume); root.addEventListener("touchcancel",resume);
 })();
