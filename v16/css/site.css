@@ -565,15 +565,19 @@ html.js .reveal.seen{opacity:1;transform:none}
 /* t433u-t437u: opener photo 005; logo centred on the frame, "A house with roots." centred below it, soft scrim behind both */
 .fly-logo{top:calc(44svh - min(520px,72vw)*.267)}
 .is-home .scr.opener{--logo-bottom:calc(44svh + min(520px,72vw)*.267)}
-.scr.opener .bg{object-position:50% 50%}
+.scr.opener .bg{object-position:50% 30%}
 .scr.opener .ov{position:absolute;left:0;right:0;top:var(--logo-bottom);padding:clamp(14px,2.6vh,28px) var(--g) 0;text-align:center}
 .scr.opener .ov-in{max-width:none;margin:0 auto;padding-top:0}
 .scr.opener .t1{margin:0}
 html.js .is-home:not(.live) #arrive .ov{opacity:1;visibility:visible}
-.scr.opener .veil{background:radial-gradient(ellipse min(64vw,660px) min(50vh,440px) at 50% 52%,rgba(59,50,40,.76),rgba(59,50,40,.7) 60%,rgba(59,50,40,.32) 85%,rgba(59,50,40,0) 100%),linear-gradient(180deg,rgba(59,50,40,.18),rgba(59,50,40,0) 40%)}
+/* t447u: no radial patch; a gentle, even top-to-bottom wash plus soft shadows on the logo and title */
+.scr.opener .veil{background:linear-gradient(180deg,rgba(59,50,40,.6) 0%,rgba(59,50,40,.68) 32%,rgba(59,50,40,.8) 62%,rgba(59,50,40,.62) 100%)}
+.is-home .fly-logo:not(.on-light) .logo-cream{filter:drop-shadow(0 1px 2px rgba(40,33,26,.55)) drop-shadow(0 2px 18px rgba(40,33,26,.45))}
+.scr.opener .t1{text-shadow:0 1px 2px rgba(40,33,26,.5),0 2px 22px rgba(40,33,26,.45)}
 /* t436u: the lead line near the start, and the closing block at the end of Home */
 .band-lead{background:var(--terra);color:var(--linho);padding:72px var(--g) 76px;text-align:center}
 .band-lead .whole-lead{margin:0 auto}
 .band-whole .whole-end{padding:56px 0 96px}
 .band-whole .home-req{margin:0 0 18px;font-size:15px;color:var(--linho)}
 @media(max-width:720px){.band-lead{padding:56px var(--g) 60px}.band-whole .whole-end{padding:40px 0 80px}}
+.scr.opener .ov::before{display:none}
