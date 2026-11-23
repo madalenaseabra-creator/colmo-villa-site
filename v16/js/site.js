@@ -137,25 +137,27 @@
     });
   });
 
-  /* Request dates: a month calendar that fills Arrival and Departure (availability not connected yet) */
-  var cal=d.querySelector(".cal");
-  if(cal){
+  /* Request dates: two months side by side on desktop, one on mobile; fills Arrival and Departure (availability not connected yet) */
+  var cals=d.querySelectorAll(".cal-m");
+  if(cals.length){
     var M=["January","February","March","April","May","June","July","August","September","October","November","December"];
     var today=new Date();today.setHours(0,0,0,0);
     var view=new Date(today.getFullYear(),today.getMonth(),1), A=null, B=null;
-    var inA=d.querySelector("[name=arrival]"), inB=d.querySelector("[name=departure]"), title=d.querySelector(".cal-title");
+    var inA=d.querySelector("[name=arrival]"), inB=d.querySelector("[name=departure]");
     function iso(x){return x.getFullYear()+"-"+String(x.getMonth()+1).padStart(2,"0")+"-"+String(x.getDate()).padStart(2,"0");}
-    function draw(){
-      title.textContent=M[view.getMonth()]+" "+view.getFullYear();
+    function month(box,v){
+      box.querySelector(".cal-title").textContent=M[v.getMonth()]+" "+v.getFullYear();
       var h="";["Mo","Tu","We","Th","Fr","Sa","Su"].forEach(function(w){h+='<span class="dow">'+w+"</span>";});
-      var first=(view.getDay()+6)%7, days=new Date(view.getFullYear(),view.getMonth()+1,0).getDate();
+      var first=(v.getDay()+6)%7, days=new Date(v.getFullYear(),v.getMonth()+1,0).getDate();
       for(var i=0;i<first;i++)h+="<span></span>";
-      for(var n=1;n<=days;n++){var x=new Date(view.getFullYear(),view.getMonth(),n), c="";
+      for(var n=1;n<=days;n++){var x=new Date(v.getFullYear(),v.getMonth(),n), c="";
         if(A&&+x===+A||B&&+x===+B)c="sel";else if(A&&B&&x>A&&x<B)c="mid";
-        h+='<button type="button" class="'+c+'" data-d="'+iso(x)+'"'+(x<today?" disabled":"")+' aria-label="'+n+" "+M[view.getMonth()]+'">'+n+"</button>";}
-      cal.innerHTML=h;
+        h+='<button type="button" class="'+c+'" data-d="'+iso(x)+'"'+(x<today?" disabled":"")+' aria-label="'+n+" "+M[v.getMonth()]+'">'+n+"</button>";}
+      box.querySelector(".cal").innerHTML=h;
     }
-    cal.addEventListener("click",function(e){var b=e.target.closest("button");if(!b||b.disabled)return;
+    function draw(){[].forEach.call(cals,function(box,i){month(box,new Date(view.getFullYear(),view.getMonth()+i,1));});
+      d.querySelector(".cal-prev").disabled=(+view<=+new Date(today.getFullYear(),today.getMonth(),1));}
+    d.querySelector(".cal-months").addEventListener("click",function(e){var b=e.target.closest("button");if(!b||b.disabled)return;
       var p=b.getAttribute("data-d").split("-"), x=new Date(+p[0],+p[1]-1,+p[2]);
       if(!A||B||x<=A){A=x;B=null;}else B=x;
       inA.value=A?iso(A):"";inB.value=B?iso(B):"";draw();});

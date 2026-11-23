@@ -477,3 +477,31 @@ html.js .is-home:not(.docked) .mbar{opacity:0;visibility:hidden}
 
 /* t400u: credits sit inside the NiT quote block on About */
 .lines-in{margin-top:28px;max-width:34em;font-size:15px}
+
+/* t401u: strips start on the content grid with empty space on the left, and run off the right edge so a cut photo shows there is more */
+.marquee{margin-left:calc(max(0px,(100% - var(--max) - 2*var(--g))/2) + var(--g))}
+.dayband{overflow:hidden}
+.dayband .day-marquee{width:auto;margin-right:calc(-1*(max(0px,(100vw - var(--max) - 2*var(--g))/2) + var(--g)))}
+@media(prefers-reduced-motion:reduce){.marquee-track,.day-set{padding-right:var(--g)}}
+
+/* t402u: no browser blue ring or tap flash. Mouse and touch focus show nothing; keyboard focus gets a quiet Terra ring */
+html{-webkit-tap-highlight-color:transparent}
+a,button,[role=button],[tabindex],polygon,svg,.marquee,.hz,.day-marquee{-webkit-tap-highlight-color:transparent}
+:focus:not(:focus-visible){outline:none}
+svg .vol:focus,svg [data-house]:focus,svg:focus,.marquee:focus,.day-marquee:focus,.hz:focus,[data-house]:focus,.dots a:focus{outline:none}
+:focus-visible{outline:2px solid var(--terra);outline-offset:3px;border-radius:4px}
+svg .vol:focus-visible{outline:none;stroke:var(--terra);stroke-width:2;stroke-linejoin:round;stroke-opacity:1}
+.marquee:focus-visible,.day-marquee:focus-visible{outline:2px solid var(--terra);outline-offset:-2px}
+.band-close :focus-visible,.dayband :focus-visible,.site-foot :focus-visible,.scr :focus-visible,.hz :focus-visible{outline-color:var(--linho)}
+
+/* t403u: the calendar fills its panel. Two months side by side from 720px, one on mobile; arrows at the outer edges */
+.cal-wrap{display:grid;grid-template-columns:44px 1fr 44px;gap:10px;align-items:start}
+.cal-wrap>button{width:44px;height:44px;border:1px solid var(--oliva);background:none;border-radius:2px;cursor:pointer;font-size:20px;color:var(--terra);padding:0}
+.cal-wrap>button:disabled{opacity:.35;cursor:default}
+.cal-months{display:grid;grid-template-columns:1fr;gap:28px;min-width:0}
+.cal-m .cal-title{display:flex;align-items:center;justify-content:center;height:44px;margin-bottom:6px;font-weight:500;color:var(--terra)}
+.cal-m .cal{max-width:none;width:100%}
+.cal-m2{display:none}
+@media(min-width:720px){.cal-months{grid-template-columns:1fr 1fr;gap:36px}.cal-m2{display:block}}
+@media(max-width:420px){.cal-box{padding:14px 10px}.cal-wrap{grid-template-columns:36px 1fr 36px;gap:6px}.cal-wrap>button{width:36px;height:36px}}
+@media(max-width:719px){.cal-wrap{display:block;position:relative}.cal-wrap>button{position:absolute;top:0;z-index:1;width:40px;height:40px}.cal-prev{left:0}.cal-next{right:0}.cal-m .cal-title{height:40px}.cal-box{padding:14px 12px}}

@@ -38,10 +38,15 @@
 </div></section>
 <section class="band"><div class="sec" style="max-width:900px">
   <div class="formcard" style="background:var(--linho)">
-    <p><span class="ph">[AVAILABILITY CALENDAR: coming soon]</span></p>
     <div class="cal-box" style="background:var(--sand)">
-      <div class="cal-head"><button type="button" class="cal-prev" aria-label="Previous month">‹</button><b class="cal-title" aria-live="polite"></b><button type="button" class="cal-next" aria-label="Next month">›</button></div>
-      <div class="cal"></div>
+      <div class="cal-wrap">
+        <button type="button" class="cal-prev" aria-label="Previous month">‹</button>
+        <div class="cal-months" aria-live="polite">
+          <div class="cal-m"><b class="cal-title"></b><div class="cal"></div></div>
+          <div class="cal-m cal-m2"><b class="cal-title"></b><div class="cal"></div></div>
+        </div>
+        <button type="button" class="cal-next" aria-label="Next month">›</button>
+      </div>
       <p class="small" style="margin:10px 0 0">Tap your arrival, then your departure.</p>
     </div>
     <ul class="lines minstay" aria-label="Minimum stay">
