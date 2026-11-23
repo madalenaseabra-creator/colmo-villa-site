@@ -610,3 +610,6 @@ html.js .is-home #arrive .ov{transition:none}
 #good-to-know>.sleeps{margin-top:0}
 /* t463u: portrait phone, logo higher in the sky (title unchanged) */
 @media(max-width:959px) and (orientation:portrait){.fly-logo{top:calc(19svh - min(520px,72vw)*.267)}}
+/* t464u: opener logo and title in their natural colour, no shadow */
+.fly-logo .logo-cream,.is-home .fly-logo:not(.on-light) .logo-cream{filter:none}
+.scr.opener .t1,.scr.opener .t1 *{text-shadow:none}
