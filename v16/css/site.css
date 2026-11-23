@@ -536,3 +536,14 @@ svg .vol:focus-visible{outline:none;stroke:var(--terra);stroke-width:2;stroke-li
 .dayb .day-set .hour{font-size:22px;margin-bottom:10px}
 .dayb .day-set figcaption{font-size:14px;margin-top:10px}
 @media(max-width:759px){.dayb .day-set figure{width:62vw}}
+
+/* t413u/t414u: the v10 "One whole house" block, on Home after the opening, revealed on scroll */
+.band-whole{background:var(--terra);color:var(--linho);padding:96px var(--g) 0;text-align:center;overflow:hidden}
+.whole-in{max-width:1320px;margin:0 auto}
+.band-whole .close-t{margin-bottom:56px}
+.whole-photo{margin:0;border-radius:0 clamp(72px,11vw,180px) 0 0;overflow:hidden;line-height:0}
+.whole-photo img{width:100%;height:min(78vh,760px);object-fit:cover;display:block}
+html.js .reveal{opacity:0;transform:translateY(36px);transition:opacity .9s ease,transform .9s ease}
+html.js .reveal.seen{opacity:1;transform:none}
+@media(max-width:720px){.band-whole{padding-top:72px}.band-whole .close-t{margin-bottom:40px}.whole-photo{border-radius:0 72px 0 0}.whole-photo img{height:62vh}}
+@media(prefers-reduced-motion:reduce){html.js .reveal{opacity:1;transform:none;transition:none}}

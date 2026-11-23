@@ -271,13 +271,18 @@
   function drift(m,track,dir,hoverPause){
     var half=0,pos=0,last=0,idle=0,user=false,hover=false;
     function measure(){half=track.scrollWidth/2;}
-    function wrap(){if(!half)return;if(pos<=1)pos+=half;else if(pos>=half*1.5)pos-=half;}
+    /* t411u: endless in both directions; the upper edge also respects the real scroll end, so it never sticks */
+    function wrap(){if(!half)return;var max=m.scrollWidth-m.clientWidth-2,hi=Math.min(half*1.5,max-1);
+      if(pos<=Math.min(half*0.25,8))pos+=half;else if(pos>=hi)pos-=half;}
     function frame(t){var dt=last?Math.min(64,t-last):16;last=t;
       if(!reduce&&!user&&!hover&&t>idle&&half){pos+=dir*0.045*dt;wrap();m.scrollLeft=pos;}
       requestAnimationFrame(frame);}
     function hold(ms){idle=performance.now()+(ms||1600);}
     m._hold=hold;
-    m.addEventListener("scroll",function(){if(user||hover||performance.now()<idle){pos=m.scrollLeft;var p0=pos;wrap();if(pos!==p0)m.scrollLeft=pos;}},{passive:true});
+    /* before an arrow step, jump by one set if the step would cross an end, so the smooth step is never cut short */
+    m._pre=function(d){measure();if(!half)return;var max=m.scrollWidth-m.clientWidth-2,hi=Math.min(half*1.5,max-1),t=m.scrollLeft+d;
+      if(t>=hi){pos=m.scrollLeft-half;m.scrollLeft=pos;}else if(t<=Math.min(half*0.25,8)){pos=m.scrollLeft+half;m.scrollLeft=pos;}};
+    m.addEventListener("scroll",function(){if(user||hover||reduce||performance.now()<idle){pos=m.scrollLeft;var p0=pos;wrap();if(pos!==p0)m.scrollLeft=pos;}},{passive:true});
     m.addEventListener("wheel",function(){hold();},{passive:true});
     m.addEventListener("touchstart",function(){user=true;hold();},{passive:true});
     m.addEventListener("touchend",function(){user=false;hold();},{passive:true});
@@ -307,11 +312,19 @@
     function step(){var it=sc.querySelector("li,figure"); if(!it)return sc.clientWidth*0.8;
       var gap=parseFloat(getComputedStyle(it.parentElement).columnGap||getComputedStyle(it.parentElement).gap)||0;
       return it.getBoundingClientRect().width+gap;}
-    function go(d){if(sc._hold)sc._hold(2600);sc.scrollBy({left:d*step(),behavior:reduce?"auto":"smooth"});}
+    function go(d){if(sc._hold)sc._hold(2600);if(sc._pre)sc._pre(d*step());sc.scrollBy({left:d*step(),behavior:reduce?"auto":"smooth"});}
     function ends(){if(loops)return;var max=sc.scrollWidth-sc.clientWidth-2;
       prev.disabled=sc.scrollLeft<=2; next.disabled=sc.scrollLeft>=max;}
     prev.addEventListener("click",function(){go(-1);});
     next.addEventListener("click",function(){go(1);});
     sc.addEventListener("scroll",ends,{passive:true}); addEventListener("resize",ends); ends();
   });
+})();
+
+/* t413u: blocks marked .reveal fade in once they scroll into view */
+(function(){
+  var els=document.querySelectorAll(".reveal"); if(!els.length)return;
+  if(!("IntersectionObserver" in window)){els.forEach(function(e){e.classList.add("seen")});return;}
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("seen");io.unobserve(e.target);}});},{threshold:.15});
+  els.forEach(function(e){io.observe(e)});
 })();
