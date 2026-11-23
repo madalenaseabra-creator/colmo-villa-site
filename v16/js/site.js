@@ -335,7 +335,7 @@
     requestAnimationFrame(frame);
   }
   var am=document.querySelector(".marquee");
-  if(am)drift(am,am.querySelector(".marquee-track"),-1,false);
+  if(am)drift(am,am.querySelector(".marquee-track"),1,false); /* t476u: About gallery reversed, photos travel right to left, the same way as the > arrow */
   var dm=document.querySelector("[data-day-marquee]");
   if(dm){var tr=dm.querySelector(".day-track"),set=dm.querySelector(".day-set");
     if(tr&&set){var c=set.cloneNode(true);c.setAttribute("aria-hidden","true");tr.appendChild(c);drift(dm,tr,-1,true); /* t465u: the day strip now runs left to right */}}
