@@ -23,10 +23,15 @@
     var t=Math.min(1,Math.max(0,scrollY/thr));
     if(reduce)t=scrollY>24?1:0;
     var e=ease(t), vw=root.clientWidth;
-    var startW=Math.min(520,vw*(vw<700?0.78:0.4)), startTop=Math.max(64,Math.min(132,entrance.offsetHeight*0.13));
     var slot=brand.getBoundingClientRect();
     var ratio=brand.naturalWidth?brand.naturalWidth/brand.naturalHeight:1.87;
+    /* t433u/t435u: the big logo sits in the centre of the opener, the title centred just below it */
+    var eh=entrance.offsetHeight, startW=Math.min(520,vw*(vw<700?0.78:0.4)), startH=startW/ratio,
+        startTop=Math.max(24,eh*0.44-startH/2);
+    entrance.style.setProperty("--logo-bottom",(startTop+startH)+"px");
     var endW=slot.width||(slot.height*ratio)||90, endH=endW/ratio;
+    /* the centred title fades out as the logo flies, so the two never cross */
+    var ov=entrance.querySelector(".ov"); if(ov)ov.style.opacity=Math.max(0,1-t*2.5).toFixed(3);
     fly.style.transform="none";
     fly.style.width=lerp(startW,endW,e)+"px";
     fly.style.left=lerp((vw-startW)/2,slot.left,e)+"px";

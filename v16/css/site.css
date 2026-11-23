@@ -33,7 +33,7 @@ button,input,select,textarea{font:inherit;color:inherit}
 .nav{display:none}
 .nav a{color:var(--terra);text-decoration:none;font-size:14px;letter-spacing:.04em}
 .nav a:hover{text-decoration:underline}
-.nav a[aria-current=page]{text-decoration:underline;text-underline-offset:6px;color:var(--ink);font-weight:400}
+.nav a[aria-current=page]{text-decoration:underline;text-decoration-color:var(--tc);text-underline-offset:6px;color:var(--tc);font-weight:400}
 .lang{display:flex;gap:6px;align-items:baseline;font-size:12px;letter-spacing:.14em}
 .lang b{font-weight:600;color:var(--terra)}
 .lang span{color:var(--oliva-d)}
@@ -547,3 +547,33 @@ html.js .reveal{opacity:0;transform:translateY(36px);transition:opacity .9s ease
 html.js .reveal.seen{opacity:1;transform:none}
 @media(max-width:720px){.band-whole{padding-top:72px}.band-whole .close-t{margin-bottom:40px}.whole-photo{border-radius:0 72px 0 0}.whole-photo img{height:62vh}}
 @media(prefers-reduced-motion:reduce){html.js .reveal{opacity:1;transform:none;transition:none}}
+/* t418u: Home lead-in above the One whole house headline */
+.whole-lead{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;font-size:clamp(26px,2.8vw,38px);line-height:1.15;color:var(--sand);margin:0 auto 18px}
+/* t424u/t425u: About "Nothing was bought online": quote, attribution, paragraph and credits share one left edge and one width; credits inline with the footer dot */
+.story-col{max-width:34em}
+.story-col blockquote{padding-left:0;border-left:0}
+.story-col cite{margin-left:0}
+.story-col .prose{max-width:none}
+.story-col .prose p{max-width:none}
+.credits-line{margin:26px 0 0;font-size:15px;line-height:1.7;color:var(--ink)}
+.credits-line .cr{white-space:nowrap}
+.credits-line b{font-weight:500;color:var(--terra);margin-right:.35em}
+.credits-line .dot{color:var(--tc);margin:0 .6em;font-weight:500}
+@media(max-width:520px){.credits-line .cr{display:block;white-space:normal}.credits-line .dot{display:none}}
+/* t430u: Home ends on the Comporta screen, with the 48h line and Request dates */
+.scr .home-req{margin:26px 0 14px;font-size:15px}
+/* t433u-t437u: opener photo 005; logo centred on the frame, "A house with roots." centred below it, soft scrim behind both */
+.fly-logo{top:calc(44svh - min(520px,72vw)*.267)}
+.is-home .scr.opener{--logo-bottom:calc(44svh + min(520px,72vw)*.267)}
+.scr.opener .bg{object-position:50% 50%}
+.scr.opener .ov{position:absolute;left:0;right:0;top:var(--logo-bottom);padding:clamp(14px,2.6vh,28px) var(--g) 0;text-align:center}
+.scr.opener .ov-in{max-width:none;margin:0 auto;padding-top:0}
+.scr.opener .t1{margin:0}
+html.js .is-home:not(.live) #arrive .ov{opacity:1;visibility:visible}
+.scr.opener .veil{background:radial-gradient(ellipse min(64vw,660px) min(50vh,440px) at 50% 52%,rgba(59,50,40,.76),rgba(59,50,40,.7) 60%,rgba(59,50,40,.32) 85%,rgba(59,50,40,0) 100%),linear-gradient(180deg,rgba(59,50,40,.18),rgba(59,50,40,0) 40%)}
+/* t436u: the lead line near the start, and the closing block at the end of Home */
+.band-lead{background:var(--terra);color:var(--linho);padding:72px var(--g) 76px;text-align:center}
+.band-lead .whole-lead{margin:0 auto}
+.band-whole .whole-end{padding:56px 0 96px}
+.band-whole .home-req{margin:0 0 18px;font-size:15px;color:var(--linho)}
+@media(max-width:720px){.band-lead{padding:56px var(--g) 60px}.band-whole .whole-end{padding:40px 0 80px}}
