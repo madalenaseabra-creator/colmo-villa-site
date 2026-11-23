@@ -634,13 +634,12 @@ html.js .is-home #arrive .ov{transition:none}
 /* t485u: the house opening photos now carry a caption; the rounded corners move from the figure to the photo so the caption is not clipped */
 .house-head .photo.rb{border-radius:0;overflow:visible}
 .house-head .photo.rb img{display:block;border-radius:0 var(--r) 0 var(--r)}
-/* t488u (v17): one colour per house, shared by the sketch wash, the active button and the title; each 4.5:1 or more with linho text and on linho and sand */
-:root{--h-main:#8F4530;--h-quiet:#8A4A5E;--h-small:#55613F}
-.wash-living{fill:var(--h-main)}.wash-rest{fill:var(--h-quiet)}.wash-annex{fill:var(--h-small)}
-.wash.on,.wash-annex.on{fill-opacity:1;mix-blend-mode:multiply}
-.sketch .tabs button[data-house=living][aria-expanded=true]{background:var(--h-main);border-color:var(--h-main)}
-.sketch .tabs button[data-house=rest][aria-expanded=true]{background:var(--h-quiet);border-color:var(--h-quiet)}
-.sketch .tabs button[data-house=annex][aria-expanded=true]{background:var(--h-small);border-color:var(--h-small)}
-#living .house-head .t{color:var(--h-main)}
-#rest .house-head .t,.sg-quiet .sleeps-h{color:var(--h-quiet)}
-#annex .house-head .t,.sg-small .sleeps-h{color:var(--h-small)}
+/* t492u (v17): the sketch washes are back exactly as in v16 (rules above untouched). Each house's active button and title follow its own v16 wash colour.
+   Titles: the wash colours read below 4.5:1 on linho, so each title uses the closest darker shade of the same hue (4.5:1 or more on linho and sand).
+   Buttons: Main and Quiet keep the exact wash colour as background, with the darkest text that passes; Small's wash fails with any site text colour, so its button uses the darker shade of the same hue with linho text. */
+.sketch .tabs button[data-house=living][aria-expanded=true]{background:#C39677;border-color:#C39677;color:var(--ink)}
+.sketch .tabs button[data-house=rest][aria-expanded=true]{background:var(--rose);border-color:var(--rose);color:var(--terra)}
+.sketch .tabs button[data-house=annex][aria-expanded=true]{background:#605F49;border-color:#605F49;color:var(--linho)}
+#living .house-head .t{color:#7E5438}
+#rest .house-head .t,.sg-quiet .sleeps-h{color:#805339}
+#annex .house-head .t,.sg-small .sleeps-h{color:#605F49}
