@@ -625,3 +625,9 @@ html.js .is-home #arrive .ov{transition:none}
 .sg-quiet .bed span,.sg-small .bed span{color:var(--terra)}
 /* t474u: The House opener photo sits higher in the frame, so more of the house shows */
 .px-on #top>.bg{top:-4%}
+/* t477u: each volume title in the colour of its painted wash on the sketch, same hue darkened to 4.5:1 or more on linho and on sand */
+#living .house-head .t{color:#7D5437}
+#rest .house-head .t,.sg-quiet .sleeps-h{color:#7F5338}
+#annex .house-head .t,.sg-small .sleeps-h{color:#605D4A}
+/* t478u: page hero titles start on the same left margin as the content below (the 1200px column), desktop only; mobile was already aligned */
+@media(min-width:960px){.scr.opener-plain .ov{padding-left:max(var(--g),calc((100% - var(--max))/2));padding-right:max(var(--g),calc((100% - var(--max))/2))}}
