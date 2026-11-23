@@ -163,7 +163,7 @@
     });
   });
 
-  /* Request dates: two months side by side on desktop, one on mobile; fills Arrival and Departure (availability not connected yet) */
+  /* Request dates: two months side by side on desktop, one on mobile; fills Arrival and Departure (booked nights are a hand-kept list, see BOOKED) */
   var cals=d.querySelectorAll(".cal-m");
   if(cals.length){
     var M=["January","February","March","April","May","June","July","August","September","October","November","December"];
@@ -171,6 +171,11 @@
     var view=new Date(today.getFullYear(),today.getMonth(),1), A=null, B=null;
     var inA=d.querySelector("[name=arrival]"), inB=d.querySelector("[name=departure]");
     function iso(x){return x.getFullYear()+"-"+String(x.getMonth()+1).padStart(2,"0")+"-"+String(x.getDate()).padStart(2,"0");}
+    /* t467u: booked nights, kept by hand until a calendar sync exists. [first night, departure day]; the departure day is free to arrive */
+    var BOOKED=[["2027-07-03","2027-08-21"]];
+    function busy(x){var k=iso(x);return BOOKED.some(function(r){return k>=r[0]&&k<r[1];});}
+    function clearRun(a,b){for(var y=new Date(a);y<b;y.setDate(y.getDate()+1))if(busy(y))return false;return true;}
+    function off(x){if(x<today)return true;if(A&&!B&&x>A)return !clearRun(A,x);return busy(x);}
     function month(box,v){
       box.querySelector(".cal-title").textContent=M[v.getMonth()]+" "+v.getFullYear();
       var h="";["Mo","Tu","We","Th","Fr","Sa","Su"].forEach(function(w){h+='<span class="dow">'+w+"</span>";});
@@ -178,7 +183,7 @@
       for(var i=0;i<first;i++)h+="<span></span>";
       for(var n=1;n<=days;n++){var x=new Date(v.getFullYear(),v.getMonth(),n), c="";
         if(A&&+x===+A||B&&+x===+B)c="sel";else if(A&&B&&x>A&&x<B)c="mid";
-        h+='<button type="button" class="'+c+'" data-d="'+iso(x)+'"'+(x<today?" disabled":"")+' aria-label="'+n+" "+M[v.getMonth()]+'">'+n+"</button>";}
+        h+='<button type="button" class="'+c+'" data-d="'+iso(x)+'"'+(off(x)?" disabled":"")+' aria-label="'+n+" "+M[v.getMonth()]+'">'+n+"</button>";}
       box.querySelector(".cal").innerHTML=h;
     }
     function draw(){[].forEach.call(cals,function(box,i){month(box,new Date(view.getFullYear(),view.getMonth()+i,1));});
