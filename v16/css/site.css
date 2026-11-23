@@ -613,3 +613,5 @@ html.js .is-home #arrive .ov{transition:none}
 /* t464u: opener logo and title in their natural colour, no shadow */
 .fly-logo .logo-cream,.is-home .fly-logo:not(.on-light) .logo-cream{filter:none}
 .scr.opener .t1,.scr.opener .t1 *{text-shadow:none}
+/* t466u: Swim slide shows less paving: the photo sits higher (house and pool), less ground below */
+#swim>.bg{top:-4%}
