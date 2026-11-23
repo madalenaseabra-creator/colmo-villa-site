@@ -147,6 +147,27 @@
     fromHash(!!location.hash&&location.hash!=="#houses");
   }
 
+  /* t511u: minimum stay, as in the table on Request dates. Low (November to March) and Mid (April, May, October) 4 nights;
+     High (June, September, Christmas, Easter) 5; Peak (July, August) 7. A stay that crosses seasons needs the longest minimum of its nights.
+     Christmas = nights from 20 December to 6 January; Easter = nights from Palm Sunday to Easter Monday (to confirm with the owner). */
+  function cvEaster(y){var a=y%19,b=Math.floor(y/100),c=y%100,dd=Math.floor(b/4),e=b%4,f=Math.floor((b+8)/25),g=Math.floor((b-f+1)/3),
+    h=(19*a+b-dd-g+15)%30,i=Math.floor(c/4),k=c%4,l=(32+2*e+2*i-h-k)%7,m=Math.floor((a+11*h+22*l)/451),mo=Math.floor((h+l-7*m+114)/31),da=((h+l-7*m+114)%31)+1;
+    return new Date(y,mo-1,da);}
+  function cvNightMin(x){var mo=x.getMonth()+1, dt=x.getDate();
+    if(mo===7||mo===8)return 7;
+    if(mo===6||mo===9)return 5;
+    if((mo===12&&dt>=20)||(mo===1&&dt<=6))return 5;
+    var es=cvEaster(x.getFullYear()), from=new Date(es.getFullYear(),es.getMonth(),es.getDate()-7), to=new Date(es.getFullYear(),es.getMonth(),es.getDate()+1);
+    if(x>=from&&x<=to)return 5;
+    return 4;}
+  function cvParse(v){var p=v.split("-");return new Date(+p[0],+p[1]-1,+p[2]);}
+  /* nights and the minimum for a stay given as yyyy-mm-dd strings */
+  window.cvStay=function(a,b){var A=cvParse(a),B=cvParse(b),n=Math.round((B-A)/864e5),m=4;
+    for(var y=new Date(A);y<B;y.setDate(y.getDate()+1))m=Math.max(m,cvNightMin(y));
+    return {nights:n,min:m};};
+  window.cvMinFrom=function(a){var A=cvParse(a),m=cvNightMin(A),n=0;
+    for(var y=new Date(A);n<m;y.setDate(y.getDate()+1),n++)m=Math.max(m,cvNightMin(y));return m;};
+
   /* Forms: Formspree xjywaajv, with an email fallback */
   d.querySelectorAll("form[data-fs]").forEach(function(f){
     f.addEventListener("submit",function(e){
@@ -154,7 +175,10 @@
       var ok=f.querySelector(".ok"), bad=f.querySelector(".bad"), btn=f.querySelector("[type=submit]");
       ok.hidden=true;bad.hidden=true;
       var a=f.querySelector("[name=arrival]"), dep=f.querySelector("[name=departure]");
+      if(a&&dep&&(!a.value||!dep.value)){bad.hidden=false;bad.textContent="Please choose your arrival and departure dates.";return;}
       if(a&&dep&&a.value&&dep.value&&dep.value<=a.value){bad.hidden=false;bad.textContent="Please check the dates: departure comes after arrival.";return;}
+      /* t511u: no request shorter than the minimum stay */
+      if(a&&dep&&a.value&&dep.value){var st=window.cvStay(a.value,dep.value);if(st.nights<st.min){bad.hidden=false;bad.textContent="The minimum stay for those dates is "+st.min+" nights. Please choose longer dates.";return;}}
       /* t485u: no request for nights already booked; the departure day may be the first day of a booking */
       if(a&&dep&&a.value&&dep.value&&window.cvBooked&&window.cvBooked(a.value,dep.value)){bad.hidden=false;bad.textContent="Some of those nights are already booked. Please choose other dates.";return;}
       btn.disabled=true;
@@ -178,7 +202,12 @@
     /* t468u: data/busy.json is rewritten every 6 hours from the Google Calendar by a GitHub Action (dates only, no names); the list above is the fallback */
     function busy(x){var k=iso(x);return BOOKED.some(function(r){return k>=r[0]&&k<r[1];});}
     function clearRun(a,b){for(var y=new Date(a);y<b;y.setDate(y.getDate()+1))if(busy(y))return false;return true;}
-    function off(x){if(x<today)return true;if(A&&!B&&x>A)return !clearRun(A,x);return busy(x);}
+    /* t511u: once an arrival is chosen, departures shorter than the minimum stay are not offered */
+    function short(x){var s=window.cvStay(iso(A),iso(x));return s.nights<s.min;}
+    function off(x){if(x<today)return true;if(A&&!B&&x>A)return !clearRun(A,x)||short(x);return busy(x);}
+    var hint=d.querySelector(".cal-box .small"), hint0=hint?hint.textContent:"";
+    function tell(){if(!hint)return;if(A&&!B){hint.textContent="Now tap your departure. From this arrival the minimum stay is "+window.cvMinFrom(iso(A))+" nights.";}
+      else if(A&&B){var s=window.cvStay(iso(A),iso(B));hint.textContent=s.nights+" nights selected.";}else hint.textContent=hint0;}
     function month(box,v){
       box.querySelector(".cal-title").textContent=M[v.getMonth()]+" "+v.getFullYear();
       var h="";["Mo","Tu","We","Th","Fr","Sa","Su"].forEach(function(w){h+='<span class="dow">'+w+"</span>";});
@@ -194,10 +223,10 @@
     d.querySelector(".cal-months").addEventListener("click",function(e){var b=e.target.closest("button");if(!b||b.disabled)return;
       var p=b.getAttribute("data-d").split("-"), x=new Date(+p[0],+p[1]-1,+p[2]);
       if(!A||B||x<=A){A=x;B=null;}else B=x;
-      inA.value=A?iso(A):"";inB.value=B?iso(B):"";draw();});
+      inA.value=A?iso(A):"";inB.value=B?iso(B):"";draw();tell();});
     d.querySelector(".cal-prev").addEventListener("click",function(){var p=new Date(view.getFullYear(),view.getMonth()-1,1);if(p>=new Date(today.getFullYear(),today.getMonth(),1)){view=p;draw();}});
     d.querySelector(".cal-next").addEventListener("click",function(){view=new Date(view.getFullYear(),view.getMonth()+1,1);draw();});
-    window.calReset=function(){A=B=null;draw();};
+    window.calReset=function(){A=B=null;draw();tell();};
     /* t485u: true if any night from arrival (inclusive) to departure (exclusive) is booked, using the current BOOKED list */
     window.cvBooked=function(a,b){return BOOKED.some(function(r){return a<r[1]&&b>r[0];});};
     if(window.fetch)fetch("data/busy.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.ok?r.json():null;})
