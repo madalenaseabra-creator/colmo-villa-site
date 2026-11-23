@@ -631,3 +631,6 @@ html.js .is-home #arrive .ov{transition:none}
 #annex .house-head .t,.sg-small .sleeps-h{color:#605D4A}
 /* t478u: page hero titles start on the same left margin as the content below (the 1200px column), desktop only; mobile was already aligned */
 @media(min-width:960px){.scr.opener-plain .ov{padding-left:max(var(--g),calc((100% - var(--max))/2));padding-right:max(var(--g),calc((100% - var(--max))/2))}}
+/* t485u: the house opening photos now carry a caption; the rounded corners move from the figure to the photo so the caption is not clipped */
+.house-head .photo.rb{border-radius:0;overflow:visible}
+.house-head .photo.rb img{display:block;border-radius:0 var(--r) 0 var(--r)}
