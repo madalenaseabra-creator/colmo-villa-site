@@ -70,6 +70,7 @@
       ctrls.forEach(function(c){var on=c.getAttribute("data-house")===id;
         if(c.tagName==="BUTTON")c.setAttribute("aria-expanded",on?"true":"false");
         c.classList.toggle("on",on);});
+      d.querySelectorAll("[data-wash]").forEach(function(w){w.classList.toggle("on",w.getAttribute("data-wash")===id);});
       if(scroll&&id){var h=d.getElementById(id);if(h)h.scrollIntoView({behavior:reduce?"auto":"smooth",block:"start"});}
       if(scroll&&!id){var s=d.getElementById("houses");if(s)s.scrollIntoView({behavior:reduce?"auto":"smooth",block:"start"});}
       if(window.dispatchEvent)dispatchEvent(new Event("scroll"));
@@ -81,6 +82,8 @@
       show(next,true);
     }
     ctrls.forEach(function(c){
+      var w=d.querySelector('[data-wash="'+c.getAttribute("data-house")+'"]');
+      if(w){c.addEventListener("mouseenter",function(){w.classList.add("hover");});c.addEventListener("mouseleave",function(){w.classList.remove("hover");});}
       c.addEventListener("click",function(e){e.preventDefault();toggle(c.getAttribute("data-house"));});
       if(c.tagName!=="BUTTON")c.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();toggle(c.getAttribute("data-house"));}});
     });
