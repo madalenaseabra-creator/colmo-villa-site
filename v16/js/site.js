@@ -31,6 +31,23 @@
     entrance.style.setProperty("--logo-bottom",(startTop+startH)+"px");
     /* t463u: on a portrait phone the logo rests higher, in the sky above the trees; the title keeps its place */
     if(vw<960&&eh>vw)startTop=Math.max(24,eh*0.19-startH/2);
+    /* t465u: on desktop the logo rests high in the sky, and the title sits on the line of the pool's far edge */
+    var ov0=entrance.querySelector(".ov"), bgi=entrance.querySelector(".bg"), t1=entrance.querySelector(".t1");
+    if(!(vw<960&&eh>vw)){
+      startTop=Math.max(28,eh*0.05);
+      if(ov0&&bgi&&t1&&bgi.naturalWidth){
+        var key=vw+"x"+eh+"x"+bgi.offsetHeight+(document.fonts?document.fonts.status:"");
+        if(ov0._k!==key){
+          var W=bgi.offsetWidth,H=bgi.offsetHeight,nw=bgi.naturalWidth,nh=bgi.naturalHeight,sc=Math.max(W/nw,H/nh),
+              py=(parseFloat((getComputedStyle(bgi).objectPosition||"50% 30%").split(" ")[1])||30)/100,
+              poolY=bgi.offsetTop+(H-nh*sc)*py+0.621*nh*sc;
+          ov0.style.top="0px";
+          var mk=document.createElement("span");mk.style.cssText="display:inline-block;width:0;height:0;vertical-align:baseline";
+          t1.appendChild(mk);var base=mk.getBoundingClientRect().top-ov0.getBoundingClientRect().top;t1.removeChild(mk);
+          ov0.style.top=Math.round(poolY-base)+"px";ov0._k=key;
+        }
+      }
+    }else if(ov0&&ov0._k){ov0.style.top="";ov0._k=null;}
     var endW=slot.width||(slot.height*ratio)||90, endH=endW/ratio;
     /* the centred title fades out as the logo flies, so the two never cross */
     var ov=entrance.querySelector(".ov"); if(ov){var gap=parseFloat(getComputedStyle(ov).paddingTop)||30;
@@ -311,7 +328,7 @@
   if(am)drift(am,am.querySelector(".marquee-track"),-1,false);
   var dm=document.querySelector("[data-day-marquee]");
   if(dm){var tr=dm.querySelector(".day-track"),set=dm.querySelector(".day-set");
-    if(tr&&set){var c=set.cloneNode(true);c.setAttribute("aria-hidden","true");tr.appendChild(c);drift(dm,tr,1,true);}}
+    if(tr&&set){var c=set.cloneNode(true);c.setAttribute("aria-hidden","true");tr.appendChild(c);drift(dm,tr,-1,true); /* t465u: the day strip now runs left to right */}}
 
   /* arrows: about one photo per click, smooth */
   document.querySelectorAll("[data-gal]").forEach(function(g){
