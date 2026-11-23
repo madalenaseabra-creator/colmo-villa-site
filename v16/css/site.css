@@ -455,7 +455,9 @@ html.js .is-home:not(.docked) .mbar{opacity:0;visibility:hidden}
 .dayband .acc{color:var(--linho)}
 .dayband .classic{font-family:"Instrument Serif",Georgia,serif;font-style:italic;font-weight:400;line-height:1.2;color:var(--sand);font-size:clamp(20px,2.1vw,28px);margin:0 0 16px}
 .day-note{max-width:28em;margin:0 0 4px;color:var(--sand);font-size:15px}
-.day-marquee{overflow:hidden;margin-top:24px;width:100%}
+.day-marquee{overflow-x:auto;overflow-y:hidden;scrollbar-width:none;cursor:grab;overscroll-behavior-x:contain;width:100%}
+.day-marquee::-webkit-scrollbar{display:none}
+.day-marquee.drag{cursor:grabbing;user-select:none}
 .day-track{display:flex;width:max-content;will-change:transform}
 .day-set{display:flex;gap:14px;padding-right:14px}
 .day-set figure{margin:0;flex:0 0 auto;width:clamp(112px,13.8vw,176px)}
@@ -478,11 +480,7 @@ html.js .is-home:not(.docked) .mbar{opacity:0;visibility:hidden}
 /* t400u: credits sit inside the NiT quote block on About */
 .lines-in{margin-top:28px;max-width:34em;font-size:15px}
 
-/* t401u: strips start on the content grid with empty space on the left, and run off the right edge so a cut photo shows there is more */
-.marquee{margin-left:calc(max(0px,(100% - var(--max) - 2*var(--g))/2) + var(--g))}
-.dayband{overflow:hidden}
-.dayband .day-marquee{width:auto;margin-right:calc(-1*(max(0px,(100vw - var(--max) - 2*var(--g))/2) + var(--g)))}
-@media(prefers-reduced-motion:reduce){.marquee-track,.day-set{padding-right:var(--g)}}
+/* t401u inset and peek: replaced in v1607 (t405u) */
 
 /* t402u: no browser blue ring or tap flash. Mouse and touch focus show nothing; keyboard focus gets a quiet Terra ring */
 html{-webkit-tap-highlight-color:transparent}
@@ -505,3 +503,36 @@ svg .vol:focus-visible{outline:none;stroke:var(--terra);stroke-width:2;stroke-li
 @media(min-width:720px){.cal-months{grid-template-columns:1fr 1fr;gap:36px}.cal-m2{display:block}}
 @media(max-width:420px){.cal-box{padding:14px 10px}.cal-wrap{grid-template-columns:36px 1fr 36px;gap:6px}.cal-wrap>button{width:36px;height:36px}}
 @media(max-width:719px){.cal-wrap{display:block;position:relative}.cal-wrap>button{position:absolute;top:0;z-index:1;width:40px;height:40px}.cal-prev{left:0}.cal-next{right:0}.cal-m .cal-title{height:40px}.cal-box{padding:14px 12px}}
+
+/* v1607 (t405u): every gallery runs edge to edge, with wide arrows at both sides. Terra on Linho is 7.74:1 */
+.gal{position:relative}
+.gal-arr{position:absolute;top:50%;z-index:4;transform:translateY(-50%);display:flex;align-items:center;justify-content:center;width:44px;height:44px;padding:0;border:1px solid var(--terra);border-radius:50%;background:var(--linho);color:var(--terra);cursor:pointer;box-shadow:0 2px 10px rgba(59,50,40,.18);transition:background .2s,color .2s,opacity .2s}
+.gal-arr svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.gal-prev{left:10px}.gal-next{right:10px}
+.gal-arr:hover{background:var(--terra);color:var(--linho)}
+.gal-arr:disabled{opacity:0;pointer-events:none}
+.gal-arr:focus:not(:focus-visible){outline:none}
+.gal-arr:focus-visible{outline:2px solid var(--terra);outline-offset:3px}
+@media(min-width:960px){.gal-arr{width:68px;height:68px}.gal-arr svg{width:28px;height:28px}.gal-prev{left:24px}.gal-next{right:24px}}
+.marquee{margin-left:0}
+.marquee-track{padding:0}
+.dayband .gal-day{margin:24px calc(-1*(max(0px,(100vw - var(--max) - 2*var(--g))/2) + var(--g))) 0}
+.dayband .gal-day .day-set{padding-right:14px}
+.gal-day .gal-arr{top:calc(50% + 4px)}
+@media(max-width:759px){
+  .gal-cards .cards{padding:20px 0 8px;gap:0;max-width:none}
+  .gal-cards .cards figure{flex:0 0 100%}
+  .gal-cards .cards figcaption{padding:0 var(--g)}
+  .gal-cards .gal-arr{top:calc(20px + (100vw * .375))}
+}
+@media(min-width:760px){.gal-cards .gal-arrows{display:none}}
+@media(prefers-reduced-motion:reduce){.marquee-track,.day-set{padding-right:0}}
+/* t406u: no extra rule above Minimum stay */
+.minstay{border-top:0}
+/* t407u: Days horizontal uses the strip layout, with larger vertical photos */
+.dayb .day-set{gap:18px;padding-right:18px}
+.dayb .day-set figure{width:clamp(220px,24vw,340px)}
+.dayb .day-set img{aspect-ratio:3/4;height:auto}
+.dayb .day-set .hour{font-size:22px;margin-bottom:10px}
+.dayb .day-set figcaption{font-size:14px;margin-top:10px}
+@media(max-width:759px){.dayb .day-set figure{width:62vw}}

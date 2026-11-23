@@ -211,35 +211,6 @@
   size();
 })();
 
-/* About gallery: drifts left to right; dragging, swiping or the trackpad moves it, then the drift resumes */
-(function(){
-  var m=document.querySelector(".marquee"); if(!m)return;
-  var reduce=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var track=m.querySelector(".marquee-track"), half=0, pos=0, last=0, idle=0, user=false;
-  function measure(){half=track.scrollWidth/2;}
-  function wrap(){if(!half)return;if(pos<=1)pos+=half;else if(pos>=half*1.5)pos-=half;}
-  function frame(t){
-    var dt=last?Math.min(64,t-last):16;last=t;
-    if(!reduce&&!user&&t>idle&&half){pos-=0.045*dt;wrap();m.scrollLeft=pos;}
-    requestAnimationFrame(frame);
-  }
-  function touch(){idle=performance.now()+1600;}
-  m.addEventListener("scroll",function(){if(user||performance.now()<idle){pos=m.scrollLeft;var p0=pos;wrap();if(pos!==p0)m.scrollLeft=pos;}},{passive:true});
-  m.addEventListener("wheel",touch,{passive:true});
-  m.addEventListener("touchstart",function(){user=true;touch();},{passive:true});
-  m.addEventListener("touchend",function(){user=false;touch();},{passive:true});
-  var sx=0,sl=0;
-  m.addEventListener("pointerdown",function(e){if(e.pointerType!=="mouse")return;user=true;sx=e.clientX;sl=m.scrollLeft;m.classList.add("drag");m.setPointerCapture(e.pointerId);});
-  m.addEventListener("pointermove",function(e){if(!m.classList.contains("drag"))return;pos=sl-(e.clientX-sx);var p0=pos;wrap();sl+=pos-p0;m.scrollLeft=pos;});
-  function up(){if(!m.classList.contains("drag"))return;m.classList.remove("drag");user=false;touch();pos=m.scrollLeft;}
-  m.addEventListener("pointerup",up);m.addEventListener("pointercancel",up);
-  m.addEventListener("keydown",function(e){if(e.key==="ArrowRight"||e.key==="ArrowLeft"){touch();}});
-  addEventListener("resize",measure);
-  addEventListener("load",function(){measure();pos=half*0.5;m.scrollLeft=pos;});
-  measure();pos=half*0.5;m.scrollLeft=pos;
-  requestAnimationFrame(frame);
-})();
-
 /* Find us map: MapLibre GL 4.7.1 with the OpenFreeMap Positron style, repainted in the COLMO palette.
    One approximate pin and a capped zoom, so the exact house is not shown. Loaded only near the screen. */
 (function(){
@@ -290,15 +261,57 @@
   if("IntersectionObserver" in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){io.disconnect();load();}});},{rootMargin:"600px 0px"});io.observe(el);}else load();
 })();
 
-/* v10 "One day at Colmo" strip: loops slowly, pauses on hover, focus and touch; still with reduced motion */
+
+
+/* v1607 (t405u): galleries run edge to edge with wide arrows.
+   The About gallery and the day strip drift on their own (left to right, and right to left as in v10),
+   dragging, swiping or the arrows move them, then the drift resumes. Nothing drifts with reduced motion. */
 (function(){
-  var root=document.querySelector("[data-day-marquee]"); if(!root)return;
-  var track=root.querySelector(".day-track"), set=root.querySelector(".day-set"); if(!track||!set)return;
-  if(window.matchMedia("(prefers-reduced-motion: reduce)").matches){root.classList.add("is-static");return;}
-  var clone=set.cloneNode(true); clone.setAttribute("aria-hidden","true"); track.appendChild(clone);
-  root.classList.add("is-animated");
-  function pause(){root.classList.add("is-paused");} function resume(){root.classList.remove("is-paused");}
-  root.addEventListener("mouseenter",pause); root.addEventListener("mouseleave",resume);
-  root.addEventListener("focusin",pause); root.addEventListener("focusout",function(){if(!root.contains(document.activeElement))resume();});
-  root.addEventListener("touchstart",pause,{passive:true}); root.addEventListener("touchend",resume); root.addEventListener("touchcancel",resume);
+  var reduce=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function drift(m,track,dir,hoverPause){
+    var half=0,pos=0,last=0,idle=0,user=false,hover=false;
+    function measure(){half=track.scrollWidth/2;}
+    function wrap(){if(!half)return;if(pos<=1)pos+=half;else if(pos>=half*1.5)pos-=half;}
+    function frame(t){var dt=last?Math.min(64,t-last):16;last=t;
+      if(!reduce&&!user&&!hover&&t>idle&&half){pos+=dir*0.045*dt;wrap();m.scrollLeft=pos;}
+      requestAnimationFrame(frame);}
+    function hold(ms){idle=performance.now()+(ms||1600);}
+    m._hold=hold;
+    m.addEventListener("scroll",function(){if(user||hover||performance.now()<idle){pos=m.scrollLeft;var p0=pos;wrap();if(pos!==p0)m.scrollLeft=pos;}},{passive:true});
+    m.addEventListener("wheel",function(){hold();},{passive:true});
+    m.addEventListener("touchstart",function(){user=true;hold();},{passive:true});
+    m.addEventListener("touchend",function(){user=false;hold();},{passive:true});
+    if(hoverPause){m.addEventListener("mouseenter",function(){hover=true;});m.addEventListener("mouseleave",function(){hover=false;hold(600);});}
+    var sx=0,sl=0;
+    m.addEventListener("pointerdown",function(e){if(e.pointerType!=="mouse")return;user=true;sx=e.clientX;sl=m.scrollLeft;m.classList.add("drag");m.setPointerCapture(e.pointerId);});
+    m.addEventListener("pointermove",function(e){if(!m.classList.contains("drag"))return;pos=sl-(e.clientX-sx);var p0=pos;wrap();sl+=pos-p0;m.scrollLeft=pos;});
+    function up(){if(!m.classList.contains("drag"))return;m.classList.remove("drag");user=false;hold();pos=m.scrollLeft;}
+    m.addEventListener("pointerup",up);m.addEventListener("pointercancel",up);
+    m.addEventListener("keydown",function(e){if(e.key==="ArrowRight"||e.key==="ArrowLeft")hold(2500);});
+    addEventListener("resize",measure);
+    function start(){measure();pos=half*0.5;m.scrollLeft=pos;}
+    addEventListener("load",start);start();
+    requestAnimationFrame(frame);
+  }
+  var am=document.querySelector(".marquee");
+  if(am)drift(am,am.querySelector(".marquee-track"),-1,false);
+  var dm=document.querySelector("[data-day-marquee]");
+  if(dm){var tr=dm.querySelector(".day-track"),set=dm.querySelector(".day-set");
+    if(tr&&set){var c=set.cloneNode(true);c.setAttribute("aria-hidden","true");tr.appendChild(c);drift(dm,tr,1,true);}}
+
+  /* arrows: about one photo per click, smooth */
+  document.querySelectorAll("[data-gal]").forEach(function(g){
+    var sc=g.querySelector(".marquee,.day-marquee,.cards"); if(!sc)return;
+    var prev=g.querySelector(".gal-prev"), next=g.querySelector(".gal-next");
+    var loops=!!sc._hold;
+    function step(){var it=sc.querySelector("li,figure"); if(!it)return sc.clientWidth*0.8;
+      var gap=parseFloat(getComputedStyle(it.parentElement).columnGap||getComputedStyle(it.parentElement).gap)||0;
+      return it.getBoundingClientRect().width+gap;}
+    function go(d){if(sc._hold)sc._hold(2600);sc.scrollBy({left:d*step(),behavior:reduce?"auto":"smooth"});}
+    function ends(){if(loops)return;var max=sc.scrollWidth-sc.clientWidth-2;
+      prev.disabled=sc.scrollLeft<=2; next.disabled=sc.scrollLeft>=max;}
+    prev.addEventListener("click",function(){go(-1);});
+    next.addEventListener("click",function(){go(1);});
+    sc.addEventListener("scroll",ends,{passive:true}); addEventListener("resize",ends); ends();
+  });
 })();
