@@ -9,7 +9,17 @@ MIN_NIGHTS = int(os.environ.get("MIN_NIGHTS", "2"))
 if not URL:
     print("ICAL_URL secret is not set; nothing to do."); sys.exit(0)
 
-raw = urllib.request.urlopen(URL, timeout=30).read().decode("utf-8", "replace")
+import time
+raw = None
+for attempt in range(4):                                   # errors never print the private address
+    try:
+        req = urllib.request.Request(URL, headers={"User-Agent": "colmo-villa-availability/1.0"})
+        raw = urllib.request.urlopen(req, timeout=30).read().decode("utf-8", "replace"); break
+    except Exception as e:
+        code = getattr(e, "code", type(e).__name__)
+        print("Calendar fetch failed (%s), attempt %d" % (code, attempt + 1)); time.sleep(20 * (attempt + 1))
+if raw is None or "BEGIN:VCALENDAR" not in raw:
+    print("Could not read the calendar; busy.json left unchanged."); sys.exit(1)
 lines = []
 for ln in raw.replace("\r\n", "\n").split("\n"):          # unfold folded lines
     if ln[:1] in (" ", "\t") and lines: lines[-1] += ln[1:]
