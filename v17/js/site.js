@@ -78,7 +78,7 @@
     function run(){
       queued=false;var f=innerWidth<720?0.25:0.5;
       vis.forEach(function(s){
-        var r=s.getBoundingClientRect(), m=s.querySelector(":scope>.bg");
+        var r=s.getBoundingClientRect(), m=s.querySelector(":scope>.bg,:scope>picture>.bg");
         if(m)m.style.transform="translate3d(0,"+(-r.top*f).toFixed(1)+"px,0)";
       });
     }
@@ -342,7 +342,7 @@
   if(am)drift(am,am.querySelector(".marquee-track"),1,false); /* t476u: About gallery reversed, photos travel right to left, the same way as the > arrow */
   var dm=document.querySelector("[data-day-marquee]");
   if(dm){var tr=dm.querySelector(".day-track"),set=dm.querySelector(".day-set");
-    if(tr&&set){var c=set.cloneNode(true);c.setAttribute("aria-hidden","true");tr.appendChild(c);drift(dm,tr,-1,true); /* t465u: the day strip now runs left to right */}}
+    if(tr&&set){var c=set.cloneNode(true);c.setAttribute("aria-hidden","true");tr.appendChild(c);drift(dm,tr,1,true); /* t496u: the day strip runs right to left, the same way as the About gallery and the > arrow */}}
 
   /* arrows: about one photo per click, smooth */
   document.querySelectorAll("[data-gal]").forEach(function(g){
@@ -352,9 +352,13 @@
     function step(){var it=sc.querySelector("li,figure"); if(!it)return sc.clientWidth*0.8;
       var gap=parseFloat(getComputedStyle(it.parentElement).columnGap||getComputedStyle(it.parentElement).gap)||0;
       return it.getBoundingClientRect().width+gap;}
-    function go(d){if(sc._hold)sc._hold(2600);if(sc._pre)sc._pre(d*step());sc.scrollBy({left:d*step(),behavior:reduce?"auto":"smooth"});}
-    function ends(){if(loops)return;var max=sc.scrollWidth-sc.clientWidth-2;
-      prev.disabled=sc.scrollLeft<=2; next.disabled=sc.scrollLeft>=max;}
+    function go(d){if(sc._hold)sc._hold(2600);if(sc._pre)sc._pre(d*step());
+      /* t496u: galleries that do not loop wrap around: > on the last photo goes back to the first, < on the first goes to the last */
+      if(!loops){var max=sc.scrollWidth-sc.clientWidth-2;
+        if(d>0&&sc.scrollLeft>=max){sc.scrollTo({left:0,behavior:reduce?"auto":"smooth"});return;}
+        if(d<0&&sc.scrollLeft<=2){sc.scrollTo({left:sc.scrollWidth,behavior:reduce?"auto":"smooth"});return;}}
+      sc.scrollBy({left:d*step(),behavior:reduce?"auto":"smooth"});}
+    function ends(){prev.disabled=false;next.disabled=false;} /* t496u: the arrows are never hidden */
     prev.addEventListener("click",function(){go(-1);});
     next.addEventListener("click",function(){go(1);});
     sc.addEventListener("scroll",ends,{passive:true}); addEventListener("resize",ends); ends();

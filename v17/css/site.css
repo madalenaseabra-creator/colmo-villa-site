@@ -70,9 +70,9 @@ body{padding-bottom:76px}
 /* Full screen parallax (rodrigomoran.com) */
 .px{position:relative;height:100vh;height:100svh;overflow:hidden;background:var(--sand)}
 .px.short{height:72vh;height:72svh}
-.px>.bg{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover}
-.px-on .px>.bg{top:-12.5%;height:125%;will-change:transform}
-@media(min-width:720px){.px-on .px>.bg{top:-25%;height:150%}}
+.px>.bg,.px>picture>.bg{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover}
+.px-on .px>.bg,.px-on .px>picture>.bg{top:-12.5%;height:125%;will-change:transform}
+@media(min-width:720px){.px-on .px>.bg,.px-on .px>picture>.bg{top:-25%;height:150%}}
 .tag{position:absolute;z-index:2;left:var(--g);right:var(--g);bottom:calc(92px + env(safe-area-inset-bottom));max-width:560px;background:var(--linho);color:var(--ink);padding:22px 24px 24px;border-radius:0 var(--r) 0 0}
 .tag .t{margin-bottom:10px}
 .tag p{margin:0}
@@ -525,7 +525,8 @@ svg .vol:focus-visible{outline:none;stroke:var(--terra);stroke-width:2;stroke-li
   .gal-cards .cards figcaption{padding:0 var(--g)}
   .gal-cards .gal-arr{top:calc(20px + (100vw * .375))}
 }
-@media(min-width:760px){.gal-cards .gal-arrows{display:none}}
+/* t496u: the house gallery arrows show on every screen; from 760px the photos run in one row, two at a time, so the arrows have somewhere to go */
+@media(min-width:760px){.gal-cards .cards{display:flex;gap:24px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:var(--g);scrollbar-width:none}.gal-cards .cards::-webkit-scrollbar{display:none}.gal-cards .cards figure{flex:0 0 calc((100% - 24px)/2)}}
 @media(prefers-reduced-motion:reduce){.marquee-track,.day-set{padding-right:0}}
 /* t406u: no extra rule above Minimum stay */
 .minstay{border-top:0}
@@ -595,7 +596,7 @@ html.js .is-home:not(.live) #arrive .ov{opacity:1;visibility:visible}
 /* t455u: no opacity lag on the opener title, so it fades before it can reach the logo */
 html.js .is-home #arrive .ov{transition:none}
 /* t457u: portrait phones use a per-photo horizontal focus */
-@media(max-width:959px) and (orientation:portrait){.px>.bg{object-position:var(--mpos,50%) 50%}.scr.opener .bg{object-position:var(--mpos,50%) 50%}}
+@media(max-width:959px) and (orientation:portrait){.px>.bg,.px>picture>.bg{object-position:var(--mpos,50%) 50%}.scr.opener .bg{object-position:var(--mpos,50%) 50%}}
 /* t461u: auto-hide header */
 .head{transition:transform .35s ease,opacity .35s}
 .head.hide,html.js .is-home .head.docked.hide{transform:translateY(-105%)}
@@ -646,3 +647,5 @@ html.js .is-home #arrive .ov{transition:none}
 /* t495u (v17): only Quiet Thatch lighter and rosier: the lightest dusty rose of the old-rose family that keeps 4.5:1 (title on linho; the label on sand needs one step darker) */
 #rest .house-head .t{color:#995852}
 .sg-quiet .sleeps-h{color:#884E49}
+/* t496u: phone openers use their own portrait crop, already centred on the subject, so no extra horizontal shift */
+@media(max-width:759px){.px>picture>.bg{object-position:50% 50%}}
