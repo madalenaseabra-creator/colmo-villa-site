@@ -31,7 +31,9 @@
     entrance.style.setProperty("--logo-bottom",(startTop+startH)+"px");
     var endW=slot.width||(slot.height*ratio)||90, endH=endW/ratio;
     /* the centred title fades out as the logo flies, so the two never cross */
-    var ov=entrance.querySelector(".ov"); if(ov)ov.style.opacity=Math.max(0,1-t*2.5).toFixed(3);
+    var ov=entrance.querySelector(".ov"); if(ov){var gap=parseFloat(getComputedStyle(ov).paddingTop)||30;
+      /* t455u: gone before the title can reach the logo */
+      ov.style.opacity=Math.max(0,1-scrollY/(gap*0.85)).toFixed(3);}
     fly.style.transform="none";
     fly.style.width=lerp(startW,endW,e)+"px";
     fly.style.left=lerp((vw-startW)/2,slot.left,e)+"px";
@@ -332,4 +334,21 @@
   if(!("IntersectionObserver" in window)){els.forEach(function(e){e.classList.add("seen")});return;}
   var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("seen");io.unobserve(e.target);}});},{threshold:.15});
   els.forEach(function(e){io.observe(e)});
+})();
+/* t461u: the header slides away on scroll down and comes back on scroll up.
+   Always shown near the top and while the menu is open. On Home the docked logo goes with it. */
+(function(){
+  var d=document, head=d.querySelector(".head"), panel=d.querySelector(".panel"), fly=d.querySelector(".fly-logo");
+  if(!head)return;
+  var last=scrollY, tick=false;
+  function set(h){head.classList.toggle("hide",h); if(fly)fly.classList.toggle("hide",h&&head.classList.contains("docked"));}
+  function run(){
+    tick=false; var y=scrollY, nav=head.offsetHeight||64, open=panel&&panel.classList.contains("open");
+    if(open||y<nav*1.5||head.contains(d.activeElement)){set(false);}
+    else if(y>last+6){set(true);}
+    else if(y<last-6){set(false);}
+    if(Math.abs(y-last)>6||y<nav*1.5)last=y;
+  }
+  addEventListener("scroll",function(){if(!tick){tick=true;requestAnimationFrame(run);}},{passive:true});
+  head.addEventListener("focusin",function(){set(false);});
 })();

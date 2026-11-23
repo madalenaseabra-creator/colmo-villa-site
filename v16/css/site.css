@@ -280,7 +280,7 @@ textarea{min-height:120px;resize:vertical}
 .scr{height:auto;min-height:calc(100vh - var(--nav));min-height:calc(100svh - var(--nav));display:flex;flex-direction:column;justify-content:flex-end;background:#2B241D}
 .scr .ov{position:relative;z-index:2;color:var(--linho);padding:0 var(--g) calc(104px + env(safe-area-inset-bottom))}
 .scr .ov::before{content:"";position:absolute;left:0;right:0;bottom:0;top:-160px;z-index:-1;
-  background:linear-gradient(to top,rgba(43,36,29,.8) 0,rgba(43,36,29,.8) calc(100% - 160px),rgba(43,36,29,.5) calc(100% - 90px),rgba(43,36,29,.18) calc(100% - 40px),rgba(43,36,29,0) 100%)}
+  background:linear-gradient(to top,rgba(43,36,29,.7) 0,rgba(43,36,29,.7) calc(100% - 160px),rgba(43,36,29,.44) calc(100% - 90px),rgba(43,36,29,.16) calc(100% - 40px),rgba(43,36,29,0) 100%)}
 .scr .ov-in{max-width:600px;padding-top:8px}
 .scr .t,.scr .acc,.scr p,.scr cite,.scr .label,.scr .go,.scr .nums b,.scr .nums span{color:var(--linho)}
 .scr .acc{font-family:"Instrument Serif",Georgia,serif;font-style:italic}
@@ -399,7 +399,7 @@ html.js .is-home:not(.docked) .mbar{opacity:0;visibility:hidden}
   .foot-statutory::before{content:"·";margin:0 7px;color:rgba(241,235,221,.7)}
   .foot-statutory .foot-reg::before{margin:0 7px}
 }
-@media(max-width:959px){body{padding-bottom:0}.site-foot{padding-bottom:calc(28px + 76px + env(safe-area-inset-bottom))}}
+@media(max-width:959px){body{padding-bottom:0}}
 
 /* The House: who sleeps where, inside Good to know (t391u). Small cards with line-drawn beds. */
 .sleeps{margin-top:clamp(40px,6vw,64px)}
@@ -566,14 +566,14 @@ html.js .reveal.seen{opacity:1;transform:none}
 .fly-logo{top:calc(44svh - min(520px,72vw)*.267)}
 .is-home .scr.opener{--logo-bottom:calc(44svh + min(520px,72vw)*.267)}
 .scr.opener .bg{object-position:50% 30%}
-.scr.opener .ov{position:absolute;left:0;right:0;top:var(--logo-bottom);padding:clamp(14px,2.6vh,28px) var(--g) 0;text-align:center}
+.scr.opener .ov{position:absolute;left:0;right:0;top:var(--logo-bottom);padding:clamp(30px,4.6vh,46px) var(--g) 0;text-align:center}
 .scr.opener .ov-in{max-width:none;margin:0 auto;padding-top:0}
 .scr.opener .t1{margin:0}
 html.js .is-home:not(.live) #arrive .ov{opacity:1;visibility:visible}
 /* t447u: no radial patch; a gentle, even top-to-bottom wash plus soft shadows on the logo and title */
-.scr.opener .veil{background:linear-gradient(180deg,rgba(59,50,40,.6) 0%,rgba(59,50,40,.68) 32%,rgba(59,50,40,.8) 62%,rgba(59,50,40,.62) 100%)}
-.is-home .fly-logo:not(.on-light) .logo-cream{filter:drop-shadow(0 1px 2px rgba(40,33,26,.55)) drop-shadow(0 2px 18px rgba(40,33,26,.45))}
-.scr.opener .t1{text-shadow:0 1px 2px rgba(40,33,26,.5),0 2px 22px rgba(40,33,26,.45)}
+.scr.opener .veil{background:none}
+.is-home .fly-logo:not(.on-light) .logo-cream{filter:drop-shadow(0 0 1px rgba(36,30,24,.7)) drop-shadow(0 1px 3px rgba(36,30,24,.55)) drop-shadow(0 0 16px rgba(36,30,24,.45))}
+.scr.opener .t1{text-shadow:0 0 1px rgba(36,30,24,.7),0 1px 3px rgba(36,30,24,.6),0 0 14px rgba(36,30,24,.55),0 0 34px rgba(36,30,24,.4)}
 /* t436u: the lead line near the start, and the closing block at the end of Home */
 .band-lead{background:var(--terra);color:var(--linho);padding:72px var(--g) 76px;text-align:center}
 .band-lead .whole-lead{margin:0 auto}
@@ -581,3 +581,25 @@ html.js .is-home:not(.live) #arrive .ov{opacity:1;visibility:visible}
 .band-whole .home-req{margin:0 0 18px;font-size:15px;color:var(--linho)}
 @media(max-width:720px){.band-lead{padding:56px var(--g) 60px}.band-whole .whole-end{padding:40px 0 80px}}
 .scr.opener .ov::before{display:none}
+/* t454u: Swim slide is title only; band lightened to the minimum that keeps the title at 4.5:1 or more */
+#swim .ov::before{background:linear-gradient(to top,rgba(43,36,29,.62) 0,rgba(43,36,29,.62) calc(100% - 160px),rgba(43,36,29,.38) calc(100% - 90px),rgba(43,36,29,.14) calc(100% - 40px),rgba(43,36,29,0) 100%)}
+
+/* t456u/t458u/t459u: mobile header = logo, compact Request dates, menu. EN | PT lives in the menu. Menu aligned right. No bottom bar. */
+.mbar{display:none!important}
+@media(max-width:959px){
+  .head .lang{display:none}
+  .head .btn{display:inline-block;margin-left:auto;padding:9px 12px;font-size:11px;letter-spacing:.12em;white-space:nowrap}
+  .panel{text-align:right}
+  .panel .lang{justify-content:flex-end}
+}
+/* t455u: no opacity lag on the opener title, so it fades before it can reach the logo */
+html.js .is-home #arrive .ov{transition:none}
+/* t457u: portrait phones use a per-photo horizontal focus */
+@media(max-width:959px) and (orientation:portrait){.px>.bg{object-position:var(--mpos,50%) 50%}.scr.opener .bg{object-position:var(--mpos,50%) 50%}}
+/* t461u: auto-hide header */
+.head{transition:transform .35s ease,opacity .35s}
+.head.hide,html.js .is-home .head.docked.hide{transform:translateY(-105%)}
+.fly-logo{transition:transform .35s ease}
+.fly-logo.hide{transform:translateY(calc(-1 * var(--nav) - 24px))!important}
+@media(prefers-reduced-motion:reduce){.head,.fly-logo{transition:none}}
+@media(max-width:959px){.head .burger{margin-left:auto}.head .btn+.burger{margin-left:0}}
