@@ -163,7 +163,7 @@
     });
   });
 
-  /* Request dates: two months side by side on desktop, one on mobile; fills Arrival and Departure (booked nights are a hand-kept list, see BOOKED) */
+  /* Request dates: two months side by side on desktop, one on mobile; fills Arrival and Departure (booked nights come from data/busy.json, synced from Google Calendar) */
   var cals=d.querySelectorAll(".cal-m");
   if(cals.length){
     var M=["January","February","March","April","May","June","July","August","September","October","November","December"];
@@ -173,6 +173,7 @@
     function iso(x){return x.getFullYear()+"-"+String(x.getMonth()+1).padStart(2,"0")+"-"+String(x.getDate()).padStart(2,"0");}
     /* t467u: booked nights, kept by hand until a calendar sync exists. [first night, departure day]; the departure day is free to arrive */
     var BOOKED=[["2027-07-03","2027-08-21"]];
+    /* t468u: data/busy.json is rewritten every 6 hours from the Google Calendar by a GitHub Action (dates only, no names); the list above is the fallback */
     function busy(x){var k=iso(x);return BOOKED.some(function(r){return k>=r[0]&&k<r[1];});}
     function clearRun(a,b){for(var y=new Date(a);y<b;y.setDate(y.getDate()+1))if(busy(y))return false;return true;}
     function off(x){if(x<today)return true;if(A&&!B&&x>A)return !clearRun(A,x);return busy(x);}
@@ -195,6 +196,8 @@
     d.querySelector(".cal-prev").addEventListener("click",function(){var p=new Date(view.getFullYear(),view.getMonth()-1,1);if(p>=new Date(today.getFullYear(),today.getMonth(),1)){view=p;draw();}});
     d.querySelector(".cal-next").addEventListener("click",function(){view=new Date(view.getFullYear(),view.getMonth()+1,1);draw();});
     window.calReset=function(){A=B=null;draw();};
+    if(window.fetch)fetch("data/busy.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.ok?r.json():null;})
+      .then(function(j){if(j&&Array.isArray(j.busy)){BOOKED=j.busy;draw();}}).catch(function(){});
     draw();
   }
 })();
