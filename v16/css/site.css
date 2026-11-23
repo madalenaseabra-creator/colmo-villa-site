@@ -270,3 +270,43 @@ textarea{min-height:120px;resize:vertical}
   .js-fade .tag{opacity:1;transform:none}
 }
 .band-rose .label{color:var(--ink)}
+
+/* Home v16.02: full-screen photos with the copy on top (t378u).
+   Text is Linho on a warm dark scrim rgba(43,36,29,.8): even over a pure white pixel the
+   backdrop stays at or below rgb(85,80,74), so Linho text keeps at least 6.7:1. */
+.scr{height:auto;min-height:calc(100vh - var(--nav));min-height:calc(100svh - var(--nav));display:flex;flex-direction:column;justify-content:flex-end;background:#2B241D}
+.scr .ov{position:relative;z-index:2;color:var(--linho);padding:0 var(--g) calc(104px + env(safe-area-inset-bottom))}
+.scr .ov::before{content:"";position:absolute;left:0;right:0;bottom:0;top:-110px;z-index:-1;
+  background:linear-gradient(to top,rgba(43,36,29,.8) 0,rgba(43,36,29,.8) calc(100% - 110px),rgba(43,36,29,0) 100%)}
+.scr .ov-in{max-width:600px;padding-top:8px}
+.scr .t,.scr .acc,.scr p,.scr cite,.scr .label,.scr .go,.scr .nums b,.scr .nums span{color:var(--linho)}
+.scr .acc{font-family:"Instrument Serif",Georgia,serif;font-style:italic}
+.scr p{margin:0 0 14px;max-width:34em}
+.scr p:last-child{margin-bottom:0}
+.scr p.big{font-size:clamp(18px,1.6vw,21px);line-height:1.55}
+.scr .go{display:inline-block;margin-top:14px;font-size:12px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;text-underline-offset:5px}
+.scr .btn{margin-top:18px}
+.scr blockquote{color:var(--linho);border-left-color:var(--colmo);margin-bottom:6px}
+.scr cite{margin-bottom:20px}
+.ov-nums{margin-top:22px;border-top-color:var(--linho)}
+.ov-nums li{padding:12px 0 14px;border-bottom-color:var(--linho)}
+.ov-nums li:nth-child(odd){border-right-color:var(--linho)}
+.ov-nums li.full{border-right:0}
+.ov-nums b{font-size:clamp(36px,4.4vw,60px)}
+.ov-nums span{margin-top:6px;font-size:14px}
+.scr.opener .ov{padding-bottom:calc(110px + env(safe-area-inset-bottom))}
+.js-fade .scr .ov-in{opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease}
+.js-fade .scr.in .ov-in{opacity:1;transform:none}
+@media(min-width:960px){
+  .scr{justify-content:center}
+  .scr .ov{flex:1;display:flex;flex-direction:column;justify-content:flex-end;width:min(760px,56vw);padding:96px 40px 9vh calc(var(--g) + 3vw)}
+  .scr .ov::before{top:0;right:-340px;
+    background:linear-gradient(to right,rgba(43,36,29,.8) 0,rgba(43,36,29,.8) calc(100% - 340px),rgba(43,36,29,.45) calc(100% - 220px),rgba(43,36,29,0) 100%)}
+  .ov-nums{grid-template-columns:repeat(3,1fr)}
+  .ov-nums li,.ov-nums li:nth-child(odd),.ov-nums li:nth-child(even){padding:14px 16px 16px 0;border-right:0}
+  .ov-nums li.full{grid-column:auto}
+}
+@media(prefers-reduced-motion:reduce){.js-fade .scr .ov-in{opacity:1;transform:none}}
+.minstay{margin:0 0 26px}
+.minstay li .l{color:var(--ink);text-align:left}
+.minstay li>span:last-child{white-space:nowrap}

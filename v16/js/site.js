@@ -14,7 +14,7 @@
   function onScrollHead(){if(head)head.classList.toggle("scrolled",scrollY>innerHeight*0.45);}
   addEventListener("scroll",onScrollHead,{passive:true});onScrollHead();
 
-  /* Parallax, like rodrigomoran.com: the photo moves at half the scroll speed (0.75 of it on phones) */
+  /* Parallax, like rodrigomoran.com: the photo moves at half the scroll speed (0.75 of it on small screens) */
   if(!reduce && "IntersectionObserver" in window){
     root.classList.add("px-on","js-fade");
     var vis=new Set(), queued=false;
