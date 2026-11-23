@@ -381,10 +381,12 @@
   function set(h){head.classList.toggle("hide",h); if(fly)fly.classList.toggle("hide",h&&head.classList.contains("docked"));}
   function run(){
     tick=false; var y=scrollY, nav=head.offsetHeight||64, open=panel&&panel.classList.contains("open");
-    if(open||y<nav*1.5||head.contains(d.activeElement)){set(false);}
+    /* t502u: on Home the header stays while the logo shrinks into it and just after it docks, so the menu is there at once */
+    var arr=d.body.classList.contains("is-home")&&d.getElementById("arrive"), top=(arr?arr.offsetHeight:0)+nav*1.5;
+    if(open||y<top||head.contains(d.activeElement)){set(false);}
     else if(y>last+6){set(true);}
     else if(y<last-6){set(false);}
-    if(Math.abs(y-last)>6||y<nav*1.5)last=y;
+    if(Math.abs(y-last)>6||y<top)last=y;
   }
   addEventListener("scroll",function(){if(!tick){tick=true;requestAnimationFrame(run);}},{passive:true});
   head.addEventListener("focusin",function(){set(false);});

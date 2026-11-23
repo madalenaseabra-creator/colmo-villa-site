@@ -649,3 +649,20 @@ html.js .is-home #arrive .ov{transition:none}
 .sg-quiet .sleeps-h{color:#884E49}
 /* t496u: phone openers use their own portrait crop, already centred on the subject, so no extra horizontal shift */
 @media(max-width:759px){.px>picture>.bg{object-position:50% 50%}}
+
+/* t502u: on Home, below 960px, the menu button shows as soon as the logo starts to shrink, over the photo, before the header docks */
+@media(max-width:959px){
+  html.js .is-home.live .head:not(.docked){opacity:1;transform:none;background:transparent;box-shadow:none}
+  html.js .is-home.live .head:not(.docked)>:not(.burger){visibility:hidden}
+  html.js .is-home.live .head:not(.docked) .burger{pointer-events:auto;color:var(--linho);filter:drop-shadow(0 0 1px rgba(36,30,24,.8)) drop-shadow(0 1px 4px rgba(36,30,24,.6))}
+}
+/* t504u: every framed photo keeps 1, 2 or 3 rounded corners, never 0 */
+.day-set .r1{border-radius:var(--r) 0 0 0}
+.day-set .r3{border-radius:var(--r) var(--r) 0 var(--r)}
+@media(min-width:760px){
+  .gal-cards .cards button{overflow:hidden}
+  .gal-cards .cards img{display:block}
+  .gal-cards .cards figure:nth-child(3n+1) button{border-radius:0 var(--r) 0 var(--r)}
+  .gal-cards .cards figure:nth-child(3n+2) button{border-radius:var(--r) 0 0 0}
+  .gal-cards .cards figure:nth-child(3n) button{border-radius:var(--r) var(--r) 0 var(--r)}
+}
