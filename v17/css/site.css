@@ -643,3 +643,6 @@ html.js .is-home #arrive .ov{transition:none}
 #living .house-head .t{color:#7E5438}
 #rest .house-head .t,.sg-quiet .sleeps-h{color:#805339}
 #annex .house-head .t,.sg-small .sleeps-h{color:#605F49}
+/* t495u (v17): only Quiet Thatch lighter and rosier: the lightest dusty rose of the old-rose family that keeps 4.5:1 (title on linho; the label on sand needs one step darker) */
+#rest .house-head .t{color:#995852}
+.sg-quiet .sleeps-h{color:#884E49}
