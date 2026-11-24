@@ -672,10 +672,10 @@ html.js .is-home #arrive .ov{transition:none}
 .cook-box{pointer-events:auto;max-width:720px;margin:0 auto;background:var(--linho);color:var(--ink);padding:20px 22px 18px;border:1px solid var(--terra);border-radius:var(--r) var(--r) 0 0;box-shadow:0 -8px 24px rgba(59,50,40,.12)}
 .cook-t{margin:0 0 8px;font-size:15px;font-weight:500;letter-spacing:.04em;color:var(--ink)}
 .cook-box p#cook-p,.cook p.cook-p{margin:0;font-size:15px;line-height:1.5;font-weight:300;color:var(--ink)}
-.cook-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
-.cook-actions button{flex:1 1 140px;min-height:44px;padding:12px 18px;font-family:Jost,system-ui,sans-serif;font-size:12px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;cursor:pointer}
-.cook-ok{background:var(--tc);color:var(--linho);border:1.5px solid var(--tc);border-radius:var(--r) 0 0 0}
-.cook-no{background:var(--linho);color:var(--ink);border:1.5px solid var(--ink);border-radius:0 var(--r) 0 0}
+.cook-actions{display:flex;flex-wrap:nowrap;gap:10px;margin-top:16px}
+.cook-actions button{flex:1 1 0;min-width:0;min-height:44px;padding:12px 18px;font-family:Jost,system-ui,sans-serif;font-size:12px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;cursor:pointer}
+.cook-ok{background:var(--tc);color:var(--linho);border:1.5px solid var(--tc);border-radius:0 var(--r) 0 0}
+.cook-no{background:var(--linho);color:var(--ink);border:1.5px solid var(--ink);border-radius:var(--r) 0 0 0}
 .foot-legal .cook-set{background:none;border:0;padding:4px 0;font:inherit;letter-spacing:inherit;text-transform:none;color:var(--linho);cursor:pointer}
 .foot-legal .cook-set:hover{color:var(--sand);text-decoration:underline;text-underline-offset:3px}
 @media(max-width:759px){.foot-legal.has-cook{flex-wrap:wrap;white-space:normal;justify-content:center}}

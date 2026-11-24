@@ -444,7 +444,7 @@ window.cvGA="";
     if(d.querySelector(".cook"))return;
     var box=d.createElement("div");
     box.className="cook";box.setAttribute("role","dialog");box.setAttribute("aria-modal","false");box.setAttribute("aria-labelledby","cook-t");box.setAttribute("aria-describedby","cook-p");
-    box.innerHTML='<div class="cook-box"><p class="cook-t" id="cook-t">Optional analytics</p><p class="cook-p" id="cook-p">We use optional analytics cookies (Google Analytics 4) to understand how the site is used. Necessary cookies keep the site working. You can accept or reject analytics.</p><div class="cook-actions"><button type="button" class="cook-ok">Accept</button><button type="button" class="cook-no">Reject</button></div></div>';
+    box.innerHTML='<div class="cook-box"><p class="cook-t" id="cook-t">Optional analytics</p><p class="cook-p" id="cook-p">We use optional analytics cookies (Google Analytics 4) to understand how the site is used. Necessary cookies keep the site working. You can accept or reject analytics.</p><div class="cook-actions"><button type="button" class="cook-no">Reject</button><button type="button" class="cook-ok">Accept</button></div></div>';
     d.body.appendChild(box);
     box.querySelector(".cook-ok").addEventListener("click",function(){choose("accepted");});
     box.querySelector(".cook-no").addEventListener("click",function(){choose("rejected");});
