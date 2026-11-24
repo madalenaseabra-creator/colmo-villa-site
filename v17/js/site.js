@@ -420,3 +420,56 @@
   addEventListener("scroll",function(){if(!tick){tick=true;requestAnimationFrame(run);}},{passive:true});
   head.addEventListener("focusin",function(){set(false);});
 })();
+
+/* t528u: Google Analytics 4, only after Accept. Leave cvGA empty until a measurement ID exists: no banner, no script. */
+window.cvGA="";
+(function(){
+  var id=(window.cvGA||"").trim();
+  if(!id)return;
+  var KEY="cv-cookies", d=document;
+  function boot(){
+    window.dataLayer=window.dataLayer||[];
+    window.gtag=window.gtag||function(){dataLayer.push(arguments);};
+    gtag("consent","default",{ad_storage:"denied",ad_user_data:"denied",ad_personalization:"denied",analytics_storage:"denied",wait_for_update:500});
+  }
+  function load(){
+    if(window.cvGAloaded)return;
+    window.cvGAloaded=true;
+    gtag("js",new Date());
+    gtag("config",id,{anonymize_ip:true});
+    var s=d.createElement("script");s.async=true;s.src="https://www.googletagmanager.com/gtag/js?id="+encodeURIComponent(id);d.head.appendChild(s);
+  }
+  function hide(){var b=d.querySelector(".cook"); if(b)b.remove();}
+  function show(){
+    if(d.querySelector(".cook"))return;
+    var box=d.createElement("div");
+    box.className="cook";box.setAttribute("role","dialog");box.setAttribute("aria-modal","false");box.setAttribute("aria-labelledby","cook-t");box.setAttribute("aria-describedby","cook-p");
+    box.innerHTML='<div class="cook-box"><p class="cook-t" id="cook-t">Optional analytics</p><p class="cook-p" id="cook-p">We use optional analytics cookies (Google Analytics 4) to understand how the site is used. Necessary cookies keep the site working. You can accept or reject analytics.</p><div class="cook-actions"><button type="button" class="cook-ok">Accept</button><button type="button" class="cook-no">Reject</button></div></div>';
+    d.body.appendChild(box);
+    box.querySelector(".cook-ok").addEventListener("click",function(){choose("accepted");});
+    box.querySelector(".cook-no").addEventListener("click",function(){choose("rejected");});
+    box.querySelector(".cook-ok").focus();
+  }
+  function choose(v){
+    try{localStorage.setItem(KEY,v);}catch(e){}
+    boot();
+    if(v==="accepted"){gtag("consent","update",{analytics_storage:"granted"});load();}
+    else{gtag("consent","update",{analytics_storage:"denied"});}
+    hide();
+  }
+  function apply(){
+    var v=null; try{v=localStorage.getItem(KEY);}catch(e){}
+    if(v==="accepted"){boot();gtag("consent","update",{analytics_storage:"granted"});load();}
+    else if(v==="rejected"){boot();}
+    else show();
+  }
+  var legal=d.querySelector(".foot-legal");
+  if(legal && !legal.querySelector(".cook-set")){
+    var li=d.createElement("li");
+    var b=d.createElement("button");
+    b.type="button";b.className="cook-set";b.textContent="Cookie settings";
+    b.addEventListener("click",show);
+    li.appendChild(b);legal.appendChild(li);legal.classList.add("has-cook");
+  }
+  apply();
+})();
