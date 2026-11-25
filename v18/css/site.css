@@ -1,0 +1,695 @@
+/* COLMO VILLA v18 (colours from v17: pine green). Based on v16. Type and balance from v10, components from v12. Mobile first. */
+:root{
+  --linho:#F1EBDD;--colmo:#D8C6A5;--sand:#E2D7C2;--areia:#B7A58A;--rose:#D3B09B;
+  --oliva:#77765B;--oliva-d:#5E5D48;--terra:#514638;--ink:#3B3228;--tc:#8F4530;--pine:#2F3A2E;--pine-wash:#B3BEAC;
+  --g:22px;--nav:64px;--max:1200px;--r:48px;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+html,body{margin:0}
+body{background:var(--linho);color:var(--ink);font-family:Jost,system-ui,sans-serif;font-weight:300;font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+img{max-width:100%;height:auto;display:block}
+a{color:var(--terra)}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--pine);outline-offset:3px}
+.sr{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* Type (v10) */
+.t{font-family:Archivo,sans-serif;font-weight:600;font-stretch:88%;font-synthesis:none;letter-spacing:-.02em;line-height:1.06;color:var(--pine);margin:0 0 18px}
+.t1{font-size:clamp(36px,5vw,62px)}
+.t2{font-size:clamp(30px,3.8vw,48px)}
+.t3{font-size:clamp(24px,2.6vw,32px)}
+.acc{font-family:"Instrument Serif",Georgia,serif;font-style:italic;font-weight:400;letter-spacing:0;color:var(--pine)}
+.label{font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--oliva-d);margin:0 0 12px}
+.prose p{margin:0 0 16px;max-width:36em}
+.prose p:last-child{margin-bottom:0}
+.small{font-size:14px;color:var(--oliva-d)}
+
+/* Header */
+.head{position:fixed;inset:0 0 auto;z-index:60;height:var(--nav);display:flex;align-items:center;gap:16px;padding:0 var(--g);background:var(--linho);box-shadow:0 1px 0 rgba(81,70,56,.12)}
+.brand{display:flex;align-items:center;height:100%;flex:0 0 auto;transition:opacity .3s}
+.brand img{height:calc(var(--nav) - 16px);width:auto}
+.is-home .brand{visibility:hidden;pointer-events:none}
+.nav{display:none}
+.nav a{color:var(--terra);text-decoration:none;font-size:14px;letter-spacing:.04em}
+.nav a:hover{text-decoration:underline}
+.nav a[aria-current=page]{text-decoration:underline;text-decoration-color:var(--pine);text-underline-offset:6px;color:var(--pine);font-weight:400}
+.lang{display:flex;gap:6px;align-items:baseline;font-size:12px;letter-spacing:.14em}
+.lang b{font-weight:600;color:var(--terra)}
+.lang span{color:var(--oliva-d)}
+.head .lang{margin-left:auto}
+.btn{display:inline-block;background:var(--tc);color:var(--linho);padding:12px 20px;font-size:12px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;border:0;border-radius:2px;cursor:pointer}
+.btn:hover{background:#7d3c29}
+.head .btn{display:none}
+.burger{background:none;border:0;width:44px;height:44px;padding:11px;cursor:pointer;color:var(--terra)}
+.burger i,.burger i:before,.burger i:after{display:block;width:22px;height:1.5px;background:currentColor;position:relative}
+.burger i:before,.burger i:after{content:"";position:absolute;left:0}
+.burger i:before{top:-7px}.burger i:after{top:7px}
+.panel{position:fixed;inset:var(--nav) 0 0;z-index:55;background:var(--linho);padding:24px var(--g) 120px;display:none;overflow:auto}
+.panel.open{display:block}
+.panel a{display:block;padding:16px 0;border-bottom:1px solid var(--areia);font-family:Archivo,sans-serif;font-weight:600;font-stretch:88%;font-size:26px;color:var(--terra);text-decoration:none}
+.panel a[aria-current=page]{color:var(--pine)}
+.panel .lang{margin-top:22px}
+@media(min-width:960px){
+  :root{--g:48px;--nav:84px;--r:64px}
+  .nav{display:flex;gap:26px;margin:0 auto}
+  .head .lang{margin-left:0}
+  .head .btn{display:inline-block}
+  .burger,.panel{display:none!important}
+}
+main{padding-top:var(--nav)}
+
+/* Mobile bar */
+.mbar{position:fixed;left:0;right:0;bottom:0;z-index:58;padding:10px var(--g) calc(10px + env(safe-area-inset-bottom));background:var(--pine);box-shadow:0 -1px 0 rgba(47,58,46,.4);transition:transform .3s}
+.mbar .btn{display:block;text-align:center;padding:14px}
+.mbar.away{transform:translateY(110%)}
+@media(min-width:960px){.mbar{display:none}}
+body{padding-bottom:76px}
+@media(min-width:960px){body{padding-bottom:0}}
+
+/* Full screen parallax (rodrigomoran.com) */
+.px{position:relative;height:100vh;height:100svh;overflow:hidden;background:var(--sand)}
+.px.short{height:72vh;height:72svh}
+.px>.bg,.px>picture>.bg{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover}
+.px-on .px>.bg,.px-on .px>picture>.bg{top:-12.5%;height:125%;will-change:transform}
+@media(min-width:720px){.px-on .px>.bg,.px-on .px>picture>.bg{top:-25%;height:150%}}
+.tag{position:absolute;z-index:2;left:var(--g);right:var(--g);bottom:calc(92px + env(safe-area-inset-bottom));max-width:560px;background:var(--linho);color:var(--ink);padding:22px 24px 24px;border-radius:0 var(--r) 0 0}
+.tag .t{margin-bottom:10px}
+.tag p{margin:0}
+.tag .go{display:inline-block;margin-top:12px;font-size:12px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--terra);text-underline-offset:5px}
+.tag .btn{margin-top:16px}
+.tag .hr{display:block;font-family:Archivo,sans-serif;font-weight:600;font-stretch:88%;font-size:34px;line-height:1;color:var(--pine);margin-bottom:8px}
+@media(min-width:960px){.tag{left:calc(var(--g) + 2vw);bottom:9vh;padding:28px 34px 30px}}
+.js-fade .tag{opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease}
+.js-fade .px.in .tag{opacity:1;transform:none}
+.hero-logo{position:absolute;z-index:2;left:50%;top:9vh;width:min(420px,72vw);transform:translateX(-50%);filter:drop-shadow(0 2px 18px rgba(59,50,40,.35))}
+.px .veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(59,50,40,.32),rgba(59,50,40,0) 45%)}
+.dots{display:none}
+@media(min-width:1024px){
+  .dots{display:flex;flex-direction:column;gap:12px;position:fixed;right:22px;top:50%;transform:translateY(-50%);z-index:40;margin:0;padding:10px 8px;list-style:none;background:rgba(241,235,221,.92);border-radius:20px}
+  .dots a{display:block;width:10px;height:10px;border-radius:50%;border:1.5px solid var(--terra);position:relative}
+  .dots a.on{background:var(--terra)}
+  .dots a span{position:absolute;right:20px;top:50%;transform:translateY(-50%);white-space:nowrap;background:var(--linho);color:var(--ink);font-size:13px;padding:2px 8px;opacity:0;pointer-events:none;transition:opacity .2s}
+  .dots a:hover span,.dots a:focus span{opacity:1}
+}
+
+/* Sections */
+.sec{padding:64px var(--g);max-width:calc(var(--max) + 2*var(--g));margin:0 auto}
+.band{background:var(--sand)}
+.band-colmo{background:var(--colmo)}
+.band-rose{background:var(--rose)}
+.split{display:grid;gap:32px;align-items:center}
+@media(min-width:960px){
+  .sec{padding:100px var(--g)}
+  .split{grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:72px}
+  .split.flip>:first-child{order:2}
+}
+.ra{border-radius:var(--r) 0 var(--r) 0;overflow:hidden}
+.rb{border-radius:0 var(--r) 0 var(--r);overflow:hidden}
+.photo img{width:100%;height:auto;aspect-ratio:4/3;object-fit:cover}
+.photo.tall img{aspect-ratio:4/5}
+figure{margin:0}
+figcaption{font-size:14px;color:var(--oliva-d);margin-top:10px}
+
+/* Number tiles (v12 num-grid) */
+.nums{display:grid;grid-template-columns:1fr 1fr;border-top:1.5px solid var(--ink);margin:0;padding:0;list-style:none}
+.nums li{padding:20px 0 22px;border-bottom:1.5px solid var(--ink)}
+.nums li:nth-child(odd){padding-right:18px;border-right:1.5px solid var(--ink)}
+.nums li:nth-child(even){padding-left:18px}
+.nums li.full{grid-column:1/-1;border-right:0;padding-right:0}
+.nums b{display:block;font-family:Archivo,sans-serif;font-weight:600;font-stretch:88%;font-size:clamp(44px,5.4vw,72px);line-height:.95;letter-spacing:-.03em;color:var(--pine)}
+.nums span{display:block;font-size:14px;margin-top:8px;color:var(--oliva-d)}
+.nums.row{grid-template-columns:repeat(2,1fr);margin-top:36px}
+.nums.row b{font-size:clamp(36px,4vw,52px)}
+@media(min-width:960px){
+  .nums.row{grid-template-columns:repeat(4,1fr);border-top:1.5px solid var(--ink)}
+  .nums.row li{padding:18px 18px 20px;border-right:1.5px solid var(--ink)!important}
+  .nums.row li:first-child{padding-left:0}
+  .nums.row li:last-child{border-right:0!important}
+}
+.nums b.word{font-size:clamp(26px,2.6vw,34px);line-height:1.1;padding-top:6px}
+
+/* Collage + pull quote (v12) */
+.collage{position:relative;padding-bottom:22%}
+.collage .c1{width:80%;border-radius:0 var(--r) 0 0;overflow:hidden}
+.collage .c1 img{width:100%;aspect-ratio:4/5;object-fit:cover}
+.collage .c2{position:absolute;right:0;bottom:0;width:50%;border:8px solid var(--linho);border-radius:var(--r) 0 var(--r) 0;overflow:hidden}
+.band .collage .c2{border-color:var(--sand)}
+.collage .c2 img{width:100%;aspect-ratio:1/1;object-fit:cover}
+blockquote{margin:0 0 6px;padding-left:18px;border-left:3px solid var(--pine);font-family:"Instrument Serif",Georgia,serif;font-style:italic;font-size:clamp(28px,3vw,40px);line-height:1.12;color:var(--pine)}
+cite{display:block;font-style:normal;font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--oliva-d);margin:0 0 26px 21px}
+
+/* The day, 3x2 (v12) */
+.day{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:28px}
+.day>*{margin:0;min-height:0}
+.day img{width:100%;aspect-ratio:1/1;object-fit:cover}
+.day .txt{display:flex;flex-direction:column;justify-content:flex-end;padding:14px;background:var(--linho);min-width:0}
+.day .h{font-family:Archivo,sans-serif;font-weight:600;font-stretch:88%;font-size:28px;line-height:1;color:var(--pine);margin-bottom:8px}
+.day .txt p{margin:0;font-size:15px;line-height:1.45}
+@media(max-width:600px){.day .txt p{font-size:14px}}
+@media(min-width:900px){.day{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.day .txt{padding:24px}.day .h{font-size:40px}.day .txt p{font-size:17px}}
+
+/* Placeholders */
+.ph{display:inline-block;margin:6px 0;padding:8px 12px;border:1.5px dashed var(--oliva);background:var(--sand);color:var(--ink);font-size:13px;font-weight:500;letter-spacing:.04em}
+.band .ph{background:var(--linho)}
+
+/* Tables and lists with thin lines */
+.lines{list-style:none;margin:0;padding:0;border-top:1px solid var(--areia)}
+.lines li{display:flex;justify-content:space-between;gap:16px;padding:14px 0;border-bottom:1px solid var(--areia)}
+.lines li b{font-weight:500;color:var(--terra)}
+.lines li span{color:var(--oliva-d);text-align:right}
+.band .lines li span{color:var(--oliva-d)}
+.who{width:100%;border-collapse:collapse;font-size:15px}
+.who th,.who td{text-align:left;padding:12px 10px 12px 0;border-bottom:1px solid var(--areia);vertical-align:top}
+.who th{font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--oliva-d)}
+.who td:last-child,.who th:last-child{text-align:right;padding-right:0}
+.who tfoot td{font-weight:500;color:var(--terra);border-bottom:0}
+@media(max-width:600px){.who .c-house{display:none}}
+.gtk{list-style:none;margin:0;padding:0;border-top:1px solid var(--areia)}
+.gtk li{padding:14px 0;border-bottom:1px solid var(--areia)}
+
+/* The House explorer: sticky sketch */
+.explore{position:relative}
+#houses{scroll-margin-top:var(--nav)}
+.sketch{position:sticky;top:var(--nav);z-index:30;background:var(--linho);border-bottom:1px solid var(--areia);padding:6px var(--g) 8px}
+.sketch-in{max-width:var(--max);margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:4px 10px}
+.sketch svg{height:50px;width:auto;flex:0 0 auto;overflow:visible}
+.tabs-wrap{width:100%}
+.sketch .tabs{display:flex;gap:6px;justify-content:center;flex-wrap:nowrap}
+.sketch .tabs button,.chip-g{background:none;border:1px solid var(--oliva);border-radius:20px;padding:5px 12px;font-size:14px;line-height:1.4;color:var(--terra);cursor:pointer;min-height:34px}
+.sketch .tabs button[aria-expanded=true]{background:var(--terra);color:var(--linho);border-color:var(--terra)}
+.chip-g{background:none;border:0;color:var(--oliva-d);cursor:default;display:inline-flex;align-items:center;padding-left:6px;font-size:13px;letter-spacing:.04em}
+.sketch .hint{display:none}
+.vol{cursor:pointer;fill:transparent;stroke:none;pointer-events:all}
+.wash{fill-opacity:0;transition:fill-opacity .3s}
+.wash.hover{fill-opacity:.4}
+.wash.on{fill-opacity:.92}
+.wash-living{fill:#C39677}.wash-rest{fill:var(--rose)}.wash-annex{fill:var(--oliva)}
+.wash-annex.on{fill-opacity:.55}
+.sk-lab{display:none;font-family:Jost,sans-serif;font-size:8px;fill:var(--ink);font-weight:400}
+.sk-wc{filter:url(#wc)}
+@media(min-width:960px){
+  .sketch{padding:10px var(--g)}
+  .sketch-in{flex-wrap:nowrap;justify-content:space-between}
+  .sketch svg{height:104px}
+  .sk-lab{display:inline}
+  .tabs-wrap{width:auto}
+  .sketch .hint{display:block;font-size:14px;color:var(--oliva-d);margin:0 0 8px}
+}
+.house{scroll-margin-top:calc(var(--nav) + 106px)}
+@media(min-width:960px){.house{scroll-margin-top:calc(var(--nav) + 125px)}}
+.house[hidden]{display:none}
+.house-head{display:grid;gap:18px;align-items:center;padding:22px var(--g) 8px;max-width:calc(var(--max) + 2*var(--g));margin:0 auto}
+.house-head .t{margin-bottom:10px}
+.house-head p{margin:0;max-width:36em}
+.house-head .photo img{aspect-ratio:3/2}
+@media(min-width:960px){.house-head{grid-template-columns:1fr 1.25fr;gap:56px;padding-top:40px}}
+.cards{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:20px var(--g) 8px;max-width:calc(var(--max) + 2*var(--g));margin:0 auto;-webkit-overflow-scrolling:touch}
+.cards figure{flex:0 0 82%;scroll-snap-align:start}
+.cards button{display:block;padding:0;border:0;background:none;cursor:zoom-in;width:100%}
+.cards img{width:100%;aspect-ratio:4/3;object-fit:cover}
+.cards figure.port img{object-position:center 40%}
+@media(min-width:760px){
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:28px 24px;overflow:visible}
+  .cards figure{flex:none}
+}
+.back{max-width:calc(var(--max) + 2*var(--g));margin:0 auto;padding:12px var(--g) 48px}
+.back a{font-size:12px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;text-underline-offset:5px}
+.only-m{display:block}.only-d{display:none}
+@media(min-width:760px){.only-m{display:none}.only-d{display:block}}
+
+/* Lightbox */
+.lb{position:fixed;inset:0;z-index:90;background:rgba(59,50,40,.94);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:56px 12px 24px}
+.lb[hidden]{display:none}
+.lb img{max-width:100%;max-height:80vh;object-fit:contain}
+.lb p{color:var(--linho);margin:12px 0 0;font-size:15px}
+.lb button{position:absolute;top:10px;right:12px;background:var(--linho);color:var(--ink);border:0;border-radius:2px;padding:8px 14px;font-size:13px;letter-spacing:.12em;text-transform:uppercase;cursor:pointer}
+
+/* Map */
+.map{background:var(--sand);padding:10px;border-radius:0 var(--r) 0 var(--r)}
+.map svg{width:100%;height:auto;display:block}
+.mapframe{width:100%;height:320px;border:0;display:block;border-radius:0 var(--r) 0 var(--r);background:var(--sand)}
+
+/* Forms */
+form{display:grid;gap:14px}
+.row2{display:grid;gap:14px}
+@media(min-width:640px){.row2{grid-template-columns:1fr 1fr}}
+label{display:flex;flex-direction:column;gap:6px;font-size:12px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--terra)}
+input,select,textarea{background:var(--linho);border:1px solid var(--oliva);border-radius:2px;padding:12px;font-size:16px;letter-spacing:0;text-transform:none;font-weight:300;color:var(--ink)}
+textarea{min-height:120px;resize:vertical}
+.formcard{background:var(--sand);padding:26px 20px}
+@media(min-width:960px){.formcard{padding:40px}}
+.status{margin:0;padding:12px 14px;background:var(--linho);border-left:3px solid var(--terra)}
+.status[hidden]{display:none}
+.cal-box{background:var(--linho);padding:18px;margin:16px 0 24px}
+.cal-head{display:flex;align-items:center;justify-content:space-between;max-width:340px;margin-bottom:10px}
+.cal-head b{font-weight:500;color:var(--terra)}
+.cal-head button{width:44px;height:44px;border:1px solid var(--oliva);background:none;border-radius:2px;cursor:pointer;font-size:20px;color:var(--terra)}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;max-width:340px}
+.cal span,.cal button{aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:13px;border-radius:50%}
+.cal .dow{aspect-ratio:auto;height:20px;font-size:11px;color:var(--oliva-d)}
+.cal button{border:1px solid var(--areia);background:none;cursor:pointer;color:var(--ink);padding:0}
+.cal button:disabled{border-color:transparent;color:var(--oliva-d);cursor:default;text-decoration:line-through}
+.cal button.sel{background:var(--tc);border-color:var(--tc);color:var(--linho)}
+.cal button.mid{background:var(--colmo);border-color:var(--colmo)}
+.faq details{border-bottom:1px solid var(--areia);padding:16px 0}
+.faq summary{cursor:pointer;font-weight:400;color:var(--terra);font-size:18px}
+.faq details p{margin:10px 0 0;max-width:40em}
+
+/* Footer */
+.foot{background:var(--pine);color:var(--linho);padding:56px var(--g) 40px;font-size:14px}
+.foot a{color:var(--linho)}
+.foot-in{max-width:var(--max);margin:0 auto;display:grid;gap:20px}
+.foot img{width:min(320px,80vw);height:auto}
+.foot ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px 20px}
+.foot p{margin:0}
+.foot .credits{color:var(--colmo)}
+
+/* Policies */
+.policy{max-width:760px}
+
+@media(prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important;scroll-behavior:auto!important}
+  .js-fade .tag{opacity:1;transform:none}
+}
+.band-rose .label{color:var(--ink)}
+
+/* Home v16.02: full-screen photos with the copy on top (t378u).
+   Text is Linho on a warm dark scrim rgba(43,36,29,.8): even over a pure white pixel the
+   backdrop stays at or below rgb(85,80,74), so Linho text keeps at least 6.7:1. */
+.scr{height:auto;min-height:calc(100vh - var(--nav));min-height:calc(100svh - var(--nav));display:flex;flex-direction:column;justify-content:flex-end;background:#2B241D}
+.scr .ov{position:relative;z-index:2;color:var(--linho);padding:0 var(--g) calc(104px + env(safe-area-inset-bottom))}
+.scr .ov::before{content:"";position:absolute;left:0;right:0;bottom:0;top:-160px;z-index:-1;
+  background:linear-gradient(to top,rgba(43,36,29,.7) 0,rgba(43,36,29,.7) calc(100% - 160px),rgba(43,36,29,.44) calc(100% - 90px),rgba(43,36,29,.16) calc(100% - 40px),rgba(43,36,29,0) 100%)}
+.scr .ov-in{max-width:600px;padding-top:8px}
+.scr .t,.scr .acc,.scr p,.scr cite,.scr .label,.scr .go,.scr .nums b,.scr .nums span{color:var(--linho)}
+.scr .acc{font-family:"Instrument Serif",Georgia,serif;font-style:italic}
+.scr p{margin:0 0 14px;max-width:34em}
+.scr p:last-child{margin-bottom:0}
+.scr p.big{font-size:clamp(18px,1.6vw,21px);line-height:1.55}
+.scr .go{display:inline-block;margin-top:14px;font-size:12px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;text-underline-offset:5px}
+.scr .btn{margin-top:18px}
+.scr blockquote{color:var(--linho);border-left-color:var(--colmo);margin-bottom:6px}
+.scr cite{margin-bottom:20px}
+.ov-nums{margin-top:22px;border-top-color:var(--linho)}
+.ov-nums li{padding:12px 0 14px;border-bottom-color:var(--linho)}
+.ov-nums li:nth-child(odd){border-right-color:var(--linho)}
+.ov-nums li.full{border-right:0}
+.ov-nums b{font-size:clamp(36px,4.4vw,60px)}
+.ov-nums span{margin-top:6px;font-size:14px}
+.scr.opener .ov{padding-bottom:calc(110px + env(safe-area-inset-bottom))}
+.js-fade .scr .ov-in{opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease}
+.js-fade .scr.in .ov-in{opacity:1;transform:none}
+@media(min-width:960px){
+  .scr .ov{padding:0 calc(var(--g) + 3vw) 9vh}
+  .scr .ov-in{max-width:640px}
+  .ov-nums{grid-template-columns:repeat(5,1fr);max-width:900px}
+  .scr .ov-in:has(.ov-nums){max-width:900px}
+  .ov-nums li,.ov-nums li:nth-child(odd),.ov-nums li:nth-child(even){padding:14px 16px 16px 0;border-right:0}
+  .ov-nums li.full{grid-column:auto}
+}
+@media(prefers-reduced-motion:reduce){.js-fade .scr .ov-in{opacity:1;transform:none}}
+.minstay{margin:0 0 26px}
+.minstay li .l{color:var(--ink);text-align:left}
+.minstay li>span:last-child{white-space:nowrap}
+.go-dark{font-size:12px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--ink);text-underline-offset:5px}
+.foot ul+ul{margin-top:-6px}
+
+/* Home entrance (as in v10): full page, photo and logo only. On scroll the big logo flies left into the header,
+   and the header, Request dates, the first line, the dots and the mobile bar arrive. */
+.is-home main{padding-top:0}
+.is-home .scr.opener{min-height:100svh}
+.fly-logo{position:absolute;z-index:70;left:50%;top:13vh;width:min(520px,72vw);transform:translateX(-50%);line-height:0}
+html.js .fly-logo{position:fixed}
+.fly-logo img{width:100%;height:auto;display:block;transition:opacity .3s}
+.fly-logo .logo-cream{filter:drop-shadow(0 2px 18px rgba(59,50,40,.35))}
+.fly-logo .logo-dark{position:absolute;left:0;top:0;opacity:0}
+.fly-logo.on-light .logo-cream{opacity:0}
+.fly-logo.on-light .logo-dark{opacity:1}
+html.js .is-home .head{opacity:0;pointer-events:none;transform:translateY(-10px);transition:opacity .35s,transform .35s}
+html.js .is-home .head.docked{opacity:1;pointer-events:auto;transform:none}
+html.js .is-home #arrive .ov,html.js .is-home .dots,html.js .is-home .mbar{transition:opacity .5s,visibility .5s,transform .3s}
+html.js .is-home:not(.live) #arrive .ov,html.js .is-home:not(.live) .dots{opacity:0;visibility:hidden}
+html.js .is-home:not(.docked) .mbar{opacity:0;visibility:hidden}
+@media(prefers-reduced-motion:reduce){html.js .is-home .head,html.js .is-home #arrive .ov,html.js .is-home .dots,html.js .is-home .mbar,.fly-logo img{transition:none}}
+
+/* Days at Colmo, option B: the day moves left to right. Vertical scroll (or a swipe) slides each new photo over the last,
+   and the hours appear along a timeline. Without JS or with reduced motion it is a plain stack of full screens. */
+.hz-slide{position:relative;overflow:hidden}
+.hz-slide>.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hz .hr{display:block;font-family:Archivo,sans-serif;font-weight:600;font-stretch:88%;font-size:clamp(40px,5vw,64px);line-height:1;letter-spacing:-.02em;color:var(--linho);margin-bottom:12px}
+.hz-time,.hz-hint{display:none}
+.hz-on .hz-pin{position:sticky;top:var(--nav);height:calc(100vh - var(--nav));height:calc(100svh - var(--nav));overflow:hidden;touch-action:pan-y}
+.hz-on .hz-slide{position:absolute;inset:0;min-height:0;will-change:transform;box-shadow:-30px 0 60px rgba(43,36,29,.35)}
+.hz-on .hz-slide~.hz-slide{transform:translateX(100%)}
+.hz-on .hz-time{display:flex;position:absolute;z-index:5;left:0;right:0;top:0;margin:0;padding:0 var(--g);list-style:none;background:var(--linho);height:46px;align-items:center;justify-content:space-between;border-bottom:1px solid var(--areia)}
+.hz-time::before{content:"";position:absolute;left:var(--g);right:var(--g);top:50%;height:1px;background:var(--areia)}
+.hz-time::after{content:"";position:absolute;left:var(--g);top:50%;height:2px;margin-top:-.5px;width:calc((100% - 2*var(--g))*var(--p,0));background:var(--terra)}
+.hz-time li{position:relative;z-index:1;background:var(--linho);padding:0 6px;font-size:13px;letter-spacing:.06em;color:var(--terra);opacity:0;visibility:hidden;transform:translateY(6px);transition:opacity .4s,transform .4s,visibility .4s}
+.hz-time li.past{opacity:1;visibility:visible;transform:none}
+.hz-time li.now{opacity:1;visibility:visible;transform:none;color:var(--pine);font-weight:600}
+.hz-on .hz-hint{display:block;position:absolute;z-index:6;right:var(--g);top:12px;margin:0;font-size:12px;line-height:22px;letter-spacing:.14em;text-transform:uppercase;color:var(--terra);background:var(--linho);padding:0 0 0 8px;transition:opacity .4s}
+.hz-hint.gone{opacity:0}
+@media(min-width:960px){.hz-on .hz-time{height:52px}.hz-time li{font-size:14px}.hz-on .hz-hint{top:15px}}
+
+/* About: a gallery that drifts left to right on its own; drag, swipe or use the trackpad to move it faster */
+.marquee-wrap{background:var(--linho);padding:clamp(40px,6vw,80px) 0}
+.marquee{overflow-x:auto;overflow-y:hidden;scrollbar-width:none;cursor:grab;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
+.marquee::-webkit-scrollbar{display:none}
+.marquee.drag{cursor:grabbing;user-select:none}
+.marquee-track{display:flex;gap:14px;margin:0;padding:0 14px 0 0;list-style:none;width:max-content}
+.marquee-track li{flex:0 0 auto;height:clamp(260px,52vh,520px)}
+.marquee-track img{height:100%;width:auto;object-fit:cover;border-radius:24px;pointer-events:none;-webkit-user-drag:none}
+@media(min-width:960px){.marquee-track{gap:20px}.marquee-track img{border-radius:32px}}
+
+/* Footer, as on v14 (t390u): dark, small sketch, one line on desktop, centred stack on mobile */
+.site-foot{background:var(--pine);color:var(--linho);padding:44px var(--g) 28px;border-top:1px solid rgba(241,235,221,.12)}
+.foot-inner{max-width:var(--max);margin:0 auto;display:flex;flex-direction:column;align-items:center;text-align:center}
+.foot-mark{display:block;margin:0 0 28px;line-height:0;text-decoration:none}
+.foot-mark:hover{opacity:.88}
+.foot-mark img{width:min(132px,58vw);height:auto;display:block;margin:0 auto}
+.site-foot .legal{margin:18px 0 0;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--sand)}
+.site-foot .legal a{color:inherit;text-decoration:none}
+.site-foot .legal a:hover,.site-foot .legal a:focus-visible{text-decoration:underline;text-underline-offset:3px}
+.foot-legal{display:flex;flex-wrap:nowrap;justify-content:center;align-items:baseline;list-style:none;margin:22px 0 0;padding:0;font-size:11px;letter-spacing:.01em;white-space:nowrap;width:100%}
+.foot-legal li{display:inline-flex;align-items:baseline;flex:0 0 auto}
+.foot-legal li:not(:last-child)::after{content:"·";margin:0 5px;color:rgba(241,235,221,.7)}
+.foot-legal a{color:var(--linho);text-decoration:none;padding:4px 0}
+.foot-legal a:hover{color:var(--sand);text-decoration:underline;text-underline-offset:3px}
+.foot-legal a[aria-current="page"]{font-weight:500}
+.foot-statutory{margin:12px 0 0;font-size:10px;letter-spacing:.03em;color:var(--sand);display:flex;flex-wrap:wrap;justify-content:center;align-items:baseline;gap:6px 0}
+.foot-statutory a{color:inherit;text-decoration:none}
+.foot-statutory a:hover,.foot-statutory a:focus-visible{text-decoration:underline;text-underline-offset:3px}
+.foot-statutory .foot-reg::before{content:"·";margin:0 5px;color:rgba(241,235,221,.7)}
+@media(min-width:961px){
+  .foot-legal{margin-top:28px;font-size:12px;letter-spacing:.02em}
+  .foot-legal li:not(:last-child)::after{margin:0 8px}
+  .foot-statutory{margin-top:14px;font-size:11px;letter-spacing:.04em}
+  .foot-statutory .foot-reg::before{margin:0 8px}
+}
+@media(min-width:1024px){
+  .site-foot{padding:24px var(--g)}
+  .foot-inner{flex-direction:row;flex-wrap:nowrap;align-items:center;justify-content:flex-start;gap:0 18px;text-align:left}
+  .foot-mark{order:1;margin:0;flex:0 0 auto}
+  .foot-mark img{width:96px;margin:0}
+  .site-foot .legal{order:2;margin:0 auto 0 0;font-size:11px;letter-spacing:.1em;white-space:nowrap}
+  .foot-legal{order:3;margin:0;width:auto;font-size:11px;letter-spacing:.04em}
+  .foot-legal li:not(:last-child)::after{margin:0 7px}
+  .foot-statutory{order:4;margin:0;font-size:11px;letter-spacing:.04em;flex-wrap:nowrap;gap:0;white-space:nowrap}
+  .foot-statutory::before{content:"·";margin:0 7px;color:rgba(241,235,221,.7)}
+  .foot-statutory .foot-reg::before{margin:0 7px}
+}
+@media(max-width:959px){body{padding-bottom:0}}
+
+/* The House: who sleeps where, inside Good to know (t391u). Small cards with line-drawn beds. */
+.sleeps{margin-top:clamp(40px,6vw,64px)}
+.sleeps .label{margin:0 0 18px}
+.sleeps-g{margin:0 0 22px}
+.sleeps-h{margin:0 0 10px;font-family:Archivo,sans-serif;font-weight:600;font-stretch:88%;font-size:20px;letter-spacing:-.01em;color:var(--pine)}
+.sleeps-h span{font-family:Jost,system-ui,sans-serif;font-weight:400;font-stretch:normal;font-size:14px;letter-spacing:.02em;color:var(--oliva-d);margin-left:8px}
+.beds{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media(min-width:720px){.beds{grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}}
+.bed{background:var(--linho);border-radius:22px;padding:16px 16px 14px;display:flex;flex-direction:column;gap:2px}
+.bed-ic{width:64px;height:40px;fill:none;stroke:var(--terra);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;margin:0 0 10px}
+.bed b{font-weight:500;font-size:15px;line-height:1.3;color:var(--ink)}
+.bed span{font-size:14px;line-height:1.35;color:var(--oliva-d)}
+.bed em{font-style:normal;margin-top:auto;padding-top:10px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--terra)}
+.bed em i{font-style:normal;font-family:Archivo,sans-serif;font-weight:600;font-stretch:88%;font-size:24px;letter-spacing:0;margin-left:4px;vertical-align:-2px}
+.sleeps-total{margin:8px 0 0;font-size:16px;color:var(--ink)}
+.sleeps-total b{font-family:Archivo,sans-serif;font-weight:600;font-stretch:88%;font-size:32px;color:var(--pine);margin-right:8px;vertical-align:-4px}
+
+/* Comporta: the illustrated map sits under the places list, in the same column (t393u) */
+.map.map-in{margin:28px 0 0;padding:0;background:none;border-radius:0}
+.map.map-in svg{border-radius:0 var(--r) 0 var(--r);overflow:hidden}
+
+/* Find us: MapLibre + OpenFreeMap, repainted in the COLMO palette, one approximate pin */
+.split-map{align-items:stretch}
+.mapbox{position:relative;min-height:340px;border-radius:0 var(--r) 0 var(--r);overflow:hidden;background:var(--linho)}
+#colmo-map{position:absolute;inset:0}
+@media(min-width:960px){.mapbox{min-height:440px}}
+#colmo-map .cv-pin{display:block;width:30px;height:40px;line-height:0}
+#colmo-map .cv-attr{position:absolute;right:8px;bottom:6px;z-index:2;padding:1px 6px;background:rgba(241,235,221,.92);color:var(--ink);font-size:11px;line-height:1.5;text-decoration:none}
+#colmo-map .cv-attr:hover{text-decoration:underline}
+#colmo-map .maplibregl-ctrl-group{border:1px solid var(--terra);border-radius:0;box-shadow:none;background:var(--linho)}
+#colmo-map .maplibregl-ctrl-group button{width:32px;height:32px;border-radius:0!important;background-color:var(--linho)}
+#colmo-map .maplibregl-ctrl-group button+button{border-top:1px solid var(--terra)}
+#colmo-map .maplibregl-ctrl-top-right{top:12px;right:12px}
+#colmo-map .maplibregl-ctrl-top-right .maplibregl-ctrl{margin:0}
+
+/* t399u: closing statement from v10 (the-house.html), on dark Terra. Accent in old rose: 5.9:1 on pine #2F3A2E */
+.band-close{background:var(--pine);color:var(--linho);padding:88px var(--g) 96px;text-align:center}
+.close-in{max-width:var(--max);margin:0 auto}
+.close-sk{display:block;width:min(168px,46vw);height:auto;margin:0 auto 28px;opacity:.7}
+.close-t{font-family:Archivo,sans-serif;font-weight:600;font-stretch:88%;font-synthesis:none;letter-spacing:-.02em;line-height:1.06;font-size:clamp(34px,4.6vw,62px);color:var(--linho);max-width:18em;margin:0 auto 26px}
+.close-t .acc{color:var(--rose)}
+.close-p{margin:0 auto 26px;max-width:30em;color:var(--sand)}
+.close-go{margin:0 0 22px}
+.close-go a{color:var(--linho);font-size:13px;letter-spacing:.16em;text-transform:uppercase;text-decoration:underline;text-underline-offset:5px}
+
+/* t396u-t398u: the v10 "One day at Colmo" strip (v10/experiences.html#day), on the v10 dark band.
+   Terracotta fails on the dark band (2.44:1), so the highlights are cream italic, as on the photos */
+.dayband{background:var(--ink);color:var(--linho);padding:80px var(--g)}
+.dayband .band-inner{max-width:var(--max);margin:0 auto}
+.dayband .kicker{margin:0 0 14px;font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--sand)}
+.dayband .disp{font-family:Archivo,sans-serif;font-weight:600;font-stretch:88%;font-synthesis:none;letter-spacing:-.02em;line-height:1.06;font-size:clamp(30px,3.6vw,48px);margin:0 0 16px;color:var(--linho)}
+.dayband .acc{color:var(--linho)}
+.dayband .classic{font-family:"Instrument Serif",Georgia,serif;font-style:italic;font-weight:400;line-height:1.2;color:var(--sand);font-size:clamp(20px,2.1vw,28px);margin:0 0 16px}
+.day-note{max-width:28em;margin:0 0 4px;color:var(--sand);font-size:15px}
+.day-marquee{overflow-x:auto;overflow-y:hidden;scrollbar-width:none;cursor:grab;overscroll-behavior-x:contain;width:100%}
+.day-marquee::-webkit-scrollbar{display:none}
+.day-marquee.drag{cursor:grabbing;user-select:none}
+.day-track{display:flex;width:max-content;will-change:transform}
+.day-set{display:flex;gap:14px;padding-right:14px}
+.day-set figure{margin:0;flex:0 0 auto;width:clamp(112px,13.8vw,176px)}
+.day-set figure>div{overflow:hidden}
+.day-set .ra{border-radius:var(--r) 0 var(--r) 0}
+.day-set .rb{border-radius:0 var(--r) 0 var(--r)}
+.day-set img{width:100%;aspect-ratio:3/4;height:auto;object-fit:cover;display:block}
+.day-set img.day-kitchen{object-position:42% 50%}
+.day-set .hour{display:block;font-family:Archivo,sans-serif;font-weight:700;font-stretch:70%;font-size:15px;letter-spacing:.04em;color:var(--sand);margin:0 0 8px}
+.day-set .hour small{font-size:.7em;margin-left:1px;color:var(--linho);letter-spacing:0;font-weight:700}
+.day-set figcaption{margin:8px 0 0;font-size:12px;line-height:1.3;font-weight:300;color:var(--sand);letter-spacing:.02em}
+.day-set .day-typo-panel{aspect-ratio:3/4;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-end;padding:12px 10px 14px;border:1px solid rgba(241,235,221,.22)}
+.day-set .day-typo-panel p{margin:0;font-size:13px;line-height:1.35;font-weight:300;color:var(--sand)}
+.day-close{margin:36px 0 0;font-family:Archivo,sans-serif;font-weight:600;font-stretch:88%;font-size:clamp(22px,2.4vw,32px);letter-spacing:-.02em;color:var(--linho)}
+@keyframes dayMarquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.day-marquee.is-animated .day-track{animation:dayMarquee 56s linear infinite}
+.day-marquee.is-animated:hover .day-track,.day-marquee.is-animated.is-paused .day-track,.day-marquee.is-animated:focus-within .day-track{animation-play-state:paused}
+@media(prefers-reduced-motion:reduce){.day-marquee{overflow-x:auto;-webkit-overflow-scrolling:touch}.day-marquee .day-track{animation:none;will-change:auto}}
+
+/* t400u: credits sit inside the NiT quote block on About */
+.lines-in{margin-top:28px;max-width:34em;font-size:15px}
+
+/* t401u inset and peek: replaced in v1607 (t405u) */
+
+/* t402u: no browser blue ring or tap flash. Mouse and touch focus show nothing; keyboard focus gets a quiet Terra ring */
+html{-webkit-tap-highlight-color:transparent}
+a,button,[role=button],[tabindex],polygon,svg,.marquee,.hz,.day-marquee{-webkit-tap-highlight-color:transparent}
+:focus:not(:focus-visible){outline:none}
+svg .vol:focus,svg [data-house]:focus,svg:focus,.marquee:focus,.day-marquee:focus,.hz:focus,[data-house]:focus,.dots a:focus{outline:none}
+:focus-visible{outline:2px solid var(--terra);outline-offset:3px;border-radius:4px}
+svg .vol:focus-visible{outline:none;stroke:var(--terra);stroke-width:2;stroke-linejoin:round;stroke-opacity:1}
+.marquee:focus-visible,.day-marquee:focus-visible{outline:2px solid var(--terra);outline-offset:-2px}
+.band-close :focus-visible,.dayband :focus-visible,.site-foot :focus-visible,.scr :focus-visible,.hz :focus-visible{outline-color:var(--linho)}
+
+/* t403u: the calendar fills its panel. Two months side by side from 720px, one on mobile; arrows at the outer edges */
+.cal-wrap{display:grid;grid-template-columns:44px 1fr 44px;gap:10px;align-items:start}
+.cal-wrap>button{width:44px;height:44px;border:1px solid var(--oliva);background:none;border-radius:2px;cursor:pointer;font-size:20px;color:var(--terra);padding:0}
+.cal-wrap>button:disabled{opacity:.35;cursor:default}
+.cal-months{display:grid;grid-template-columns:1fr;gap:28px;min-width:0}
+.cal-m .cal-title{display:flex;align-items:center;justify-content:center;height:44px;margin-bottom:6px;font-weight:500;color:var(--terra)}
+.cal-m .cal{max-width:none;width:100%}
+.cal-m2{display:none}
+@media(min-width:720px){.cal-months{grid-template-columns:1fr 1fr;gap:36px}.cal-m2{display:block}}
+@media(max-width:420px){.cal-box{padding:14px 10px}.cal-wrap{grid-template-columns:36px 1fr 36px;gap:6px}.cal-wrap>button{width:36px;height:36px}}
+@media(max-width:719px){.cal-wrap{display:block;position:relative}.cal-wrap>button{position:absolute;top:0;z-index:1;width:40px;height:40px}.cal-prev{left:0}.cal-next{right:0}.cal-m .cal-title{height:40px}.cal-box{padding:14px 12px}}
+
+/* v1607 (t405u): every gallery runs edge to edge, with wide arrows at both sides. Terra on Linho is 7.74:1 */
+.gal{position:relative}
+.gal-arr{position:absolute;top:50%;z-index:4;transform:translateY(-50%);display:flex;align-items:center;justify-content:center;width:44px;height:44px;padding:0;border:1px solid var(--terra);border-radius:50%;background:var(--linho);color:var(--terra);cursor:pointer;box-shadow:0 2px 10px rgba(59,50,40,.18);transition:background .2s,color .2s,opacity .2s}
+.gal-arr svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.gal-prev{left:10px}.gal-next{right:10px}
+.gal-arr:hover{background:var(--terra);color:var(--linho)}
+.gal-arr:disabled{opacity:0;pointer-events:none}
+.gal-arr:focus:not(:focus-visible){outline:none}
+.gal-arr:focus-visible{outline:2px solid var(--terra);outline-offset:3px}
+@media(min-width:960px){.gal-arr{width:68px;height:68px}.gal-arr svg{width:28px;height:28px}.gal-prev{left:24px}.gal-next{right:24px}}
+.marquee{margin-left:0}
+.marquee-track{padding:0}
+.dayband .gal-day{margin:24px calc(-1*(max(0px,(100vw - var(--max) - 2*var(--g))/2) + var(--g))) 0}
+.dayband .gal-day .day-set{padding-right:14px}
+.gal-day .gal-arr{top:calc(50% + 4px)}
+@media(max-width:759px){
+  .gal-cards .cards{padding:20px 0 8px;gap:0;max-width:none}
+  .gal-cards .cards figure{flex:0 0 100%}
+  .gal-cards .cards figcaption{padding:0 var(--g)}
+  .gal-cards .gal-arr{top:calc(20px + (100vw * .375))}
+}
+/* t496u: the house gallery arrows show on every screen; from 760px the photos run in one row, two at a time, so the arrows have somewhere to go */
+@media(min-width:760px){.gal-cards .cards{display:flex;gap:24px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:var(--g);scrollbar-width:none}.gal-cards .cards::-webkit-scrollbar{display:none}.gal-cards .cards figure{flex:0 0 calc((100% - 24px)/2)}}
+@media(prefers-reduced-motion:reduce){.marquee-track,.day-set{padding-right:0}}
+/* t406u: no extra rule above Minimum stay */
+.minstay{border-top:0}
+/* t407u: Days horizontal uses the strip layout, with larger vertical photos */
+.dayb .day-set{gap:18px;padding-right:18px}
+.dayb .day-set figure{width:clamp(220px,24vw,340px)}
+.dayb .day-set img{aspect-ratio:3/4;height:auto}
+.dayb .day-set .hour{font-size:22px;margin-bottom:10px}
+.dayb .day-set figcaption{font-size:14px;margin-top:10px}
+@media(max-width:759px){.dayb .day-set figure{width:62vw}}
+
+/* t413u/t414u: the v10 "One whole house" block, on Home after the opening, revealed on scroll */
+.band-whole{background:var(--pine);color:var(--linho);padding:96px var(--g) 0;text-align:center;overflow:hidden}
+.whole-in{max-width:1320px;margin:0 auto}
+.band-whole .close-t{margin-bottom:56px}
+.whole-photo{margin:0;border-radius:0 clamp(72px,11vw,180px) 0 0;overflow:hidden;line-height:0}
+.whole-photo img{width:100%;height:min(78vh,760px);object-fit:cover;display:block}
+html.js .reveal{opacity:0;transform:translateY(36px);transition:opacity .9s ease,transform .9s ease}
+html.js .reveal.seen{opacity:1;transform:none}
+@media(max-width:720px){.band-whole{padding-top:72px}.band-whole .close-t{margin-bottom:40px}.whole-photo{border-radius:0 72px 0 0}.whole-photo img{height:62vh}}
+@media(prefers-reduced-motion:reduce){html.js .reveal{opacity:1;transform:none;transition:none}}
+/* t418u: Home lead-in above the One whole house headline */
+.whole-lead{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;font-size:clamp(26px,2.8vw,38px);line-height:1.15;color:var(--sand);margin:0 auto 18px}
+/* t424u/t425u: About "Nothing was bought online": quote, attribution, paragraph and credits share one left edge and one width; credits inline with the footer dot */
+.story-col{max-width:34em}
+.story-col blockquote{padding-left:0;border-left:0}
+.story-col cite{margin-left:0}
+.story-col .prose{max-width:none}
+.story-col .prose p{max-width:none}
+.credits-line{margin:26px 0 0;font-size:15px;line-height:1.7;color:var(--ink)}
+.credits-line .cr{white-space:nowrap}
+.credits-line b{font-weight:500;color:var(--terra);margin-right:.35em}
+.credits-line .dot{color:var(--pine);margin:0 .6em;font-weight:500}
+@media(max-width:520px){.credits-line .cr{display:block;white-space:normal}.credits-line .dot{display:none}}
+/* t430u: Home ends on the Comporta screen, with the 48h line and Request dates */
+.scr .home-req{margin:26px 0 14px;font-size:15px}
+/* t433u-t437u: opener photo 005; logo centred on the frame, "A house with roots." centred below it, soft scrim behind both */
+.fly-logo{top:calc(44svh - min(520px,72vw)*.267)}
+.is-home .scr.opener{--logo-bottom:calc(44svh + min(520px,72vw)*.267)}
+.scr.opener .bg{object-position:50% 30%}
+.scr.opener .ov{position:absolute;left:0;right:0;top:var(--logo-bottom);padding:clamp(30px,4.6vh,46px) var(--g) 0;text-align:center}
+.scr.opener .ov-in{max-width:none;margin:0 auto;padding-top:0}
+.scr.opener .t1{margin:0}
+html.js .is-home:not(.live) #arrive .ov{opacity:1;visibility:visible}
+/* t447u: no radial patch; a gentle, even top-to-bottom wash plus soft shadows on the logo and title */
+.scr.opener .veil{background:none}
+.is-home .fly-logo:not(.on-light) .logo-cream{filter:drop-shadow(0 0 1px rgba(36,30,24,.7)) drop-shadow(0 1px 3px rgba(36,30,24,.55)) drop-shadow(0 0 16px rgba(36,30,24,.45))}
+.scr.opener .t1{text-shadow:0 0 1px rgba(36,30,24,.7),0 1px 3px rgba(36,30,24,.6),0 0 14px rgba(36,30,24,.55),0 0 34px rgba(36,30,24,.4)}
+/* t436u: the lead line near the start, and the closing block at the end of Home */
+.band-lead{background:var(--pine);color:var(--linho);padding:72px var(--g) 76px;text-align:center}
+.band-lead .whole-lead{margin:0 auto}
+.band-whole .whole-end{padding:56px 0 96px}
+.band-whole .home-req{margin:0 0 18px;font-size:15px;color:var(--linho)}
+@media(max-width:720px){.band-lead{padding:56px var(--g) 60px}.band-whole .whole-end{padding:40px 0 80px}}
+.scr.opener .ov::before{display:none}
+/* t454u: Swim slide is title only; band lightened to the minimum that keeps the title at 4.5:1 or more */
+#swim .ov::before{background:linear-gradient(to top,rgba(43,36,29,.62) 0,rgba(43,36,29,.62) calc(100% - 160px),rgba(43,36,29,.38) calc(100% - 90px),rgba(43,36,29,.14) calc(100% - 40px),rgba(43,36,29,0) 100%)}
+
+/* t456u/t458u/t459u: mobile header = logo, compact Request dates, menu. EN | PT lives in the menu. Menu aligned right. No bottom bar. */
+.mbar{display:none!important}
+@media(max-width:959px){
+  .head .lang{display:none}
+  .head .btn{display:inline-block;margin-left:auto;padding:9px 12px;font-size:11px;letter-spacing:.12em;white-space:nowrap}
+  .panel{text-align:right}
+  .panel .lang{justify-content:flex-end}
+}
+/* t455u: no opacity lag on the opener title, so it fades before it can reach the logo */
+html.js .is-home #arrive .ov{transition:none}
+/* t457u: portrait phones use a per-photo horizontal focus */
+@media(max-width:959px) and (orientation:portrait){.px>.bg,.px>picture>.bg{object-position:var(--mpos,50%) 50%}.scr.opener .bg{object-position:var(--mpos,50%) 50%}}
+/* t461u: auto-hide header */
+.head{transition:transform .35s ease,opacity .35s}
+.head.hide,html.js .is-home .head.docked.hide{transform:translateY(-105%)}
+.fly-logo{transition:transform .35s ease}
+.fly-logo.hide{transform:translateY(calc(-1 * var(--nav) - 24px))!important}
+@media(prefers-reduced-motion:reduce){.head,.fly-logo{transition:none}}
+@media(max-width:959px){.head .burger{margin-left:auto}.head .btn+.burger{margin-left:0}}
+/* t462u: mobile-only line breaks, Good to know after Who sleeps where */
+.nw{white-space:nowrap}
+@media(min-width:960px){br.mbr{display:none}}
+.gtk-l{margin-top:clamp(40px,6vw,64px)}
+#good-to-know>.sleeps{margin-top:0}
+/* t463u: portrait phone, logo higher in the sky (title unchanged) */
+@media(max-width:959px) and (orientation:portrait){.fly-logo{top:calc(19svh - min(520px,72vw)*.267)}}
+/* t464u: opener logo and title in their natural colour, no shadow */
+.fly-logo .logo-cream,.is-home .fly-logo:not(.on-light) .logo-cream{filter:none}
+.scr.opener .t1,.scr.opener .t1 *{text-shadow:none}
+/* t466u: Swim slide shows less paving: the photo sits higher (house and pool), less ground below */
+.px-on #swim>.bg{top:-4%}
+/* t470u: Google Maps link on the Find us map */
+.mapbox .cv-gmaps{position:absolute;left:12px;top:12px;z-index:3;padding:5px 10px;background:rgba(241,235,221,.94);color:var(--terra);font-size:13px;line-height:1.4;text-decoration:underline;text-underline-offset:3px}
+.mapbox .cv-gmaps:hover{color:var(--pine)}
+#colmo-map a.cv-pin{cursor:pointer}
+/* t472u: Who sleeps where cards take the colour that paints each volume on the house sketch (Quiet Thatch rose, Studio Thatch olive), text kept at 4.5:1 or more */
+.sg-quiet .bed{background:#D5B5A0}
+.sg-small .bed{background:#C0BCA9}
+.sg-quiet .bed span,.sg-small .bed span{color:var(--terra)}
+/* t474u: The House opener photo sits higher in the frame, so more of the house shows */
+/* t483u: The House opener is now Final-47, framed as proposal B (no vertical offset); the t474u offset for final-10 is retired */
+/* t477u: each volume title in the colour of its painted wash on the sketch, same hue darkened to 4.5:1 or more on linho and on sand */
+#living .house-head .t{color:#7D5437}
+#rest .house-head .t,.sg-quiet .sleeps-h{color:#7F5338}
+#annex .house-head .t,.sg-small .sleeps-h{color:#605D4A}
+/* t478u: page hero titles start on the same left margin as the content below (the 1200px column), desktop only; mobile was already aligned */
+@media(min-width:960px){.scr.opener-plain .ov{padding-left:max(var(--g),calc((100% - var(--max))/2));padding-right:max(var(--g),calc((100% - var(--max))/2))}}
+/* t485u: the house opening photos now carry a caption; the rounded corners move from the figure to the photo so the caption is not clipped */
+.house-head .photo.rb{border-radius:0;overflow:visible}
+.house-head .photo.rb img{display:block;border-radius:0 var(--r) 0 var(--r)}
+/* t492u (v17): the sketch washes are back exactly as in v16 (rules above untouched). Each house's active button and title follow its own v16 wash colour.
+   Titles: the wash colours read below 4.5:1 on linho, so each title uses the closest darker shade of the same hue (4.5:1 or more on linho and sand).
+   Buttons: Main and Quiet keep the exact wash colour as background, with the darkest text that passes; Small's wash fails with any site text colour, so its button uses the darker shade of the same hue with linho text. */
+.sketch .tabs button[data-house=living][aria-expanded=true]{background:#C39677;border-color:#C39677;color:var(--ink)}
+.sketch .tabs button[data-house=rest][aria-expanded=true]{background:var(--rose);border-color:var(--rose);color:var(--terra)}
+.sketch .tabs button[data-house=annex][aria-expanded=true]{background:#605F49;border-color:#605F49;color:var(--linho)}
+#living .house-head .t{color:#7E5438}
+#rest .house-head .t,.sg-quiet .sleeps-h{color:#805339}
+#annex .house-head .t,.sg-small .sleeps-h{color:#605F49}
+/* t495u (v17): only Quiet Thatch lighter and rosier: the lightest dusty rose of the old-rose family that keeps 4.5:1 (title on linho; the label on sand needs one step darker) */
+#rest .house-head .t{color:#995852}
+.sg-quiet .sleeps-h{color:#884E49}
+/* t496u: phone openers use their own portrait crop, already centred on the subject, so no extra horizontal shift */
+@media(max-width:759px){.px>picture>.bg{object-position:50% 50%}}
+
+/* t502u: on Home, below 960px, the menu button shows as soon as the logo starts to shrink, over the photo, before the header docks */
+@media(max-width:959px){
+  html.js .is-home.live .head:not(.docked){opacity:1;transform:none;background:transparent;box-shadow:none}
+  html.js .is-home.live .head:not(.docked)>:not(.burger){visibility:hidden}
+  html.js .is-home.live .head:not(.docked) .burger{pointer-events:auto;color:var(--linho);filter:drop-shadow(0 0 1px rgba(36,30,24,.8)) drop-shadow(0 1px 4px rgba(36,30,24,.6))}
+}
+/* t504u: every framed photo keeps 1, 2 or 3 rounded corners, never 0 */
+.day-set .r1{border-radius:var(--r) 0 0 0}
+.day-set .r3{border-radius:var(--r) var(--r) 0 var(--r)}
+@media(min-width:760px){
+  .gal-cards .cards button{overflow:hidden}
+  .gal-cards .cards img{display:block}
+  .gal-cards .cards figure:nth-child(3n+1) button{border-radius:0 var(--r) 0 var(--r)}
+  .gal-cards .cards figure:nth-child(3n+2) button{border-radius:var(--r) 0 0 0}
+  .gal-cards .cards figure:nth-child(3n) button{border-radius:var(--r) var(--r) 0 var(--r)}
+}
+
+/* t528u: cookie banner. Hidden unless JS finds a GA_ID. Accept and Reject are equal in size. */
+.cook{position:fixed;left:0;right:0;bottom:0;z-index:80;padding:0 var(--g) calc(16px + env(safe-area-inset-bottom));pointer-events:none}
+.cook-box{pointer-events:auto;max-width:720px;margin:0 auto;background:var(--linho);color:var(--ink);padding:20px 22px 18px;border:1px solid var(--terra);border-radius:var(--r) var(--r) 0 0;box-shadow:0 -8px 24px rgba(59,50,40,.12)}
+.cook-t{margin:0 0 8px;font-size:15px;font-weight:500;letter-spacing:.04em;color:var(--ink)}
+.cook-box p#cook-p,.cook p.cook-p{margin:0;font-size:15px;line-height:1.5;font-weight:300;color:var(--ink)}
+.cook-actions{display:flex;flex-wrap:nowrap;gap:10px;margin-top:16px}
+.cook-actions button{flex:1 1 0;min-width:0;min-height:44px;padding:12px 18px;font-family:Jost,system-ui,sans-serif;font-size:12px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;cursor:pointer}
+.cook-ok{background:var(--tc);color:var(--linho);border:1.5px solid var(--tc);border-radius:0 var(--r) 0 0}
+.cook-no{background:var(--linho);color:var(--ink);border:1.5px solid var(--ink);border-radius:var(--r) 0 0 0}
+.foot-legal .cook-set{background:none;border:0;padding:4px 0;font:inherit;letter-spacing:inherit;text-transform:none;color:var(--linho);cursor:pointer}
+.foot-legal .cook-set:hover{color:var(--sand);text-decoration:underline;text-underline-offset:3px}
+@media(max-width:759px){.foot-legal.has-cook{flex-wrap:wrap;white-space:normal;justify-content:center}}
+
+/* v18: colours only. Pine #2F3A2E is the dominant dark (footer, closing bands, mobile bar, titles on light grounds).
+   Contrast: pine on Linho 10.0:1, on Sand 8.3:1, on Colmo 7.1:1; Linho on pine 10.0:1, Sand on pine 8.3:1, old rose on pine 5.9:1.
+   Terracotta stays on buttons only. */
+/* Sketch: Main Thatch wash goes from terracotta to a diluted pine (#B3BEAC); Quiet and Studio keep their washes. Ink on it 6.5:1, pine on it 6.2:1 */
+.wash-living{fill:var(--pine-wash)}
+.sketch .tabs button[data-house=living][aria-expanded=true]{background:var(--pine-wash);border-color:var(--pine-wash);color:var(--ink)}
+#living .house-head .t{color:var(--pine)}
+/* Garage in Colmo #D8C6A5, ink text 8.6:1 */
+.chip-g{background:#D8C6A5;color:var(--ink);padding:5px 12px;border-radius:20px}
+/* The House, #outside only: title, text aligned to the top of the collage, wide 3:2 big photo and square small one */
+#outside .split{align-items:start}
+#outside .collage .c1 img{aspect-ratio:3/2}
+#outside .collage .c2 img{aspect-ratio:1/1}
