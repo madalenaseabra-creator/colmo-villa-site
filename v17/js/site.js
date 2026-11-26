@@ -182,6 +182,13 @@
       /* t485u: no request for nights already booked; the departure day may be the first day of a booking */
       if(a&&dep&&a.value&&dep.value&&window.cvBooked&&window.cvBooked(a.value,dep.value)){bad.hidden=false;bad.textContent="Some of those nights are already booked. Please choose other dates.";return;}
       btn.disabled=true;
+      /* Copy to the bookings sheet (Google Apps Script). Extra only: fire-and-forget, never blocks Formspree or shows anything. */
+      if(a&&dep){try{
+        var g=function(n){var x=f.querySelector("[name="+n+"]");return x?String(x.value||"").trim():"";};
+        fetch("https://script.google.com/macros/s/AKfycbyjEo89ztJ7udPB4xQwpQq871oJPCYodvafAmoYoArqeDHCYGBSh60Us4CzGE1wCvp_Sg/exec",{method:"POST",mode:"no-cors",keepalive:true,headers:{"Content-Type":"text/plain;charset=utf-8"},
+          body:JSON.stringify({checkin:a.value,checkout:dep.value,name:g("name"),email:g("email"),phone:g("phone"),guests:g("guests"),message:g("message"),token:"DK85bkAcJ8kNGokuWx8no3fK",hp:""})
+        }).catch(function(){});
+      }catch(_){}}
       fetch("https://formspree.io/f/xjywaajv",{method:"POST",body:new FormData(f),headers:{Accept:"application/json"}})
         .then(function(r){if(!r.ok)throw new Error("send");ok.hidden=false;f.reset();if(window.calReset)calReset();})
         .catch(function(){bad.hidden=false;bad.innerHTML='The request could not be sent. Please write to <a href="mailto:colmovilla@gmail.com">colmovilla@gmail.com</a>.';})
