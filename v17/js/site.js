@@ -189,27 +189,26 @@
           body:JSON.stringify({checkin:a.value,checkout:dep.value,name:g("name"),email:g("email"),phone:g("phone"),guests:g("guests"),message:g("message"),token:"DK85bkAcJ8kNGokuWx8no3fK",hp:""})
         }).catch(function(){});
       }catch(_){}}
-      /* Request dates: readable email for the team (Portuguese labels, dates, nights). The visible form is unchanged. */
+      /* Request dates: readable email (English labels to match the Formspree template, dates, nights). The visible form is unchanged. */
       var fsBody=new FormData(f);
       if(a&&dep){try{
         var v=function(n){var x=f.querySelector("[name="+n+"]");var t=x?String(x.value||"").trim():"";return t||"\u2014";};
         var dd=function(s){var p=s.split("-");return new Date(Date.UTC(+p[0],p[1]-1,+p[2]));};
         var A=dd(a.value),D=dd(dep.value),nts=Math.round((D-A)/864e5);
-        var W=["dom","seg","ter","qua","qui","sex","s\u00e1b"],M=["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
+        var W=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],M=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
         var dm=function(x){return x.getUTCDate()+" "+M[x.getUTCMonth()];},Y=function(x){return x.getUTCFullYear();};
         var fl=function(x){return W[x.getUTCDay()]+", "+dm(x)+" "+Y(x);};
         var rng=Y(A)!==Y(D)?dm(A)+" "+Y(A)+" \u2013 "+dm(D)+" "+Y(D):A.getUTCMonth()===D.getUTCMonth()?A.getUTCDate()+"\u2013"+dm(D)+" "+Y(D):dm(A)+" \u2013 "+dm(D)+" "+Y(D);
         fsBody=new FormData();
-        fsBody.append("_subject","Pedido COLMO VILLA \u00b7 "+rng+" \u00b7 "+nts+(nts===1?" noite":" noites")+" \u00b7 "+v("name"));
-        fsBody.append("_replyto",v("email"));
-        fsBody.append("Nome",v("name"));
-        fsBody.append("Email",v("email"));
-        fsBody.append("Chegada",fl(A));
-        fsBody.append("Partida",fl(D));
-        fsBody.append("Noites",String(nts));
-        fsBody.append("H\u00f3spedes",v("guests"));
-        fsBody.append("Mensagem",v("message"));
-        fsBody.append("Como nos conheceu",v("how_heard"));
+        fsBody.append("_subject","COLMO VILLA request \u00b7 "+rng+" \u00b7 "+nts+(nts===1?" night":" nights")+" \u00b7 "+v("name"));
+        fsBody.append("Name",v("name"));
+        fsBody.append("email",v("email"));
+        fsBody.append("Arrival",fl(A));
+        fsBody.append("Departure",fl(D));
+        fsBody.append("Nights",String(nts));
+        fsBody.append("Guests",v("guests"));
+        fsBody.append("Message",v("message"));
+        fsBody.append("How they heard of us",v("how_heard"));
       }catch(_){fsBody=new FormData(f);}}
       fetch("https://formspree.io/f/xjywaajv",{method:"POST",body:fsBody,headers:{Accept:"application/json"}})
         .then(function(r){if(!r.ok)throw new Error("send");ok.hidden=false;f.reset();if(window.calReset)calReset();})
